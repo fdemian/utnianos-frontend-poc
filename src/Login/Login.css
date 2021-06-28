@@ -1,0 +1,142 @@
+.login-grid-container {
+   margin-top: 50px;
+}
+
+.login-container
+{
+  width: 368px;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 768px) {
+  .login-container input, .login-container .antd-pro-login-submit {
+    width: 400px;
+  }
+
+  .login-container form
+  {
+    width: 900px;
+  }
+
+  .login-container .ant-tabs-tabpane.ant-tabs-tabpane-active {
+    padding-left: 0%;
+  }
+
+
+  .alt-login-container > div
+  {
+    margin-left: 152px;
+  }
+
+
+  .login .alt-login-title {
+    color: darkgray;
+    font-weight: bold;
+    margin-left: 17%;
+  }
+
+  .register .alt-login-title {
+    color: darkgray;
+    margin-left: 14%;
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+
+ .input-field.ant-input-affix-wrapper
+  {
+    display: block;
+  }
+
+  .login-container form
+  {
+    width: 100%;
+  }
+
+  .login-container .ant-tabs-tabpane.ant-tabs-tabpane-active {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+
+  .alt-login-title {
+    color: gainsboro;
+  }
+
+  .alt-login-container
+  {
+    text-align: center;
+  }
+
+  .login .alt-login-title,.register .alt-login-title {
+    color: gainsboro;
+    margin-left: 0;
+  }
+
+}
+
+.icon-header
+{
+  margin-left: 41%;
+  margin-bottom: 30px;
+}
+
+.mobile .icon-header
+{
+  margin-left: 40%;
+  margin-bottom: 30px;
+}
+
+.login-container .ant-tabs-nav-wrap
+{
+  text-align: left;
+  margin-left: 110px;
+}
+
+.icon-header img {
+  vertical-align: bottom;
+}
+
+.icon-header span {
+  vertical-align: middle;
+  color: darkgray;
+}
+
+.icon-header,.icon-logo {
+  height: 44px;
+  line-height: 44px;
+  padding-left: 25px;
+}
+
+.icon-title {
+  font-size: 33px;
+  color: rgba(0,0,0,.85);
+  font-family: Myriad Pro,Helvetica Neue,Arial,Helvetica,sans-serif;
+  font-weight: 600;
+  position: relative;
+  top: 2px;
+}
+
+.input-field {
+  width: 560px;
+}
+
+.login-form {
+  margin-left: 30%;
+}
+
+.simulated-link {
+  color: #1890ff;
+  background-color: transparent;
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.login-container .ant-popover-placement-right {
+  left: 398px !important;
+}
+
+.login-button {
+  width: 560px;
+}

@@ -1,0 +1,143 @@
+span.invisible, li.ant-menu-item.invisible {
+  display: none;
+}
+
+.navbar-container {
+  background-color: white;
+  box-shadow: 0 2px 8px #f0f1f2;
+}
+
+.navbar-spinner {
+  margin-left: 54%;
+}
+
+.logo.container {
+  margin-left: 0px;
+  width: 140px;
+}
+
+.navbar-logo-mobile {
+  height: 30px;
+  width: 93px;
+  margin-left: 15px;
+}
+
+.navbar-mobile .menu-title {
+  margin-left: '5px';
+  font-size: '15px';
+}
+
+.navbar-text-mobile {
+  font-size: 14px;
+  color: gainsboro;
+  display: inline;
+}
+
+span.logo-item-desktop{
+  margin-left: 140px;
+}
+
+span.pull-right, .ant-menu-item.pull-right {
+  margin-left: 60%;
+}
+
+span.register-link {
+ margin-left: 45px;
+}
+
+.logo.container.mobile {
+  margin-left: 0px;
+  width: 100%;
+}
+
+.desktop-menu {
+  height: 70px;
+}
+
+.navbar-text {
+  text-align: center;
+  color: rgba(0,0,0,.65);
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.blog-name {
+  text-align: center;
+  color: rgba(0,0,0,.65);
+  font-size: 20px;
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+.blog-logo {
+  vertical-align: middle;
+  display: inline-block;
+  position: relative;
+  width: 150px;
+  height:50px;
+  line-height: 64px;
+}
+
+.logo.container.mobile .header-search {
+  margin-left: 40px;
+}
+
+.logo.container.mobile .menu-logo {
+  padding-left: 35%;
+}
+
+.userDropdown
+{
+  margin-left: 30px;
+  color: gainsboro;
+}
+
+.userName
+{
+  margin-left: 10px;
+}
+
+/* Navbar mobile */
+
+.sidemenu-mobile {
+  width: 256px;
+  margin-left: -24px;
+}
+
+.sidemenu-inline .sidemenu-style-title {
+  margin-left: 5px;
+  font-size: 15px;
+}
+
+/* Sider styles */
+
+.sider {
+  min-height: 100vh;
+  box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+  position: relative;
+  z-index: 10;
+}
+
+.sider.fixSiderbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.sider.light {
+  box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
+  background-color: white;
+}
+
+.ant-tabs-nav-wrap {
+  padding-left: 38%;
+}
+
+.login-items {
+  margin-left: 60%;
+}
+
+.account-nav-items {
+  display: flex;
+  margin-left: 60%;
+}
