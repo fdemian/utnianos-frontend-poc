@@ -4,26 +4,29 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import ApplicationRoutes from './Routes/Routes';
 import AppRoute from './Routes/AppRoute';
 //import reportWebVitals from './reportWebVitals';
-
+import apolloClient from './apolloConfig';
+import { ApolloProvider } from "@apollo/client";
 const { App, Routes } = ApplicationRoutes;
 
 const UTNApp = () => {
   return(
-  <Router>
-      <App>
-        <Switch>
-        {Routes.map(route =>
-          <AppRoute
-            exact={route.exact}
-            path={route.path}
-            component={route.component}
-            isPrivate={route.private}
-            key={route.path ? route.path.toString() : "-"}
-          />
-         )}
-         </Switch>
-       </App>
-   </Router>
+  <ApolloProvider client={apolloClient}>
+    <Router>
+        <App>
+          <Switch>
+          {Routes.map(route =>
+            <AppRoute
+              exact={route.exact}
+              path={route.path}
+              component={route.component}
+              isPrivate={route.private}
+              key={route.path ? route.path.toString() : "-"}
+            />
+           )}
+           </Switch>
+         </App>
+     </Router>
+   </ApolloProvider>
   );
 };
 
