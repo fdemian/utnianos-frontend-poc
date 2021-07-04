@@ -81,7 +81,7 @@ const Navbar = (props) => {
       className="desktop-menu"
     >
     {
-      loading ? <Spin /> :
+      loading || !data ? <Spin /> :
       (
       <>
       <span className="logo-item-desktop" key="logo-item-desktop" role="menuitem">

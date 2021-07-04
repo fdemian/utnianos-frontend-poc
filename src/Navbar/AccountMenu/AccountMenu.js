@@ -6,16 +6,13 @@ import AccountAvatar from '../../UserAvatar/UserAvatar';
 // Font awesome icons.
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faPlus as plus,
-  faAddressCard as addressCard,
   faCog as cog,
   faSignOutAlt as signOut,
-  faPenNib as draftIcon
 } from '@fortawesome/free-solid-svg-icons';
 import { logout } from '../../Login/utils';
 import './AccountMenu.css';
 
-const AccountMenu = ({ mutate, user, isFetching }) => {
+const AccountMenu = ({ user, isFetching }) => {
 
   if(user === undefined)
     return <Spin />;
@@ -34,36 +31,6 @@ const AccountMenu = ({ mutate, user, isFetching }) => {
         </span>
       </Menu.Item>
       <hr className="divider" />
-      <Menu.Item key="account:newstory">
-        <Link to="/stories/new">
-          <FontAwesomeIcon
-            icon={plus}
-            className="MenuIcon"
-            size="lg"
-          />
-          &nbsp; New Story
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="account:categories">
-        <Link to="/categories">
-         <FontAwesomeIcon
-            icon={addressCard}
-            className="MenuIcon"
-            size="lg"
-          />
-          &nbsp; Categories
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="account:draft">
-        <Link to="/drafts">
-          <FontAwesomeIcon
-            icon={draftIcon}
-            className="MenuIcon"
-            size="lg"
-          />
-          &nbsp; Drafts
-        </Link>
-      </Menu.Item>
       <Menu.Item key="account:settings">
         <Link to="/settings">
           <FontAwesomeIcon
@@ -79,7 +46,6 @@ const AccountMenu = ({ mutate, user, isFetching }) => {
           data-testid="logout-button"
           onClick={() => {
             logout();
-            mutate(null);
           }}>
           <FontAwesomeIcon
             icon={signOut}
