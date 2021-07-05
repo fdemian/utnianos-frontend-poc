@@ -78,9 +78,13 @@ span.register-link {
   vertical-align: middle;
   display: inline-block;
   position: relative;
-  width: 150px;
   height:50px;
+  margin-top: 10px;
   line-height: 64px;
+}
+
+.login-link-text {
+  font-size: 20px;
 }
 
 .logo.container.mobile .header-search {
@@ -140,6 +144,7 @@ span.register-link {
 
 .login-items {
   margin-left: 60%;
+  margin-top: 8px;
 }
 
 .account-nav-items {

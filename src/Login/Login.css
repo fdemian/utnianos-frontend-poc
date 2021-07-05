@@ -77,7 +77,7 @@
 
 .icon-header
 {
-  margin-left: 41%;
+  margin-left: 45%;
   margin-bottom: 30px;
 }
 
@@ -103,8 +103,8 @@
 }
 
 .icon-header,.icon-logo {
-  height: 44px;
   line-height: 44px;
+  height: 55px;
 }
 
 .icon-title {

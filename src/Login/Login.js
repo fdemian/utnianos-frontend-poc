@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
-import { Form, Input, Button, Alert } from 'antd';
+import { Form, Input, Button /*, Alert*/ } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import TopIcon from './TopIcon';
-import Loading from '../Loading/LoadingIndicator';
+//import Loading from '../Loading/LoadingIndicator';
 import { useLoginMutation } from "./loginMutation";
 import { useIsLoggedIn } from './authToken';
 import './Login.css';

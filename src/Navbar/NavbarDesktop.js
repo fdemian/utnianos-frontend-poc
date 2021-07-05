@@ -74,8 +74,8 @@ const Navbar = (props) => {
            loading ? <Spin /> :
            (
             <Link to="/login">
-              <FontAwesomeIcon icon={signIn} />
-              Login
+              <span className="login-link-text">Login &nbsp;</span>
+              <FontAwesomeIcon icon={signIn} size="2x" />
             </Link>
             )
          }
