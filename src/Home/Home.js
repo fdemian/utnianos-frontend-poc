@@ -1,18 +1,11 @@
 import React from 'react';
 import UnloggedHome from './UnloggedHome';
 import LandingPage from './LandingPage';
-import { useApolloClient, gql } from "@apollo/client";
-
-const IS_LOGGED_IN = gql`
-  query IsUserLoggedIn {
-    isLoggedIn @client
-}`
+import { useIsLoggedIn } from '../Login/authToken';
 
 const Home = () => {
 
-  const client = useApolloClient();
-  const loginData = client.readQuery({query:IS_LOGGED_IN});
-  const { isLoggedIn } = loginData;
+  const { isLoggedIn } = useIsLoggedIn();
 
   if(isLoggedIn){
     return <LandingPage />;

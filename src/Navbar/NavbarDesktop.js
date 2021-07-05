@@ -5,10 +5,13 @@ import React, {
 import { Menu, Spin } from 'antd';
 import NavLogo from './NavLogo';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignInAlt as signIn } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSignInAlt as signIn
+} from '@fortawesome/free-solid-svg-icons';
 import { gql, useQuery, useApolloClient } from "@apollo/client";
-import { clearUserData, getLoggedInUser} from '../Login/utils';
+import { useIsLoggedIn, useAuthToken} from '../Login/authToken';
 import './Navbar.css';
 
 const AccountMenu = lazy(() => import('./AccountMenu/AccountMenu'));
@@ -24,56 +27,34 @@ const GET_USER = gql`
   }
 `;
 
-const IS_LOGGED_IN = gql`
-  query IsUserLoggedIn {
-    isLoggedIn @client
-}`
-
-
 const Navbar = (props) => {
 
   const {
+    /*
     notifications,
-    /*notificationsEnabled,*/
+    notificationsEnabled,
     markReadNotification,
-    isFetching,
     dismissNotifications,
+    */
     blogName
   } = props;
 
-
+  const history = useHistory();
   const client = useApolloClient();
-  const loginData = client.readQuery({query:IS_LOGGED_IN});
-  const loggedIn = loginData.isLoggedIn;
-  const id = getLoggedInUser();
-  const queryOpts = { variables: { id: id }, skip: !loggedIn };
+  const { isLoggedIn } = useIsLoggedIn();
+  const [authToken, _, removeAuthToken] = useAuthToken();
+
+  const id = authToken['id'];
+  const queryOpts = { variables: { id: id }, skip: !isLoggedIn };
   const { loading, error, data } = useQuery(GET_USER, queryOpts);
 
-  const logoutFn = () => {
-
-    console.clear();
-    console.log('client', client);
-    console.log('clien.writeQuery', client.writeQuery);
-
-    // Set isLoggedIn field to false in the apollo client.
-    client.writeQuery({
-      query: IS_LOGGED_IN,
-      data: {
-        __typename: 'login',
-        isLoggedIn: false
-      },
-      variables: {
-        status: false
-      }
-     });
-
-     clearUserData();
+  const logoutFn = async () => {
+    await client.resetStore();
+    removeAuthToken();
+    history.push(`/`);
   }
 
-  if(error)
-    return <p>There was an error with the application.</p>;
-
-  if(!loggedIn)
+  if(error || !isLoggedIn)
   {
     return(
     <Suspense fallback={<Spin />}>
@@ -90,7 +71,7 @@ const Navbar = (props) => {
 
         <span className="login-items"  role="menuitem">
          {
-           isFetching ? <Spin /> :
+           loading ? <Spin /> :
            (
             <Link to="/login">
               <FontAwesomeIcon icon={signIn} />
@@ -104,8 +85,7 @@ const Navbar = (props) => {
     );
   }
 
-  if(loggedIn){
-
+  if(isLoggedIn) {
   return(
   <Suspense fallback={<Spin />}>
     <Menu
@@ -139,9 +119,6 @@ const Navbar = (props) => {
    </Suspense>
    );
   }
-
-
-
 
 }
 

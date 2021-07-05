@@ -37,6 +37,11 @@ span.logo-item-desktop{
   margin-left: 140px;
 }
 
+.error-icon-navbar {
+  margin-left: 140px;
+  margin-top: 10px;
+}
+
 span.pull-right, .ant-menu-item.pull-right {
   margin-left: 60%;
 }

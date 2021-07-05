@@ -1,40 +1,34 @@
 import {
   ApolloClient,
+  ApolloLink,
   InMemoryCache,
-  createHttpLink,
-  gql
+  createHttpLink
 } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-import { getAuthToken } from './Login/utils';
-const httpLink = createHttpLink({ uri: '/graphql' });
-const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const token = getAuthToken();
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+import { useAuthToken } from "./Login/authToken";
+
+const getAuthToken = (authTokens) => authTokens['auth'];
+const authMiddleware = (authToken) =>
+  new ApolloLink((operation, forward) => {
+    // add the authorization to the headers
+    const token = getAuthToken(authToken);
+    if (token) {
+
+      operation.setContext({
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
     }
-  }
-});
 
-const IS_LOGGED_IN = gql`
-  query IsUserLoggedIn {
-    isLoggedIn @client
-  }
-`;
-const cache = new InMemoryCache();
-cache.writeQuery({
-  query: IS_LOGGED_IN,
-  data: {
-    isLoggedIn: false,
-  },
+    return forward(operation);
 });
+const cache = new InMemoryCache({});
+const httpLink = createHttpLink({ uri: '/graphql' });
 
-const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: cache
-});
-
-export default client;
+export const useNewClient = () => {
+  const [authToken] = useAuthToken();
+  return new ApolloClient({
+    link: authMiddleware(authToken).concat(httpLink),
+    cache,
+  });
+};

@@ -5,9 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import TopIcon from './TopIcon';
 import Loading from '../Loading/LoadingIndicator';
-import { useMutation, useApolloClient, gql } from "@apollo/client";
-import { setLoginData } from './utils';
-
+import { useLoginMutation } from "./loginMutation";
+import { useIsLoggedIn } from './authToken';
 import './Login.css';
 
 const layout = {
@@ -19,22 +18,6 @@ const layout = {
   },
 };
 
-const USER_LOGIN = gql`
-  mutation LoginMutation($username: String!, $password: String!) {
-    auth(username: $username, password: $password) {
-      id
-      accessToken
-      refreshToken
-      isLoggedIn @client
-    }
-  }
-`;
-
-const IS_LOGGED_IN = gql`
-  query IsUserLoggedIn {
-    isLoggedIn @client
-}`
-
 const LoginScreen = (props) => {
 
   // Initial state.
@@ -42,15 +25,13 @@ const LoginScreen = (props) => {
   const [login, setLogin] = useState(initialLoginState);
 
   // User login hook.
-  const [userLogin, { loading, error, data }] = useMutation(USER_LOGIN);
-  const client = useApolloClient();
-  const loginData = client.readQuery({query:IS_LOGGED_IN});
-  const { isLoggedIn } = loginData;
+  const [loginMutation] = useLoginMutation();
+  const { isLoggedIn } = useIsLoggedIn();
 
   // Finished checking login values.
   const onFinish = values => {
      const { username, password } = values;
-     userLogin({ variables:{ username, password }});
+     loginMutation({ variables:{ username, password }});
   };
 
   // Fail!
@@ -73,38 +54,16 @@ const LoginScreen = (props) => {
       });
   }
 
-  const confirmLogin = async data => {
-    const { id, accessToken, refreshToken } = data.auth;
-    setLoginData(id, accessToken, refreshToken);
-    client.writeQuery({
-      query: IS_LOGGED_IN,
-      data: {
-        __typename: 'login',
-        isLoggedIn: true
-      },
-      variables: {
-        status: true
-      }
-    });
-
-    setTimeout(function(){
-      props.history.push(`/`);
-    }, 0);
-  }
-
   if(isLoggedIn)
     return <Redirect to="/" />;
 
+  /*
   if(error)
     return <p>Error</p>;
 
   if(loading)
     return <Loading />;
-
-
-  if(data) {
-    confirmLogin(data);
-  }
+  */
 
   return (
   <div className="login-grid-container">
@@ -159,7 +118,7 @@ const LoginScreen = (props) => {
           </Button>
         </Form.Item>
       </Form>
-      {
+      {/*
        error &&
         <Alert
           style={{ marginTop: 24 }}
@@ -168,7 +127,7 @@ const LoginScreen = (props) => {
           showIcon
           closable
         />
-      }
+      */}
   </div>
   );
 
