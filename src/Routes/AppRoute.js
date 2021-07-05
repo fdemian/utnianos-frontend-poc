@@ -7,7 +7,7 @@ const AppRoute = ({exact, path, component, isPrivate, key}) => {
 
   const { isLoggedIn } = useIsLoggedIn();
 
-  if(isPrivate && !isLoggedIn())
+  if(isPrivate && !isLoggedIn)
     return  <Redirect to='/login' />;
   else return (
   <Suspense fallback={<Loading />}>

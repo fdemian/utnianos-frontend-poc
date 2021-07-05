@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Col, Row } from 'antd';
+import { Link } from 'react-router-dom';
 
 const { Meta } = Card;
 
@@ -17,9 +18,11 @@ const OptionsList = () => {
         </Card>
       </Col>
       <Col span={6}>
+        <Link to="/apuntes">
         <Card hoverable style={cardStyle} >
            <Meta title="Apuntes de materias" description="Colección de apuntes de materias, incluyendo parciales y finales." />
         </Card>
+        </Link>
       </Col>
       <Col span={6}>
         <Card hoverable style={cardStyle} >

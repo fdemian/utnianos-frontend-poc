@@ -1,0 +1,14 @@
+.file-list-header-container {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.contribution-type-select {
+  margin-right: 10px;
+}
+
+.file-list-container {
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 50px;
+}
