@@ -5,8 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import TopIcon from './TopIcon';
 import Loading from '../Loading/LoadingIndicator';
-import { useMutation, gql } from "@apollo/client";
-import { setLoginData, isLoggedIn } from './utils';
+import { useMutation, useApolloClient, gql } from "@apollo/client";
+import { setLoginData } from './utils';
+
 import './Login.css';
 
 const layout = {
@@ -24,16 +25,15 @@ const USER_LOGIN = gql`
       id
       accessToken
       refreshToken
+      isLoggedIn @client
     }
   }
 `;
 
-/*
 const IS_LOGGED_IN = gql`
   query IsUserLoggedIn {
     isLoggedIn @client
-  }
-`;*/
+}`
 
 const LoginScreen = (props) => {
 
@@ -43,7 +43,9 @@ const LoginScreen = (props) => {
 
   // User login hook.
   const [userLogin, { loading, error, data }] = useMutation(USER_LOGIN);
-  //const loginData = useQuery(IS_LOGGED_IN);
+  const client = useApolloClient();
+  const loginData = client.readQuery({query:IS_LOGGED_IN});
+  const { isLoggedIn } = loginData;
 
   // Finished checking login values.
   const onFinish = values => {
@@ -74,10 +76,23 @@ const LoginScreen = (props) => {
   const confirmLogin = async data => {
     const { id, accessToken, refreshToken } = data.auth;
     setLoginData(id, accessToken, refreshToken);
-    props.history.push(`/`);
+    client.writeQuery({
+      query: IS_LOGGED_IN,
+      data: {
+        __typename: 'login',
+        isLoggedIn: true
+      },
+      variables: {
+        status: true
+      }
+    });
+
+    setTimeout(function(){
+      props.history.push(`/`);
+    }, 0);
   }
 
-  if(isLoggedIn())
+  if(isLoggedIn)
     return <Redirect to="/" />;
 
   if(error)

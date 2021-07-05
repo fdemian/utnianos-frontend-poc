@@ -1,6 +1,13 @@
+import { gql, useApolloClient } from "@apollo/client";
+
 const LOCALSTORAGE_USER_KEY = "loggedInUser";
 const TOKEN_KEY = 'token';
 const REFRESH_TOKEN = 'refreshToken';
+
+const IS_LOGGED_IN = gql`
+  query IsUserLoggedIn {
+    isLoggedIn @client
+}`
 
 export const setLoginData = (id, token, refresh) => {
   // Set user id, token and refresh token.
@@ -14,8 +21,16 @@ export const getLoggedInUser = () => {
 }
 
 export const getAuthToken = () => sessionStorage.getItem(LOCALSTORAGE_USER_KEY);
-export const isLoggedIn = () => sessionStorage.getItem(LOCALSTORAGE_USER_KEY) !== null;
-export const logout = () => {
+
+export const isLoggedIn = (client) => {
+  const loginData = client.readQuery({query:IS_LOGGED_IN});
+  const { isLoggedIn } = loginData;
+
+  return isLoggedIn;
+}
+
+export const clearUserData = () => {
+   // Purge session storage.
    sessionStorage.removeItem(LOCALSTORAGE_USER_KEY);
    sessionStorage.removeItem(TOKEN_KEY);
    sessionStorage.removeItem(REFRESH_TOKEN);

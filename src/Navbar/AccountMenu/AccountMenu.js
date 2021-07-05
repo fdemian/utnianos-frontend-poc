@@ -9,10 +9,9 @@ import {
   faCog as cog,
   faSignOutAlt as signOut,
 } from '@fortawesome/free-solid-svg-icons';
-import { logout } from '../../Login/utils';
 import './AccountMenu.css';
 
-const AccountMenu = ({ user, isFetching }) => {
+const AccountMenu = ({ user, logoutFn, isFetching }) => {
 
   if(user === undefined)
     return <Spin />;
@@ -44,9 +43,7 @@ const AccountMenu = ({ user, isFetching }) => {
       <Menu.Item key="account:logout">
         <span
           data-testid="logout-button"
-          onClick={() => {
-            logout();
-          }}>
+          onClick={logoutFn}>
           <FontAwesomeIcon
             icon={signOut}
             className="MenuIcon"

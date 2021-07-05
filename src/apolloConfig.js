@@ -1,8 +1,12 @@
-import { ApolloClient, createHttpLink, makeVar, InMemoryCache } from '@apollo/client';
+import {
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink,
+  gql
+} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { getAuthToken } from './Login/utils';
-
-const httpLink = createHttpLink({uri: '/graphql' });
+import { getAuthToken, isLoggedIn } from './Login/utils';
+const httpLink = createHttpLink({ uri: '/graphql' });
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = getAuthToken();
@@ -15,27 +19,22 @@ const authLink = setContext((_, { headers }) => {
   }
 });
 
-/*
-export const isLoggedIn = makeVar([]);
-
-const cache = new InMemoryCache({
-  typePolicies: {
-    Query: {
-      loggedIn: {
-        cartItems: {
-          read() {
-            return cartItemsVar();
-          }
-        }
-      }
-    }
+const IS_LOGGED_IN = gql`
+  query IsUserLoggedIn {
+    isLoggedIn @client
   }
+`;
+const cache = new InMemoryCache();
+cache.writeQuery({
+  query: IS_LOGGED_IN,
+  data: {
+    isLoggedIn: false,
+  },
 });
-*/
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache()
+  cache: cache
 });
 
 export default client;

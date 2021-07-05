@@ -7,7 +7,8 @@ import NavLogo from './NavLogo';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt as signIn } from '@fortawesome/free-solid-svg-icons';
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useApolloClient } from "@apollo/client";
+import { clearUserData, getLoggedInUser} from '../Login/utils';
 import './Navbar.css';
 
 const AccountMenu = lazy(() => import('./AccountMenu/AccountMenu'));
@@ -23,10 +24,15 @@ const GET_USER = gql`
   }
 `;
 
+const IS_LOGGED_IN = gql`
+  query IsUserLoggedIn {
+    isLoggedIn @client
+}`
+
+
 const Navbar = (props) => {
 
   const {
-    loggedIn,
     notifications,
     /*notificationsEnabled,*/
     markReadNotification,
@@ -35,8 +41,37 @@ const Navbar = (props) => {
     blogName
   } = props;
 
-  const queryOpts = { variables: { id: 1 }, skip: !loggedIn };
+
+  const client = useApolloClient();
+  const loginData = client.readQuery({query:IS_LOGGED_IN});
+  const loggedIn = loginData.isLoggedIn;
+  const id = getLoggedInUser();
+  const queryOpts = { variables: { id: id }, skip: !loggedIn };
   const { loading, error, data } = useQuery(GET_USER, queryOpts);
+
+  const logoutFn = () => {
+
+    console.clear();
+    console.log('client', client);
+    console.log('clien.writeQuery', client.writeQuery);
+
+    // Set isLoggedIn field to false in the apollo client.
+    client.writeQuery({
+      query: IS_LOGGED_IN,
+      data: {
+        __typename: 'login',
+        isLoggedIn: false
+      },
+      variables: {
+        status: false
+      }
+     });
+
+     clearUserData();
+  }
+
+  if(error)
+    return <p>There was an error with the application.</p>;
 
   if(!loggedIn)
   {
@@ -50,7 +85,7 @@ const Navbar = (props) => {
         className="desktop-menu"
       >
         <span className="logo-item-desktop" key="logo-item-desktop" role="menuitem">
-           <NavLogo mobile={false} blogName={props.blogName} />
+           <NavLogo mobile={false} blogName={blogName} />
         </span>
 
         <span className="login-items"  role="menuitem">
@@ -85,7 +120,7 @@ const Navbar = (props) => {
       (
       <>
       <span className="logo-item-desktop" key="logo-item-desktop" role="menuitem">
-         <NavLogo mobile={false} blogName={props.blogName} />
+         <NavLogo mobile={false} blogName={blogName} />
       </span>
        <span className="account-nav-items"  role="menuitem">
        {/*<Notifications
@@ -94,7 +129,7 @@ const Navbar = (props) => {
           markRead={markReadNotification}
           dismiss={dismissNotifications}
         />*/}
-        <AccountMenu user={data.user} />
+        <AccountMenu user={data.user} logoutFn={logoutFn} />
        </span>
        </>
        )

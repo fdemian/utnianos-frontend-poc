@@ -1,10 +1,19 @@
 import React, { Suspense } from "react";
 import Loading from '../Loading/LoadingIndicator';
 import { Route, Redirect } from 'react-router-dom';
-import { isLoggedIn } from '../Login/utils';
+import { isLoggedIn, useIsLoggedIn } from '../Login/utils';
+import { gql, useApolloClient } from "@apollo/client";
 
-const AppRoute = ({exact, path, component, isPrivate, key}) => {  
-  if(isPrivate && !isLoggedIn())
+const IS_LOGGED_IN = gql`
+  query IsUserLoggedIn {
+    isLoggedIn @client
+}`
+
+const AppRoute = ({exact, path, component, isPrivate, key}) => {
+  const client = useApolloClient();
+  const loginData = client.readQuery({query:IS_LOGGED_IN});
+  const { isLoggedIn } = loginData;
+  if(isPrivate && !isLoggedIn)
     return  <Redirect to='/login' />;
   else return (
   <Suspense fallback={<Loading />}>
