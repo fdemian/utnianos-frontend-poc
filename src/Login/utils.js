@@ -20,7 +20,7 @@ export const getLoggedInUser = () => {
   return sessionStorage.getItem(LOCALSTORAGE_USER_KEY);
 }
 
-export const getAuthToken = () => sessionStorage.getItem(LOCALSTORAGE_USER_KEY);
+export const getAuthToken = () => sessionStorage.getItem(TOKEN_KEY);
 
 export const isLoggedIn = (client) => {
   const loginData = client.readQuery({query:IS_LOGGED_IN});

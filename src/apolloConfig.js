@@ -5,7 +5,7 @@ import {
   gql
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { getAuthToken, isLoggedIn } from './Login/utils';
+import { getAuthToken } from './Login/utils';
 const httpLink = createHttpLink({ uri: '/graphql' });
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
