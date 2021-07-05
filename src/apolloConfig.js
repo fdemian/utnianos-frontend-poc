@@ -6,6 +6,10 @@ import {
 } from '@apollo/client';
 import { useAuthToken } from "./Login/authToken";
 
+
+// TODO:
+//https://stackoverflow.com/questions/61327448/how-to-refresh-jwt-token-using-apollo-and-graphql
+
 const getAuthToken = (authTokens) => authTokens['auth'];
 const authMiddleware = (authToken) =>
   new ApolloLink((operation, forward) => {

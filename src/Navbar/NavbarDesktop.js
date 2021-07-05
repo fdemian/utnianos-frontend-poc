@@ -54,6 +54,11 @@ const Navbar = (props) => {
     history.push(`/`);
   }
 
+  if(error){
+    removeAuthToken();
+    history.push(`/login`);
+  }
+
   if(error || !isLoggedIn)
   {
     return(
