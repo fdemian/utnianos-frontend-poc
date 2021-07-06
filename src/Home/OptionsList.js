@@ -18,16 +18,18 @@ const OptionsList = () => {
         </Card>
       </Col>
       <Col span={6}>
-        <Link to="/apuntes">
+        <Link to="/classnotes">
         <Card hoverable style={cardStyle} >
            <Meta title="Apuntes de materias" description="Colección de apuntes de materias, incluyendo parciales y finales." />
         </Card>
         </Link>
       </Col>
       <Col span={6}>
-        <Card hoverable style={cardStyle} >
-           <Meta title="Estadisticas" description="Estadísticas de carrera." />
-        </Card>
+        <Link to="/classnotes/upload">
+          <Card hoverable style={cardStyle} >
+             <Meta title="Subir apuntes" description="Colabora con la comunidad subiendo parciales y finales." />
+          </Card>
+        </Link>
       </Col>
     </Row>
   </div>

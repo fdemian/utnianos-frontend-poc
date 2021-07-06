@@ -11,7 +11,8 @@ const ApplicationRoutes = {
    Routes: [
     { path: "/", exact: true, component: Home, private: false },
     { path: "/login", exact: true, component: Login, private: false },
-    { path: "/apuntes", exact: true, component: FileUploader, private: true }
+    { path: "/classnotes", exact: true, component: FileList, private: true },
+    { path: "/classnotes/upload", exact: true, component: FileUploader, private: true }
     /*,
 
     { path: "/seguidor", exact: true, component: Seguidor, private: true }*/

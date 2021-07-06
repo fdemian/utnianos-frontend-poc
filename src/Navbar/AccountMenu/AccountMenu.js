@@ -37,7 +37,7 @@ const AccountMenu = ({ user, logoutFn, isFetching }) => {
             className="MenuIcon"
             size="lg"
           />
-          &nbsp; Settings
+          &nbsp; Ajustes
         </Link>
       </Menu.Item>
       <Menu.Item key="account:logout">
@@ -49,7 +49,7 @@ const AccountMenu = ({ user, logoutFn, isFetching }) => {
             className="MenuIcon"
             size="lg"
           />
-          &nbsp; Log out
+          &nbsp; Cerrar sesión
         </span>
       </Menu.Item>
     </Menu>
