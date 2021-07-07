@@ -5,8 +5,6 @@ import {
   createHttpLink
 } from '@apollo/client';
 import { useAuthToken } from "./Login/authToken";
-import { /*gql,*/ useApolloClient } from "@apollo/client";
-import { onError } from "@apollo/client/link/error";
 
 // TODO:
 //https://stackoverflow.com/questions/61327448/how-to-refresh-jwt-token-using-apollo-and-graphql
@@ -20,11 +18,8 @@ export const REFRESH_QUERY = gql`
       refreshToken
     }
   }
-`;*/
-
-
+`;
 //let apolloClient;
-/*
 const getNewToken = () => {
 
   return apolloClient.query({ query: GET_TOKEN_QUERY }).then((response) => {
@@ -33,13 +28,10 @@ const getNewToken = () => {
     return accessToken;
   });
 };
-*/
-
 const logoutOnError = (graphQLErrors, networkError) => {
-  /*
+
   const [authToken, _, removeAuthToken] = useAuthToken();
   const client = useApolloClient();
-  */
   console.clear();
 
   if(networkError) {
@@ -57,12 +49,12 @@ const logoutOnError = (graphQLErrors, networkError) => {
         if(isUnauthorized){
           console.log("::::::");
           console.log("unauthorized error");
-          /*
+
           console.log(authToken['refresh']);
           console.log("::::");
           console.log(authToken['refresh']);
           console.log("::::");
-          */
+
           // Expired token or wrong credentials.
           //Logout.
 
@@ -91,21 +83,18 @@ const logoutOnError = (graphQLErrors, networkError) => {
               // retry the request, returning the new observable
               return forward(operation);
             });
-      }*/
+      }
     }
 }
-
-
 }
-
 const useError = async ({graphQLErrors, networkError, operation, response, forward}) => {
     logoutOnError(graphQLErrors, networkError);
     //return forward(operation);
 }
-
 const errorLink = onError(
   (props) => useError(props)
 );
+*/
 
 const getAuthToken = (authTokens) => authTokens['auth'];
 const authMiddleware = (authToken) =>

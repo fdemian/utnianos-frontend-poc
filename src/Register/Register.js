@@ -64,7 +64,7 @@ const RegisterScreen = (props) => {
     return <Redirect to="/" />;
 
   if(data){
-   const { ok, id, message } = data.createUser;
+   const { ok, id } = data.createUser;
    if(ok){
      return <Redirect to={`/registersuccess/${id}`} />;
    }
