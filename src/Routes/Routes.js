@@ -6,7 +6,7 @@ const RegisterSuccess = React.lazy(() => import('../Register/RegisterSuccess'));
 const Home = React.lazy(() => import('../Home/Home'));
 //const Seguidor = React.lazy(() => import('../Seguidor/Seguidor'));
 const FileList = React.lazy(() => import('../FileList/FileList'));
-const FileUploader = React.lazy(() => import('../FileUploader/FileUploader'));
+const FileUploader = React.lazy(() => import('../FileUploader/UploaderSteps'));
 
 const ApplicationRoutes = {
    App: App,

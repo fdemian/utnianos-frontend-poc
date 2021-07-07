@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Steps, Button, message } from 'antd';
 import FileDetailsForm from './FileDetailsForm';
 import FileUploader from './FileUploader';
+import './Uploader.css';
 
 const { Step } = Steps;
 
@@ -24,13 +25,13 @@ const steps = [
 const UploaderSteps = () => {
 
   const [currentStep, setCurrentStep] = useState(0);
-  const [isStateValid, setIsStateValid ] = useState(1);
+  //const [isStateValid, setIsStateValid ] = useState(1);
 
   const previous = () => setCurrentStep(currentStep-1);
   const next = () => setCurrentStep(currentStep+1);
 
   return(
-  <div>
+  <div className="uploader-container">
     <Steps current={currentStep}>
       {steps.map(item => (
         <Step key={item.title} title={item.title} />
