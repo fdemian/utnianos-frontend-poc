@@ -7,7 +7,8 @@ import NavLogo from './NavLogo';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faSignInAlt as signIn
+  faSignInAlt as signIn,
+  faUserPlus as signUp
 } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 
@@ -49,10 +50,16 @@ const Navbar = (props) => {
          {
            loading ? <Spin /> :
            (
-            <Link to="/login">
-              <span className="login-link-text">Login &nbsp;</span>
-              <FontAwesomeIcon icon={signIn} size="2x" />
-            </Link>
+            <>
+              <Link to="/login">
+                <span className="login-link-text">Login &nbsp;</span>
+                <FontAwesomeIcon icon={signIn} size="2x" />
+              </Link>
+              <Link to="/register">
+                <span className="register-link-text">Register &nbsp;</span>
+                <FontAwesomeIcon icon={signUp} size="2x" />
+              </Link>
+            </>
             )
          }
         </span>

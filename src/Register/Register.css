@@ -1,0 +1,26 @@
+.register-grid-container {
+  margin-top: 50px;
+}
+
+.register-form {
+  margin-left: 34%;
+}
+
+.register-success-container {
+  margin-top: 78px;
+}
+
+.register-success-title {
+  font-size: 40px;
+  text-align: center;
+  margin-bottom: 0px;
+}
+
+.register-success-text {
+  font-size: 30px;
+  text-align: center;
+}
+
+.register-success-icon {
+  margin-left: 47%;
+}

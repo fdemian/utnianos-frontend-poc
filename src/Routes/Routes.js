@@ -1,6 +1,8 @@
 import React from "react";
 import App from '../App/App';
 const Login = React.lazy(() => import('../Login/Login'));
+const Register = React.lazy(() => import('../Register/Register'));
+const RegisterSuccess = React.lazy(() => import('../Register/RegisterSuccess'));
 const Home = React.lazy(() => import('../Home/Home'));
 //const Seguidor = React.lazy(() => import('../Seguidor/Seguidor'));
 const FileList = React.lazy(() => import('../FileList/FileList'));
@@ -11,6 +13,8 @@ const ApplicationRoutes = {
    Routes: [
     { path: "/", exact: true, component: Home, private: false },
     { path: "/login", exact: true, component: Login, private: false },
+    { path: "/register", exact: true, component: Register, private: false },
+    { path: "/registersuccess/:id", exact: true, component: RegisterSuccess, private: false },
     { path: "/classnotes", exact: true, component: FileList, private: true },
     { path: "/classnotes/upload", exact: true, component: FileUploader, private: true }
     /*,
