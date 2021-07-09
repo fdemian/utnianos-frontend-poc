@@ -33,7 +33,6 @@ describe("<NavbarDesktop />", () => {
         expect(getByRole('img')).toBeInTheDocument();
         expect(getAllByText('Login').length).toStrictEqual(2);
       });
-
    })
 
    it("Loading.", async () => {
@@ -145,7 +144,7 @@ describe("<NavbarDesktop />", () => {
      ]
     ));
 
-     const { getAllByText, getAllByRole, getByRole, getAllByTestId, debug } = render(<Navbar {...navProps} />, { mocks: mocks});
+     const { getAllByText, getAllByRole } = render(<Navbar {...navProps} />, { mocks: mocks});
      //const loadingItems = getAllByTestId("loading-spinner");
      //expect(loadingItems.length).toStrictEqual(2);
 
@@ -167,10 +166,9 @@ describe("<NavbarDesktop />", () => {
       expect(userImage).toHaveAttribute("alt", `Avatar for ：${_user.username}`);
     })
 
+  })
 
-   })
-
-   it("<AccountMenu /> > undefined user", async () => {
+  it("<AccountMenu /> > undefined user", async () => {
      const mutateFn = jest.fn();
      const navProps = {
        mutate: mutateFn,
@@ -180,9 +178,9 @@ describe("<NavbarDesktop />", () => {
 
      const { queryByTestId } = render(<AccountMenu {...navProps} />,  { mocks: []});
      expect(queryByTestId("logout-button")).toBeFalsy();
-   })
+  })
 
-   it("<AccountMenu /> > logout", async () => {
+  it("<AccountMenu /> > logout", async () => {
 
      const mutateFn = jest.fn();
      const navProps = {
@@ -201,6 +199,6 @@ describe("<NavbarDesktop />", () => {
      fireEvent.click(menuButton);
 
      debug();
-   })
+  })
 
 })

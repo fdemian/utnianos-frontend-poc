@@ -18,7 +18,6 @@ const ApplicationRoutes = {
     { path: "/classnotes", exact: true, component: FileList, private: true },
     { path: "/classnotes/upload", exact: true, component: FileUploader, private: true }
     /*,
-
     { path: "/seguidor", exact: true, component: Seguidor, private: true }*/
    ]
 };
