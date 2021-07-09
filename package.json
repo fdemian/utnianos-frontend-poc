@@ -52,6 +52,9 @@
   },
   "jest": {
     "transformIgnorePatterns": [
+      "!src/index.js",
+      "!src/apolloConfig.js",
+      "!src/Routes/Routes.js",
       "/node_modules/(?!antd|@ant-design|rc-.+?|@babel/runtime).+(js|jsx)$"
     ]
   }
