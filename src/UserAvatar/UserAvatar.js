@@ -26,7 +26,6 @@ const AccountAvatar = ({ avatar, username, size, shape }) => {
     size={size}
     className="Avatar"
     src={userAvatar}
-    role="img"
   />
   );
 

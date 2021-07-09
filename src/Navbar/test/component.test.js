@@ -156,7 +156,7 @@ describe("<NavbarDesktop />", () => {
       const altText = navProps.blogName + " logo";
 
       const blogImage = images[0];
-      const userImage = images[2];
+      const userImage = images[1];
 
       // Test user text.
       expect(userText.length).toStrictEqual(2);
