@@ -10,6 +10,7 @@ const AccountAvatar = ({ avatar, username, size, shape }) => {
       shape={shape === undefined ? 'circle': shape}
       size={size}
       className="Avatar"
+      role="img"
      >
       {username[0]}
     </Avatar>
@@ -25,6 +26,7 @@ const AccountAvatar = ({ avatar, username, size, shape }) => {
     size={size}
     className="Avatar"
     src={userAvatar}
+    role="img"
   />
   );
 

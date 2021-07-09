@@ -14,7 +14,8 @@ const NavbarMobile = lazy(() => import('./NavbarMobile'));
 const GET_USER = gql`
   query User($id: Int!) {
     user(id: $id) {
-      id,
+      __typename
+      id
       username
       avatar
     }

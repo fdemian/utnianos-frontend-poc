@@ -1,9 +1,11 @@
 import React from 'react';
 import Navbar from '../Navbar';
 import AccountMenu from '../AccountMenu/AccountMenu';
-
-import { render, fireEvent, act, waitFor} from '../../utils/testing-utils';
+import { gql } from "@apollo/client";
+import { render, fireEvent, waitFor} from '../../utils/testing-utils';
 import '@testing-library/jest-dom/extend-expect';
+
+const utils = require('../../Login/authToken');
 
 describe("<NavbarDesktop />", () => {
 
@@ -25,7 +27,7 @@ describe("<NavbarDesktop />", () => {
        mutateUser: jest.fn()
      };
 
-     const { getByText, getAllByText, getByRole, debug } = render(<Navbar {...navProps} />);
+     const { getAllByText, getByRole } = render(<Navbar {...navProps} />, { mocks: []});
 
      await waitFor(() => {
         expect(getByRole('img')).toBeInTheDocument();
@@ -38,22 +40,48 @@ describe("<NavbarDesktop />", () => {
 
      const navProps = {
        mobile: false,
-       config: {},
-       user: null,
-       loggedIn: false,
-       isFetching: true,
        blogName: "Morpheus",
-       notificationsEnabled: false,
-       notifications: [],
-       mutateUser: jest.fn()
      };
 
-     const { getByText, getByRole } = render(<Navbar {...navProps} />);
+     const GET_USER = gql`
+       query User($id: Int!) {
+         user(id: $id) {
+           __typename
+           id
+           username
+           avatar
+         }
+       }
+     `;
 
-     /*
+     const mocks = [
+       {
+           request: {
+             query: GET_USER,
+             variables: { id: "1" }
+           },
+           result: {
+             loading: true,
+             error: false,
+             data: undefined
+          },
+       }
+     ];
+     jest.spyOn(utils, 'useIsLoggedIn').mockImplementation(() => ({ isLoggedIn: true}));
+     jest.spyOn(utils, 'useAuthToken').mockImplementation(() => ([{
+       'id': 1,
+       'auth': "faketoken",
+       'refresh': "refresh",
+     },
+     jest.fn(),
+     jest.fn()
+     ]
+    ));
+
      await waitFor(() => {
-        expect(getByText('loading')).toBeInTheDocument();
-      });*/
+       const { getAllByTestId } = render(<Navbar {...navProps} />, { mocks: mocks});
+       expect(getAllByTestId('loading-spinner', {hidden:true}).length).toStrictEqual(2);
+     });
 
    })
 
@@ -61,44 +89,85 @@ describe("<NavbarDesktop />", () => {
 
      const navProps = {
        mobile: false,
-       config: {},
-       user: {
-         id: 1,
-         username: "adminuser",
-         avatar: "avatar.png"
-       },
-       loggedIn: true,
-       isFetching: false,
        blogName: "Morpheus",
-       notificationsEnabled: true,
-       notifications: [{
-         id: 1,
-         link: "",
-         text: "MR.X has commented on your story.",
-         read: false
-       }],
-       mutateUser: jest.fn()
      };
 
-     const { getAllByText, getAllByRole } = render(<Navbar {...navProps} />);
+     const _user = {
+       __typename: 'user',
+       id: 1,
+       username: "adminuser",
+       avatar: "avatar.png"
+     };
+
+     const GET_USER = gql`
+       query User($id: Int!) {
+         user(id: $id) {
+           __typename
+           id
+           username
+           avatar
+         }
+       }
+     `;
+
+     const mocks = [
+       {
+           request: {
+             query: GET_USER,
+             variables: { id: 1 }
+           },
+           result: {
+             loading: false,
+             error: false,
+             data: { user: _user }
+          },
+       },
+       {
+           request: {
+             query: GET_USER,
+             variables: { id: "1" }
+           },
+           result: {
+             loading: false,
+             error: false,
+             data: { user: _user }
+          },
+       }
+     ];
+     jest.spyOn(utils, 'useIsLoggedIn').mockImplementation(() => ({ isLoggedIn: true}));
+     jest.spyOn(utils, 'useAuthToken').mockImplementation(() => ([{
+       'id': 1,
+       'auth': "faketoken",
+       'refresh': "refresh",
+     },
+     jest.fn(),
+     jest.fn()
+     ]
+    ));
+
+     const { getAllByText, getAllByRole, getByRole, getAllByTestId, debug } = render(<Navbar {...navProps} />, { mocks: mocks});
+     //const loadingItems = getAllByTestId("loading-spinner");
+     //expect(loadingItems.length).toStrictEqual(2);
 
      await waitFor(() => {
 
-       const images = getAllByRole('img');
-       const altText = navProps.blogName + " logo";
+      const userText = getAllByText('adminuser', {hidden:true});
+      const images = getAllByRole('img');
+      const altText = navProps.blogName + " logo";
 
-       const blogImage = images[0];
-       const userImage = images[1];
+      const blogImage = images[0];
+      const userImage = images[2];
 
-       // Test blog image.
-       expect(blogImage).toHaveAttribute("alt", altText);
+      // Test user text.
+      expect(userText.length).toStrictEqual(2);
 
-       // Test user image.
-       expect(userImage).toHaveAttribute("src", `/static/avatars/${navProps.user.avatar}`);
-       expect(userImage).toHaveAttribute("alt", `Avatar for ：${navProps.user.username}`);
+      // Test user image.
+      expect(blogImage).toHaveAttribute("alt", altText);
+      expect(userImage).toHaveAttribute("src", `/static/avatars/${_user.avatar}`);
+      expect(userImage).toHaveAttribute("alt", `Avatar for ：${_user.username}`);
+    })
 
-       expect(getAllByText('adminuser').length).toStrictEqual(2);
-     })
+
    })
 
    it("<AccountMenu /> > undefined user", async () => {
@@ -109,7 +178,7 @@ describe("<NavbarDesktop />", () => {
        isFetching: true
      };
 
-     const { queryByTestId } = render(<AccountMenu {...navProps} />);
+     const { queryByTestId } = render(<AccountMenu {...navProps} />,  { mocks: []});
      expect(queryByTestId("logout-button")).toBeFalsy();
    })
 
@@ -126,7 +195,7 @@ describe("<NavbarDesktop />", () => {
        isFetching: false
      };
 
-     const { getByTestId, getByText, debug } = render(<AccountMenu {...navProps} />);
+     const { getByTestId, getByText, debug } = render(<AccountMenu {...navProps} />,  { mocks: []});
 
      const menuButton = getByText("adminuser");
      fireEvent.click(menuButton);

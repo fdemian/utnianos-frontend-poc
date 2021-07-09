@@ -18,12 +18,6 @@ const AccountMenu = lazy(() => import('./AccountMenu/AccountMenu'));
 const Navbar = (props) => {
 
   const {
-    /*
-    notifications,
-    notificationsEnabled,
-    markReadNotification,
-    dismissNotifications,
-    */
     loading,
     data,
     logoutFn,
@@ -48,7 +42,7 @@ const Navbar = (props) => {
 
         <span className="login-items"  role="menuitem">
          {
-           loading ? <Spin /> :
+           loading ? <Spin aria-busy={true} data-testid="loading-spinner" /> :
            (
             <>
               <Link to="/login">
@@ -79,20 +73,14 @@ const Navbar = (props) => {
       className="desktop-menu"
     >
     {
-      loading || !data ? <Spin /> :
+      loading || !data ? <Spin aria-busy={true} data-testid="loading-spinner" /> :
       (
       <>
       <span className="logo-item-desktop" key="logo-item-desktop" role="menuitem">
          <NavLogo mobile={false} blogName={blogName} />
       </span>
        <span className="account-nav-items"  role="menuitem">
-       {/*<Notifications
-          notifications={notifications}
-          clearFn={dismissNotifications}
-          markRead={markReadNotification}
-          dismiss={dismissNotifications}
-        />*/}
-        <AccountMenu user={data.user} logoutFn={logoutFn} />
+        <AccountMenu user={data.user} logoutFn={logoutFn} data-testid="username-test" />
        </span>
        </>
        )

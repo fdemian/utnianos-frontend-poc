@@ -5,18 +5,20 @@ import { MockedProvider } from "@apollo/client/testing";
 import '@testing-library/jest-dom';
 
 
-const TestingWrapper = ({ children }) => {
+const TestingWrapper = (props) => {
+  const { children, mocks} = props;
   return (
-    <MockedProvider>
-      <Router>
-        {children}
-      </Router>
-    </MockedProvider>
+  <MockedProvider mocks={mocks}>
+    <Router>
+      {children}
+    </Router>
+  </MockedProvider>
   )
 }
 
-const customRender = (ui, options) =>
-  render(ui, { wrapper: TestingWrapper, ...options })
+const customRender = (ui, options) => {
+  return render(ui, { wrapper: (props) => <TestingWrapper children={props.children} {...options} />, ...options })
+}
 
 // re-export everything
 export * from '@testing-library/react'
