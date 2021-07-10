@@ -21,6 +21,7 @@ const LandingPage = () => {
   const { loading, error, data } = useQuery(GET_USER, {
     variables: { id: id },
   });
+  
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
