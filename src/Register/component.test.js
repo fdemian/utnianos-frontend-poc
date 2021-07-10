@@ -42,7 +42,7 @@ describe("<Register />", () => {
   })
 
   afterEach(() => {
-    jest.clearAllMocks();
+    //jest.clearAllMocks();
   });
 
   it("Register screen > Form interaction.", async () => {
@@ -91,8 +91,7 @@ describe("<Register />", () => {
   })
 
   it("Register success.", async () => {
-    const { getAllByRole } = render(<RegisterSuccess />, {mocks: []});
-
+    const { getAllByRole } = render(<RegisterSuccess />, {mocks: mocks});
     const links = getAllByRole("link");
 
     //Check that the pages has links to login and register pages.
