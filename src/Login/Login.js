@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router';
 import { Form, Input, Button /*, Alert*/ } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,10 +20,6 @@ const layout = {
 
 const LoginScreen = (props) => {
 
-  // Initial state.
-  const initialLoginState = { username: null, password: null };
-  const [login, setLogin] = useState(initialLoginState);
-
   // User login hook.
   const [loginMutation] = useLoginMutation();
   const { isLoggedIn } = useIsLoggedIn();
@@ -38,21 +34,6 @@ const LoginScreen = (props) => {
   const onFinishFailed = errorInfo => {
      console.log('Failed:', errorInfo);
   };
-
-  //
-  const usernameChange = (username, register) => {
-      setLogin({
-        username: username,
-        password: login.password
-      });
-    }
-
-  const passwordChange = (password, register) => {
-      setLogin({
-        username: login.username,
-        password: password
-      });
-  }
 
   if(isLoggedIn)
     return <Redirect to="/" />;
@@ -71,6 +52,7 @@ const LoginScreen = (props) => {
      <Form
         {...layout}
         name="login-form"
+        role="form"
         className="login-form"
         initialValues={{ remember: true }}
         onFinish={onFinish}
@@ -87,9 +69,9 @@ const LoginScreen = (props) => {
           ]}
         >
          <Input
+            name="username"
             className="input-field"
             placeholder=" Enter your username"
-            onChange={usernameChange}
             prefix={<FontAwesomeIcon icon={faUser} size="lg" color="gainsboro" />}
          />
         </Form.Item>
@@ -106,9 +88,10 @@ const LoginScreen = (props) => {
          <Input.Password
            className="input-field"
            placeholder=" Enter password"
-           onChange={passwordChange}
            type="password"
+           name="password"
            prefix={<FontAwesomeIcon icon={faLock} size="lg" color="gainsboro" />}
+           role="textbox"
          />
         </Form.Item>
         <br />

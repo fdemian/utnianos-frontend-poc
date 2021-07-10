@@ -17,8 +17,6 @@ import {
 import { Link } from 'react-router-dom';
 import '../Navbar.css';
 
-const NotificationsHeader = lazy(() => import('../AccountMenu/NotificationsMenu/NotificationsMenuHeader'));
-
 const SubMenu = Menu.SubMenu;
 
 const AccountMenu = (props) => {
@@ -108,7 +106,7 @@ const AccountMenu = (props) => {
             disabled={notifications.length === 0}
             className="MenuItem"
            >
-            {notifications.length === 0 ?
+            {/*notifications.length === 0 ?
               'No unread notifications' :
               <Suspense fallback={<Spin />}>
                 <NotificationsHeader
@@ -116,7 +114,7 @@ const AccountMenu = (props) => {
                    enabled={true}
                 />
               </Suspense>
-            }
+            */}
           </Menu.Item>
         </SubMenu>
       </Menu>
