@@ -76,6 +76,7 @@ const RegisterScreen = (props) => {
      <Form
         {...layout}
         name="register-form"
+        role="form"
         className="register-form"
         initialValues={{ remember: true }}
         onFinish={onFinish}
@@ -92,6 +93,7 @@ const RegisterScreen = (props) => {
           ]}
         >
          <Input
+            name="username"
             className="input-field"
             placeholder=" Enter your username"
             prefix={<FontAwesomeIcon icon={faUser} size="lg" color="gainsboro" />}
@@ -112,6 +114,7 @@ const RegisterScreen = (props) => {
            ]}
          >
           <Input
+             name="email"
              className="input-field"
              placeholder=" Enter your email"
              prefix={<FontAwesomeIcon icon={faUser} size="lg" color="gainsboro" />}
@@ -128,6 +131,8 @@ const RegisterScreen = (props) => {
           ]}
         >
          <Input.Password
+           name="password"
+           role="textbox"
            className="input-field"
            placeholder=" Enter password"
            type="password"
@@ -145,6 +150,8 @@ const RegisterScreen = (props) => {
           ]}
         >
          <Input.Password
+           name="passwordrepeat"
+           role="textbox"
            className="input-field"
            placeholder=" Repeat password"
            onChange={null}

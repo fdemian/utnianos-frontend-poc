@@ -38,14 +38,6 @@ const LoginScreen = (props) => {
   if(isLoggedIn)
     return <Redirect to="/" />;
 
-  /*
-  if(error)
-    return <p>Error</p>;
-
-  if(loading)
-    return <Loading />;
-  */
-
   return (
   <div className="login-grid-container">
      <TopIcon />

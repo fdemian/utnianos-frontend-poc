@@ -1,6 +1,6 @@
 import React from 'react';
 import Login from './Login';
-import { render, fireEvent, act, waitFor} from '../utils/testing-utils';
+import { render, fireEvent, act } from '../utils/testing-utils';
 import '@testing-library/jest-dom/extend-expect';
 import { createMemoryHistory } from "history";
 
@@ -39,7 +39,7 @@ describe("<Login />", () => {
 
     expect(getByRole('form')).toHaveFormValues({
       username: '',
-      password: '',
+      password: ''
     });
 
     const textboxes = getAllByRole("textbox");
@@ -58,7 +58,6 @@ describe("<Login />", () => {
       expect(getByRole('button')).toBeInTheDocument();
       fireEvent.click(getByRole('button'), { bubbles: true });
     });
-
 
   })
 
