@@ -2,30 +2,88 @@ import React, { useState } from 'react';
 import { Steps, Button, message } from 'antd';
 import FileDetailsForm from './FileDetailsForm';
 import FileUploader from './FileUploader';
+import FileSummary from './FileSummary';
+import LoadingIndicator from '../Loading/LoadingIndicator';
+import { gql, useQuery } from "@apollo/client";
 import './Uploader.css';
 
 const { Step } = Steps;
 
-const steps = [
-  {
-    title: "Detalles de archivo.",
-    content: <FileDetailsForm />,
-  },
-  {
-    title: "Archivos a subir (opcional).",
-    content: <FileUploader />,
-  },
-  {
-    title: "Revisar y subir",
-    content: <p>'Last-content'</p>,
-  },
-];
-
+const GET_CONTRIB_TYPES = gql`
+  query GetContribTypes {
+    contribTypes {
+      id
+      name
+    }
+  }
+`;
 
 const UploaderSteps = () => {
 
   const [currentStep, setCurrentStep] = useState(0);
-  //const [isStateValid, setIsStateValid ] = useState(1);
+
+  const [previewVisible, setPreviewVisible] =  useState(false);
+  const [previewImage, setPreviewImage] = useState('');
+  const [previewTitle, setPreviewTitle] = useState('');
+  const [fileList, setFileList] = useState([]);
+
+  //
+  const [fileTitle, setFileTitle] = useState("");
+  const [fileDescription, setFileDescription] = useState("");
+
+  const {data, error, loading } = useQuery(GET_CONTRIB_TYPES);
+
+  if(error)
+    return <p>Error!</p>;
+
+  if(loading)
+    return <LoadingIndicator />;
+
+  if(!data.contribTypes && !loading)
+    return <p>Error</p>;
+    
+    const detailsProps = {
+      fileTitle,
+      setFileTitle,
+      fileDescription,
+      setFileDescription,
+      data
+    };
+
+    const uploaderProps = {
+      previewVisible,
+      setPreviewVisible,
+      previewImage,
+      setPreviewImage,
+      previewTitle,
+      setPreviewTitle,
+      fileList,
+      setFileList
+    };
+
+    const summaryProps = {
+      fileList,
+      setFileList,
+      fileTitle,
+      setFileTitle,
+      fileDescription,
+      setFileDescription
+    };
+
+  const steps = [
+    {
+      title: "Detalles de archivo.",
+      content: <FileDetailsForm {...detailsProps} />,
+    },
+    {
+      title: "Archivos a subir (opcional).",
+      content: <FileUploader {...uploaderProps} />,
+    },
+    {
+      title: "Revisar y subir",
+      content: <FileSummary {...summaryProps} />,
+    },
+  ];
 
   const previous = () => setCurrentStep(currentStep-1);
   const next = () => setCurrentStep(currentStep+1);
@@ -49,7 +107,7 @@ const UploaderSteps = () => {
           onClick={next}
           data-testid="next-button"
         >
-        Siguiente
+         Siguiente
         </Button>
       )}
       {currentStep === 2 && (

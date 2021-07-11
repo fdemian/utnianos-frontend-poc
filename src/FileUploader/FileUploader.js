@@ -12,12 +12,25 @@ function getBase64(file) {
   });
 }
 
-const FileUploader = () => {
+const FileUploader = (props) => {
 
+  const {
+    previewVisible,
+    setPreviewVisible,
+    previewImage,
+    setPreviewImage,
+    previewTitle,
+    setPreviewTitle,
+    fileList,
+    setFileList
+  } = props;
+
+  /*
   const [previewVisible, setPreviewVisible] =  useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState([]);
+  */
 
   const handleCancel = () => setPreviewVisible(false);
   const handleChange = ({ fileList }) => setFileList(fileList);
