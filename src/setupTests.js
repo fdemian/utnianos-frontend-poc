@@ -11,3 +11,7 @@ global.matchMedia = global.matchMedia || function () {
     removeListener: jest.fn()
   };
 };
+
+window.URL.createObjectURL = function(){
+  
+}

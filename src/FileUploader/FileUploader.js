@@ -33,15 +33,16 @@ const FileUploader = () => {
   };
 
   const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div className="ant-upload-text">Upload</div>
-    </div>
+  <>
+    <PlusOutlined />
+    <div className="ant-upload-text">Upload</div>
+  </>
   );
 
   return (
     <div className="clearfix uploader-container">
       <Upload
+        data-testid="uploader"
         action="https://www.terrible.url/axsync"
         listType="picture-card"
         fileList={fileList}

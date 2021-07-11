@@ -1,5 +1,6 @@
 import React from 'react';
 import UploaderSteps from './UploaderSteps';
+import FileUploader from './FileUploader';
 import { render, fireEvent, waitFor, act} from '../utils/testing-utils';
 import '@testing-library/jest-dom/extend-expect';
 
@@ -68,5 +69,26 @@ describe("<FileUploader />", () => {
 
 
 
+   it("<FileUploader />", async () => {
+     const _filename = 'chucknorris.png';
+     const file = new File(['(⌐□_□)'], _filename, { type: 'image/png' });
+     const { debug, getByTestId, getByText } = render(<FileUploader />, {mocks:[]});
+
+     let uploader = getByTestId('uploader');
+
+      // simulate ulpoad event and wait until finish
+      await waitFor(() =>
+        fireEvent.change(uploader, {
+          target: { files: [file] },
+        })
+      );
+
+      expect(getByText(_filename)).toBeInTheDocument();
+
+      const preview = getByText(_filename);
+      fireEvent.click(preview, { bubbles: true });
+
+      //debug();
+   })
 
 })
