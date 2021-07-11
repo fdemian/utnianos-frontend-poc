@@ -51,6 +51,14 @@
     ]
   },
   "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/index.js",
+      "!src/reportWebVitals.js",
+      "!src/Routes/Routes.js",
+      "!<rootDir>/node_modules/",
+      "!src/apolloConfig.js"
+    ],
     "transformIgnorePatterns": [
       "src/index.js",
       "src/apolloConfig.js",

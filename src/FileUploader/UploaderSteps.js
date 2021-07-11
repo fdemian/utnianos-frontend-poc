@@ -44,17 +44,29 @@ const UploaderSteps = () => {
 
     <div className="steps-action" style={{marginTop:50}}>
       {currentStep < 2 && (
-        <Button type="primary" onClick={next}>
+        <Button
+          type="primary"
+          onClick={next}
+          data-testid="next-button"
+        >
         Siguiente
         </Button>
       )}
       {currentStep === 2 && (
-        <Button type="primary" onClick={() => message.success('Archivo subido!')}>
+        <Button
+          type="primary"
+          onClick={() => message.success('Archivo subido!')}
+          data-testid="ok-button"
+        >
           Listo
         </Button>
       )}
       {currentStep > 0 && (
-        <Button style={{ margin: '0 8px' }} onClick={previous}>
+        <Button
+          style={{ margin: '0 8px' }}
+          onClick={previous}
+          data-testid="prev-button"
+        >
           Anterior
         </Button>
       )}
