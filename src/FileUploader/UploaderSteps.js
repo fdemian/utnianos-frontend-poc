@@ -18,6 +18,16 @@ const GET_CONTRIB_TYPES = gql`
   }
 `;
 
+const GET_COURSES = gql`
+  query GetCourses {
+    courses {
+      id
+      name
+    }
+  }
+`;
+
+
 const UploaderSteps = () => {
 
   const [currentStep, setCurrentStep] = useState(0);
@@ -30,8 +40,14 @@ const UploaderSteps = () => {
   //
   const [fileTitle, setFileTitle] = useState("");
   const [fileDescription, setFileDescription] = useState("");
+  const [selectedTypes, setSelectedTypes] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState(null);
 
-  const {data, error, loading } = useQuery(GET_CONTRIB_TYPES);
+  const contribQuery = useQuery(GET_CONTRIB_TYPES);
+  const courseQuery = useQuery(GET_COURSES);
+
+  let error = contribQuery.error || courseQuery.error;
+  let loading = contribQuery.loadin || courseQuery.loading;
 
   if(error)
     return <p>Error!</p>;
@@ -39,15 +55,19 @@ const UploaderSteps = () => {
   if(loading)
     return <LoadingIndicator />;
 
-  if(!data.contribTypes && !loading)
-    return <p>Error</p>;
-    
+    const contributions = contribQuery.data;
+    const courseData = courseQuery.data;
+
     const detailsProps = {
       fileTitle,
       setFileTitle,
       fileDescription,
       setFileDescription,
-      data
+      selectedTypes,
+      setSelectedTypes,
+      setSelectedCourse,
+      contributions,
+      courseData
     };
 
     const uploaderProps = {
@@ -63,10 +83,12 @@ const UploaderSteps = () => {
 
     const summaryProps = {
       fileList,
-      setFileList,
       fileTitle,
-      setFileTitle,
       fileDescription,
+      selectedTypes,
+      selectedCourse,
+      setFileTitle,
+      setFileList,
       setFileDescription
     };
 

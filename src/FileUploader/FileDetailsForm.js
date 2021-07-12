@@ -14,24 +14,49 @@ const layout = {
   },
 };
 
-const handleChange = (value) => {
-  console.log(`selected ${value}`);
-}
+const formRules = {
+'titulo': [
+  {
+   required: true,
+   message: 'El aporte necesita un titulo.',
+ }
+],
+'descripcion': [
+  {
+   required: true,
+   message: 'Da una breve descripción del apunte.',
+  }
+],
+'tipoApunte': [
+  {
+    required: true,
+    message: 'Elija al menos un tipo de apunte.',
+  }]
+};
 
-const FileDetailsForm = ({setFileTitle, setFileDescription, data}) => {
+const FileDetailsForm = (props) => {
 
-  // Finished checking login values.
-  const onFinish = values => {
-    console.clear();
-    console.log(values);
-  };
+  const {
+    setFileTitle,
+    setFileDescription,
+    selectedTypes,
+    setSelectedTypes,
+    setSelectedCourse,
+    contributions,
+    courseData
+  } = props;
 
-  // Fail!
-  const onFinishFailed = errorInfo => {
-     console.log('Failed:', errorInfo);
-  };
 
-  const { contribTypes } = data;
+  const onTitleChange = (e) => setFileTitle(e.target.value);
+  const onDescriptionChange = (e) => setFileDescription(e.target.value);
+  const onContribTypeChange = (e) => setSelectedTypes(e);
+  const onCourseChange = (s) => setSelectedCourse(s);
+
+  if(!courseData || !contributions)
+    return null;
+
+  const { contribTypes } = contributions;
+  const { courses } = courseData;
 
   return (
   <>
@@ -44,21 +69,15 @@ const FileDetailsForm = ({setFileTitle, setFileDescription, data}) => {
        role="form"
        className="details-form"
        initialValues={{ remember: true }}
-       onFinish={onFinish}
-       onFinishFailed={onFinishFailed}
      >
      <Form.Item
        label=""
        name="title"
-       rules={[
-         {
-          required: true,
-          message: 'El aporte necesita un titulo.',
-        }
-        ]}
+       rules={formRules['title']}
       >
        <Input
-          name="username"
+          onChange={onTitleChange}
+          name="title"
           className="input-field"
           placeholder=" Ingrese un título."
        />
@@ -66,55 +85,52 @@ const FileDetailsForm = ({setFileTitle, setFileDescription, data}) => {
       <Form.Item
         label=""
         name="description"
-        rules={[
-          {
-           required: true,
-           message: 'Da una breve descripción del apunte.',
-         }
-         ]}
+        rules={formRules['descripcion']}
        >
         <TextArea
+           style={{width:580, height:200}}
+           onChange={onDescriptionChange}
            name="description"
            className="input-field"
            placeholder=" Ingrese una descripción."
-           maxWidth={560}
-           width={560}
+           maxWidth={700}
+           width={700}
            height={500}
         />
        </Form.Item>
        <Form.Item
         label=""
-        name="description"
+        name="subject"
         rules={[]}
        >
         <Select
+          name="subject"
           defaultValue="default"
           style={{ width: 560 }}
-          onChange={() =>{}}
+          onChange={onCourseChange}
         >
           <Option value="default">
             Seleccione materia
           </Option>
+          {courses.map(c => (
+            <Option value={c.name}>{c.name}</Option>
+          ))}
         </Select>
       </Form.Item>
       <Form.Item
        label=""
        name="Tipo de apunte"
-       rules={[
-         {
-           required: true,
-           message: 'Elija al menos un tipo de apunte.',
-         }]}
+       rules={formRules['tipoApunte']}
       >
         <Select
           mode="multiple"
           style={{ width: 560 }}
           placeholder="Elija un o más tipo(s) de apunte(s)."
-          defaultValue={[]}
-          onChange={() => {}}
+          defaultValue={selectedTypes}
+          onChange={onContribTypeChange}
           >
           {contribTypes.map(a => (
-            <Option value={a.id}>{a.name}</Option>
+            <Option value={a.name}>{a.name}</Option>
           ))}
         </Select>
      </Form.Item>

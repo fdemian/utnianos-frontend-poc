@@ -1,26 +1,36 @@
 import React from 'react';
-import { Image } from 'antd';
+import { Image, Tag } from 'antd';
 
 ///uploads
 const FileSummary = (props) => {
 
   const {
     fileList,
-    setFileList,
     fileTitle,
-    setFileTitle,
     fileDescription,
-    setFileDescription
+    selectedTypes,
+    selectedCourse,
+    /*,
+    setFileTitle,
+    setFileList,
+    setFileDescription*/
   } = props;
 
-  /*
-  console.clear();
-  console.log(props);
-  console.log("_______");
-  */
   return (
-  <div>
+  <div style={{marginTop:'100px'}}>
     <h1>{fileTitle}</h1>
+    <p>{fileDescription}</p>
+    <p>Materia: {selectedCourse}</p>
+    <div>
+      <p>Tipo de contribución</p>
+      {selectedTypes.map(t => (
+        <Tag>{t}</Tag>
+      ))}
+    </div>
+    <br />
+    <br />
+    <br />        
+    <h3>Archivos incluidos</h3>
     <div>
     {fileList.map(f => (
       <Image
@@ -29,6 +39,7 @@ const FileSummary = (props) => {
       />
     ))}
     </div>
+
 
   </div>
   );
