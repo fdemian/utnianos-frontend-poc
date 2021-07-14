@@ -9,11 +9,7 @@ const FileSummary = (props) => {
     fileTitle,
     fileDescription,
     selectedTypes,
-    selectedCourse,
-    /*,
-    setFileTitle,
-    setFileList,
-    setFileDescription*/
+    selectedCourse
   } = props;
 
   return (
@@ -29,11 +25,12 @@ const FileSummary = (props) => {
     </div>
     <br />
     <br />
-    <br />        
+    <br />
     <h3>Archivos incluidos</h3>
     <div>
     {fileList.map(f => (
       <Image
+       key={f.originFileObj.uid}
        width={200}
        src={f.thumbUrl}
       />

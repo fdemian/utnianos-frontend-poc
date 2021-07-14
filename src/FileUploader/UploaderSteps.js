@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Steps, Button, message } from 'antd';
+import {Redirect} from 'react-router-dom';
 import FileDetailsForm from './FileDetailsForm';
 import FileUploader from './FileUploader';
 import FileSummary from './FileSummary';
 import LoadingIndicator from '../Loading/LoadingIndicator';
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useMutation } from "@apollo/client";
 import './Uploader.css';
 
 const { Step } = Steps;
@@ -27,6 +28,14 @@ const GET_COURSES = gql`
   }
 `;
 
+const ADD_CONTRIB = gql`
+  mutation AddContribution($title: String!, $description: String!, $types: String!, $course: String!, $path: String) {
+    addContrib(title: $title,description: $description, types: $types, course: $course, path: $path) {
+      id
+      ok
+    }
+  }
+`;
 
 const UploaderSteps = () => {
 
@@ -45,6 +54,7 @@ const UploaderSteps = () => {
 
   const contribQuery = useQuery(GET_CONTRIB_TYPES);
   const courseQuery = useQuery(GET_COURSES);
+  const [addContrib, response] = useMutation(ADD_CONTRIB);
 
   let error = contribQuery.error || courseQuery.error;
   let loading = contribQuery.loadin || courseQuery.loading;
@@ -54,6 +64,9 @@ const UploaderSteps = () => {
 
   if(loading)
     return <LoadingIndicator />;
+
+ if(response && response.ok)
+    return <Redirect to="/classnotes" />
 
     const contributions = contribQuery.data;
     const courseData = courseQuery.data;
@@ -91,6 +104,19 @@ const UploaderSteps = () => {
       setFileList,
       setFileDescription
     };
+
+
+  const onFinish = () => {
+    const variables = {
+      title: fileTitle,
+      description: fileDescription,
+      types: selectedTypes,
+      course: selectedCourse,
+      path: null
+    };
+
+    addContrib({ variables: variables});
+  }
 
   const steps = [
     {
@@ -135,7 +161,7 @@ const UploaderSteps = () => {
       {currentStep === 2 && (
         <Button
           type="primary"
-          onClick={() => message.success('Archivo subido!')}
+          onClick={onFinish}
           data-testid="ok-button"
         >
           Listo
