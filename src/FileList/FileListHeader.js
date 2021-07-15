@@ -5,54 +5,26 @@ import './FileList.css';
 
 const { Option } = Select;
 
-function handleChangeContrib(value) {
-  console.log(`selected ${value}`);
-}
+const FileListHeader = (props) => {
 
-function handleChangeCourse(value) {
-  console.log(`selected ${value}`);
-}
+  const {
+   setCoursesFilter,
+   setContribsFilter,
+   setNameFilter,
+   coursesList,
+   contribTypesList,
+  } = props;
 
-const contribTypes = [{
-  value: 'parciales',
-  label: 'Parciales',
-},
-{
-  value: 'finales',
-  label: 'Finales',
-},
-{
-  value: 'trabajopractico',
-  label: 'Trabajo Practico',
-},
-{
-  value: 'apuntesguias',
-  label: 'Apuntes y Guias',
-},
-{
-  value: 'ejercicios',
-  label: 'Ejercicios',
-},
-{
-  value: 'guiasceit',
-  label: 'Guias Ceit',
-}
-];
+  const handleChangeContrib = (value) => setContribsFilter(value);
+  const handleChangeCourse = (value) => setCoursesFilter(value);
+  const handleChangeName = (value) => setNameFilter(value);
 
-const courses = [{
-  value: 'algebra',
-  label: 'Álgebra y Geometría Analítica',
-},
-{
-  value: 'fisica1',
-  label: 'Fisica 1',
-},
-{
-  value: 'ingsoc',
-  label: 'Ingenieria y Sociedad',
-}];
+  if(coursesList.loading || contribTypesList.loading)
+    return <p>Loading</p>;
 
-const FileListHeader = () => {
+  const { courses } = coursesList.data;
+  const { contribTypes } = contribTypesList.data;
+
   return (
   <div className="file-list-header-container">
 
@@ -67,8 +39,8 @@ const FileListHeader = () => {
         optionLabelProp="label"
         >
           {contribTypes.map(c => (
-            <Option value={c.value} label={c.label}>
-              {c.label}
+            <Option value={c.name} label={c.name}>
+              {c.name}
             </Option>
           ))}
        </Select>
@@ -85,8 +57,8 @@ const FileListHeader = () => {
          optionLabelProp="label"
         >
          {courses.map(c => (
-           <Option value={c.value} label={c.label}>
-             {c.label}
+           <Option value={c.name} label={c.name}>
+             {c.name}
            </Option>
          ))}
         </Select>
@@ -94,7 +66,11 @@ const FileListHeader = () => {
 
     <span>
       <h3>Filtrar</h3>
-      <Input placeholder="Basic usage" style={{width:'300px'}} />
+      <Input
+        onChange={handleChangeName}
+        placeholder="Basic usage"
+        style={{width:'300px'}}
+      />
    </span>
 
   </div>

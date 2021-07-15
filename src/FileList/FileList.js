@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FileListHeader from './FileListHeader';
 import FileListContents from './FileListContents';
 import { gql, useQuery } from "@apollo/client";
@@ -11,7 +11,10 @@ const GET_CONTRIB_FILES = gql`
       name
       filePath
       contribTypes
-      course
+      course {
+        id
+        name
+      }
     }
   }
 `;
@@ -37,12 +40,29 @@ const GET_COURSES = gql`
 
 const FileList = () => {
 
-  //const contribFiles = useQuery(GET_CONTRIB_FILES);
+  const courses = useQuery(GET_COURSES);
+  const contribTypes = useQuery(GET_CONTRIB_TYPES);
+  const contribFiles = useQuery(GET_CONTRIB_FILES);
 
+  const [coursesFilter, setCoursesFilter] = useState([]);
+  const [contribsFilter, setContribsFilter] = useState([]);
+  const [nameFilter, setNameFilter] = useState(null);
+  
   return (
   <div className="file-list-container">
-    <FileListHeader />
-    <FileListContents />
+    <FileListHeader
+      setCoursesFilter={setCoursesFilter}
+      setContribsFilter={setContribsFilter}
+      setNameFilter={setNameFilter}
+      coursesList={courses}
+      contribTypesList={contribTypes}
+    />
+    <FileListContents
+      coursesFilter={coursesFilter}
+      contribsFilter={contribsFilter}
+      nameFilter={nameFilter}
+      data={contribFiles}
+    />
   </div>
   );
 }
