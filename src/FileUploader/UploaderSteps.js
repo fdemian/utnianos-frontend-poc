@@ -64,8 +64,8 @@ const UploaderSteps = () => {
 
   if(loading)
     return <LoadingIndicator />;
-
- if(response && response.ok)
+ 
+ if(response.data && response.data.addContrib.ok)
     return <Redirect to="/classnotes" />
 
     const contributions = contribQuery.data;
@@ -107,10 +107,11 @@ const UploaderSteps = () => {
 
 
   const onFinish = () => {
+
     const variables = {
       title: fileTitle,
       description: fileDescription,
-      types: selectedTypes,
+      types: selectedTypes.join(),
       course: selectedCourse,
       path: null
     };
