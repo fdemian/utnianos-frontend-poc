@@ -38,6 +38,9 @@ const columns = [
   },
 ];
 
+const isNullOrUndefined = (val) => val === undefined || val === null;
+const isNullOrEmpty = (val) => isNullOrUndefined(val) || val.trim() === "";
+
 const FileListContents = (props) => {
 
   const {
@@ -47,18 +50,46 @@ const FileListContents = (props) => {
     nameFilter
    } = props;
 
+   const nameFilterFn = (data) => {
+     const nameToFilter = isNullOrEmpty(nameFilter) ? "" : nameFilter;
+     return (
+      data.name.includes(nameToFilter) ||
+      (nameToFilter.trim()==="")
+     );
+   }
+
+   const courseFilterFn = (data) => {
+     if(coursesFilter.length === 0)
+        return true;
+
+     return coursesFilter.includes(data.course.name)
+   }
+
+   const contribFilterFn = (data) => {
+     if(contribsFilter.length === 0)
+       return true;
+
+     const dataContribs = data.contribTypes.split(",");
+     
+     return contribsFilter.some(cf => dataContribs.includes(cf));
+   }
+
+   const matchesFilters = (data) => {
+     return (nameFilterFn(data) && courseFilterFn(data) && contribFilterFn(data));
+   }
+
+   // Name filter is case sensitive.
+   const getFilteredData = (data) => data.filter(d => matchesFilters(d));
+
    if(data.loading)
     return <p>Loading</p>;
 
   const { classMaterials } = data.data;
-
-  console.clear();
-  console.log(classMaterials);
-  console.log("________");
+  const dataSource = getFilteredData(classMaterials);
 
   return (
   <div>
-    <Table columns={columns} dataSource={classMaterials} />
+    <Table columns={columns} dataSource={dataSource} />
   </div>
   );
 }

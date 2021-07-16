@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Upload, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import './Uploader.css';
@@ -24,13 +24,6 @@ const FileUploader = (props) => {
     fileList,
     setFileList
   } = props;
-
-  /*
-  const [previewVisible, setPreviewVisible] =  useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
-  const [fileList, setFileList] = useState([]);
-  */
 
   const handleCancel = () => setPreviewVisible(false);
   const handleChange = ({ fileList }) => setFileList(fileList);

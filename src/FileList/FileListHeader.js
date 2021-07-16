@@ -17,7 +17,7 @@ const FileListHeader = (props) => {
 
   const handleChangeContrib = (value) => setContribsFilter(value);
   const handleChangeCourse = (value) => setCoursesFilter(value);
-  const handleChangeName = (value) => setNameFilter(value);
+  const handleChangeName = (e) => setNameFilter(e.target.value);
 
   if(coursesList.loading || contribTypesList.loading)
     return <p>Loading</p>;

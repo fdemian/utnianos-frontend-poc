@@ -1,7 +1,6 @@
 import React from 'react';
 import { Image, Tag } from 'antd';
 
-///uploads
 const FileSummary = (props) => {
 
   const {
