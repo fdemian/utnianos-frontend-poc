@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, Input } from 'antd';
+import { Select, Input, Spin } from 'antd';
 
 import './FileList.css';
 
@@ -20,7 +20,7 @@ const FileListHeader = (props) => {
   const handleChangeName = (e) => setNameFilter(e.target.value);
 
   if(coursesList.loading || contribTypesList.loading)
-    return <p>Loading</p>;
+    return <Spin tip="Loading..." />;
 
   const { courses } = coursesList.data;
   const { contribTypes } = contribTypesList.data;
@@ -68,7 +68,7 @@ const FileListHeader = (props) => {
       <h3>Filtrar</h3>
       <Input
         onChange={handleChangeName}
-        placeholder="Basic usage"
+        placeholder="Filtrar por titulo del apunte"
         style={{width:'300px'}}
       />
    </span>

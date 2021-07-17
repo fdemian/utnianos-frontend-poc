@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Tag } from 'antd';
+import { Table, Tag , Spin} from 'antd';
 
 const columns = [
   {
@@ -70,7 +70,7 @@ const FileListContents = (props) => {
        return true;
 
      const dataContribs = data.contribTypes.split(",");
-     
+
      return contribsFilter.some(cf => dataContribs.includes(cf));
    }
 
@@ -82,7 +82,7 @@ const FileListContents = (props) => {
    const getFilteredData = (data) => data.filter(d => matchesFilters(d));
 
    if(data.loading)
-    return <p>Loading</p>;
+    return <Spin tip="Loading..." />;
 
   const { classMaterials } = data.data;
   const dataSource = getFilteredData(classMaterials);

@@ -1,42 +1,9 @@
 import React, { useState } from 'react';
 import FileListHeader from './FileListHeader';
 import FileListContents from './FileListContents';
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+import { GET_CONTRIB_FILES, GET_CONTRIB_TYPES, GET_COURSES } from './Queries';
 import './FileList.css';
-
-const GET_CONTRIB_FILES = gql`
-  query GetContributions {
-    classMaterials {
-      id
-      name
-      filePath
-      contribTypes
-      course {
-        id
-        name
-      }
-    }
-  }
-`;
-
-const GET_CONTRIB_TYPES = gql`
-  query GetContribTypes {
-    contribTypes {
-      id
-      name
-    }
-  }
-`;
-
-const GET_COURSES = gql`
-  query GetCourses {
-    courses {
-      id
-      name
-    }
-  }
-`;
-
 
 const FileList = () => {
 
@@ -47,7 +14,7 @@ const FileList = () => {
   const [coursesFilter, setCoursesFilter] = useState([]);
   const [contribsFilter, setContribsFilter] = useState([]);
   const [nameFilter, setNameFilter] = useState(null);
-  
+
   return (
   <div className="file-list-container">
     <FileListHeader
