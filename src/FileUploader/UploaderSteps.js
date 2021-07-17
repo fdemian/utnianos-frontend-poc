@@ -1,41 +1,15 @@
 import React, { useState } from 'react';
-import { Steps, Button, message } from 'antd';
+import { Steps, Button } from 'antd';
 import {Redirect} from 'react-router-dom';
 import FileDetailsForm from './FileDetailsForm';
 import FileUploader from './FileUploader';
 import FileSummary from './FileSummary';
 import LoadingIndicator from '../Loading/LoadingIndicator';
-import { gql, useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
+import { GET_CONTRIB_TYPES, GET_COURSES, ADD_CONTRIB } from './Queries';
 import './Uploader.css';
 
 const { Step } = Steps;
-
-const GET_CONTRIB_TYPES = gql`
-  query GetContribTypes {
-    contribTypes {
-      id
-      name
-    }
-  }
-`;
-
-const GET_COURSES = gql`
-  query GetCourses {
-    courses {
-      id
-      name
-    }
-  }
-`;
-
-const ADD_CONTRIB = gql`
-  mutation AddContribution($title: String!, $description: String!, $types: String!, $course: String!, $path: String) {
-    addContrib(title: $title,description: $description, types: $types, course: $course, path: $path) {
-      id
-      ok
-    }
-  }
-`;
 
 const UploaderSteps = () => {
 
@@ -57,14 +31,14 @@ const UploaderSteps = () => {
   const [addContrib, response] = useMutation(ADD_CONTRIB);
 
   let error = contribQuery.error || courseQuery.error;
-  let loading = contribQuery.loadin || courseQuery.loading;
+  let loading = contribQuery.loading || courseQuery.loading;
 
   if(error)
     return <p>Error!</p>;
 
   if(loading)
     return <LoadingIndicator />;
- 
+
  if(response.data && response.data.addContrib.ok)
     return <Redirect to="/classnotes" />
 
@@ -131,7 +105,7 @@ const UploaderSteps = () => {
     {
       title: "Revisar y subir",
       content: <FileSummary {...summaryProps} />,
-    },
+    }
   ];
 
   const previous = () => setCurrentStep(currentStep-1);
