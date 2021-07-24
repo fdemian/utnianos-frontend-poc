@@ -13,9 +13,11 @@ const OptionsList = () => {
   <div style={marginStyle}>
     <Row gutter={16}>
       <Col span={6}>
+        <Link to="/tracker">
         <Card hoverable style={cardStyle} role="button">
            <Meta title="Seguidor de carrera" description="Seguidor academico de carrera." />
         </Card>
+        </Link>
       </Col>
       <Col span={6}>
         <Link to="/classnotes">

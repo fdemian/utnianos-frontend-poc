@@ -7,7 +7,7 @@ const Home = React.lazy(() => import('../Home/Home'));
 const FileList = React.lazy(() => import('../FileList/FileList'));
 const FileUploader = React.lazy(() => import('../FileUploader/UploaderSteps'));
 const ClassNotesView = React.lazy(() => import('../FileView/FileView'));
-//const Seguidor = React.lazy(() => import('../Seguidor/Seguidor'));
+const CareerTracker = React.lazy(() => import('../CareerTracker/CareerTracker'));
 
 const ApplicationRoutes = {
    App: App,
@@ -18,9 +18,8 @@ const ApplicationRoutes = {
     { path: "/registersuccess/:id", exact: true, component: RegisterSuccess, private: false },
     { path: "/classnotes", exact: true, component: FileList, private: true },
     { path: "/classnotes/upload", exact: true, component: FileUploader, private: true },
-    { path: "/classnotes/:id", exact: true, component: ClassNotesView, private: true }
-    /*,
-    { path: "/seguidor", exact: true, component: Seguidor, private: true }*/
+    { path: "/classnotes/:id", exact: true, component: ClassNotesView, private: true },
+    { path: "/tracker", exact: true, component: CareerTracker, private: true }
    ]
 };
 
