@@ -1,6 +1,6 @@
 import React from 'react';
 import { gql, useQuery } from "@apollo/client";
-import CarouselView from '../CarouselView/CarouselView';
+import CarouselView from './CarouselView/CarouselView';
 
 const GET_CAREER_PLAN = gql`
   query GetCareerPlan($id: Int!) {
