@@ -1,16 +1,28 @@
 import React from 'react';
+import TrackerHeading from './TrackerComponent/TrackerHeading';
+import TrackerComponent from './TrackerComponent/TrackerComponent';
+import { useMediaQuery } from 'react-responsive';
 
 const CareeerPlanTracker = ({ user }) => {
 
-  console.clear();
-  console.log(user);
-  console.log(":::::");
+  const isDesktop = useMediaQuery({
+    query: "(min-device-width: 1200px)"
+  });
 
-  if(!user.careerPlan)
+  const { careerPlan } = user;
+
+  if(!careerPlan)
     return null;
 
   return (
-    <div>TRACKER!</div>
+  <>
+    <TrackerHeading
+       changeViewType={() => {}}
+       currentView="Desktop"
+       desktop={isDesktop}
+    />
+    <TrackerComponent careerId={careerPlan.id} />
+  </>
   );
 }
 
