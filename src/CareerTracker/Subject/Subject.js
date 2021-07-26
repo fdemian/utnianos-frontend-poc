@@ -6,10 +6,6 @@ import './Subject.css';
 
 const Subject = ({ subject, updateEstado }) => {
 
-  console.clear();
-  console.log(subject);
-  console.log("::::::");
-
   if (subject) {
     return (
       <div className="Subject">
@@ -43,7 +39,7 @@ const Subject = ({ subject, updateEstado }) => {
           </p>
 
           <p className="Unselectable">
-        No se cumplen las coorrelativas para que curses esta materia.
+            No se cumplen las coorrelativas para que curses esta materia.
           </p>
 
         </Card>

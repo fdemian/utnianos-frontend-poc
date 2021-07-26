@@ -31,9 +31,12 @@ const Carousel = (props) => {
     return null;
   }
 
+  const numberOfYears = Array.from(new Set(materias.map(m => m.year))).length;
+  const showArrows = numberOfYears > 3;
+  
   return (
     <div>
-      <CarouselArrows prevFn={prevTab} nextFn={nextTab} />
+      <CarouselArrows prevFn={prevTab} nextFn={nextTab} showArrows={showArrows} />
       <TransitionGroup>
         <CSSTransition
           transitionName="TransitionGroup"

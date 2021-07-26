@@ -34,7 +34,10 @@ const TrackerComponent = ({ careerId }) => {
 
   return (
   <>
-    <CarouselView materias={courses} updateEstado={(e) => console.log(e)} />
+    <CarouselView
+      materias={courses}
+      updateEstado={(e) => console.log(e)}
+    />
   </>
   );
 }
