@@ -1,6 +1,7 @@
 import React from 'react';
 import { gql, useQuery } from "@apollo/client";
 import CarouselView from './CarouselView/CarouselView';
+import '../CareerTracker.css';
 
 const GET_CAREER_PLAN = gql`
   query GetCareerPlan($id: Int!) {
@@ -17,7 +18,6 @@ const GET_CAREER_PLAN = gql`
   }
 `;
 
-
 const TrackerComponent = ({ careerId }) => {
 
   const { data, loading, error } = useQuery(GET_CAREER_PLAN, {
@@ -30,10 +30,11 @@ const TrackerComponent = ({ careerId }) => {
   if(error)
     return <p>Error</p>;
 
-  const { courses } = data.careerPlan;
+  const { courses, name } = data.careerPlan;
 
   return (
   <>
+    <h2 className="carrer-name">{name}</h2>
     <CarouselView
       materias={courses}
       updateEstado={(e) => console.log(e)}

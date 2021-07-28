@@ -1,6 +1,6 @@
 .career-tracker-title {
   margin-top: 50px;
-  margin-left: 40%;
+  text-align: center;
 }
 
 .career-plan-container {
@@ -46,6 +46,11 @@
 .ViewChooser.Mobile
 {
   margin-left: 40%;
+  margin-bottom: 50px;
+}
+
+.carrer-name {
+  text-align: center;
   margin-bottom: 50px;
 }
 

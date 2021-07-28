@@ -47,7 +47,6 @@ const CareerTracker = () => {
   return (
   <div>
     <h1 className="career-tracker-title">Seguidor de carrera</h1>
-    <br />
     <CareerPlanSelector user={user} careerPlans={careerPlans} />
     <CareerPlanTracker user={user} />
   </div>

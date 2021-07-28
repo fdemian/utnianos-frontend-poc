@@ -16,11 +16,12 @@ const CareeerPlanTracker = ({ user }) => {
 
   return (
   <>
+    {/*
     <TrackerHeading
        changeViewType={() => {}}
        currentView="Desktop"
        desktop={isDesktop}
-    />
+    />*/}
     <TrackerComponent careerId={careerPlan.id} />
   </>
   );
