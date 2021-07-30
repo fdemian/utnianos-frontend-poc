@@ -4,7 +4,7 @@ import { Popover, Card } from 'antd';
 import StatusDropdown from './StatusDropdown';
 import './Subject.css';
 
-const Subject = ({ subject, updateEstado }) => {
+const Subject = ({ subject, updateEstado, completionStatuses, currentStatus }) => {
 
   if (subject) {
     return (
@@ -16,7 +16,8 @@ const Subject = ({ subject, updateEstado }) => {
           <StatusDropdown
             updateFn={updateEstado}
             materiaId={subject.id}
-            status={1}
+            completionStatuses={completionStatuses}
+            currentStatus={currentStatus}
           />
         </Card>
       </div>

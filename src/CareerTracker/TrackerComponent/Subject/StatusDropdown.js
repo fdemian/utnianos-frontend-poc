@@ -3,15 +3,17 @@ import { Select, Badge } from 'antd';
 
 const { Option } = Select;
 
-const categories = [
-  { id: 0, name: 'Pendiente', color: 'default' },
-  { id: 1, name: 'Cursando', color: 'processing' },
-  { id: 2, name: 'Firmada', color: 'warning' },
-  { id: 3, name: 'Aprobada', color: 'success' },
+const colors = [
+  'default',
+  'processing',
+  'warning',
+  'success'
 ];
 
 function handleChange(value, updateFn, materiaId) {
 
+  console.log(value);
+  /*
   const categoryId = categories.filter((c) => c.name === value)[0].id;
   const materiaStatus = {
     id: materiaId,
@@ -19,24 +21,24 @@ function handleChange(value, updateFn, materiaId) {
   };
 
   updateFn(materiaStatus);
+  */
 }
 
-function categroyFromStatus(status, subjectCategories) {
-  return subjectCategories.filter((c) => (c.id + 1) === status)[0].name;
-}
+const categroyFromStatus = (currentStatus, completionStatuses) =>
+  completionStatuses.filter(c => c.id === currentStatus.completionId)[0].name;
 
-const StatusDropdown = ({ updateFn, materiaId, status }) => (
+const StatusDropdown = ({ updateFn, materiaId, completionStatuses, currentStatus }) => (
   <span>
     <Select
       style={{ width: '100%' }}
       optionFilterProp="children"
       onChange={(value) => handleChange(value, updateFn, materiaId)}
-      defaultValue={categroyFromStatus(status, categories)}
+      defaultValue={categroyFromStatus(currentStatus, completionStatuses)}
     >
-      {categories.map((category) => (
-        <Option value={category.name} key={category.id} title={category.name}>
-          <Badge status={category.color} />
-          {category.name}
+      {completionStatuses.map((status, i) => (
+        <Option value={status.name} key={status.id} title={status.name}>
+          <Badge status={colors[i]} />
+          {status.name}
         </Option>
       ))}
     </Select>

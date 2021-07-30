@@ -18,7 +18,13 @@ const GET_CAREER_PLAN = gql`
   }
 `;
 
-const TrackerComponent = ({ careerId }) => {
+const TrackerComponent = (props) => {
+
+  const {
+    careerId,
+    coursesStatus,
+    completionStatuses
+  } = props;
 
   const { data, loading, error } = useQuery(GET_CAREER_PLAN, {
     variables: { id: careerId }
@@ -37,6 +43,8 @@ const TrackerComponent = ({ careerId }) => {
     <h2 className="carrer-name">{name}</h2>
     <CarouselView
       materias={courses}
+      coursesStatus={coursesStatus}
+      completionStatuses={completionStatuses}
       updateEstado={(e) => console.log(e)}
     />
   </>

@@ -7,7 +7,13 @@ import './Carousel.css';
 
 const Carousel = (props) => {
 
-  const { materias, yearsPerTab, updateFn } = props;
+  const {
+    materias,
+    yearsPerTab,
+    updateFn,
+    coursesStatus,
+    completionStatuses
+  } = props;
   const studyYears = getYearsArray(yearsPerTab, materias);
 
   const [currentTab, setCurrentTab] = useState(1);
@@ -33,7 +39,7 @@ const Carousel = (props) => {
 
   const numberOfYears = Array.from(new Set(materias.map(m => m.year))).length;
   const showArrows = numberOfYears > 3;
-  
+
   return (
     <div>
       <CarouselArrows prevFn={prevTab} nextFn={nextTab} showArrows={showArrows} />
@@ -46,7 +52,12 @@ const Carousel = (props) => {
           transitionEnter
           transitionLeave
         >
-          <SubjectYears years={years} updateFn={updateFn} />
+          <SubjectYears
+            years={years}
+            updateFn={updateFn}
+            coursesStatus={coursesStatus}
+            completionStatuses={completionStatuses}
+          />
         </CSSTransition>
       </TransitionGroup>
     </div>
