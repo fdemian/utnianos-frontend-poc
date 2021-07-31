@@ -23,7 +23,8 @@ const TrackerComponent = (props) => {
   const {
     careerId,
     coursesStatus,
-    completionStatuses
+    completionStatuses,
+    prerrequisites
   } = props;
 
   const { data, loading, error } = useQuery(GET_CAREER_PLAN, {
