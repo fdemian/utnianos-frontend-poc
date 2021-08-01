@@ -1,5 +1,6 @@
 import React from 'react';
 //import TrackerHeading from './TrackerComponent/TrackerHeading';
+import { Spin } from 'antd';
 import TrackerComponent from './TrackerComponent/TrackerComponent';
 import { gql, useQuery } from "@apollo/client";
 
@@ -36,6 +37,13 @@ const GET_PRERREQUISITES = gql`
   }
 `;
 
+/*
+<TrackerHeading
+   changeViewType={() => {}}
+   currentView="Desktop"
+   desktop={isDesktop}
+/>
+*/
 const CareeerPlanTracker = ({ user }) => {
 
   const { careerPlan } = user;
@@ -53,9 +61,8 @@ const CareeerPlanTracker = ({ user }) => {
   if(!careerPlan)
     return null;
 
-  if(loading || statusesQuery.loading || prerreqQuery.loading) {
-    return <p>Loading...</p>
-  }
+  if(loading || statusesQuery.loading || prerreqQuery.loading)
+    return <Spin tip="Loading..." />;
 
   if(error || statusesQuery.error || prerreqQuery.error)
     return <p>Error</p>;
@@ -65,20 +72,12 @@ const CareeerPlanTracker = ({ user }) => {
   const { coursePrerrequisites } = prerreqQuery.data;
 
   return (
-  <>
-    {/*
-    <TrackerHeading
-       changeViewType={() => {}}
-       currentView="Desktop"
-       desktop={isDesktop}
-    />*/}
-    <TrackerComponent
-      careerId={careerPlan.id}
-      coursesStatus={coursesStatus}
-      completionStatuses={completionStatuses}
-      prerrequisites={coursePrerrequisites}
-    />
-  </>
+  <TrackerComponent
+    careerId={careerPlan.id}
+    coursesStatus={coursesStatus}
+    completionStatuses={completionStatuses}
+    prerrequisites={coursePrerrequisites}
+  />
   );
 }
 

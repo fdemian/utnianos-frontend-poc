@@ -27,7 +27,7 @@ function handleChange(value, updateFn, materiaId) {
 const categroyFromStatus = (currentStatus, completionStatuses) =>
   completionStatuses.filter(c => c.id === currentStatus.completionId)[0].name;
 
-const StatusDropdown = ({ updateFn, materiaId, completionStatuses, currentStatus }) => (
+const StatusDropdown = ({ updateFn, materiaId, completionStatuses, currentStatus, canTakeFinalExam }) => (
   <span>
     <Select
       style={{ width: '100%' }}
@@ -36,7 +36,12 @@ const StatusDropdown = ({ updateFn, materiaId, completionStatuses, currentStatus
       defaultValue={categroyFromStatus(currentStatus, completionStatuses)}
     >
       {completionStatuses.map((status, i) => (
-        <Option value={status.name} key={status.id} title={status.name}>
+        <Option
+          value={status.name}
+          key={status.id}
+          title={status.name}
+          disabled={status.name === "Aprobada" && !canTakeFinalExam}
+        >
           <Badge status={colors[i]} />
           {status.name}
         </Option>

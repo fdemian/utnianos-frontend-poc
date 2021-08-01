@@ -27,6 +27,7 @@ const Subject = (props) => {
             materiaId={subject.id}
             completionStatuses={completionStatuses}
             currentStatus={currentStatus}
+            canTakeFinalExam={canTakeFinalExam}
           />
         </Card>
       </div>
