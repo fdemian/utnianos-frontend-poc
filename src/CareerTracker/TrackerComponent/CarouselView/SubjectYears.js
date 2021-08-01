@@ -8,7 +8,8 @@ const SubjectYears = (props) => {
       years,
       updateFn,
       coursesStatus,
-      completionStatuses
+      completionStatuses,
+      prerrequisites
     } = props;
 
     return(
@@ -21,6 +22,7 @@ const SubjectYears = (props) => {
           updateEstado={updateFn}
           coursesStatus={coursesStatus}
           completionStatuses={completionStatuses}
+          prerrequisites={prerrequisites}
         />
       ))}
     </div>

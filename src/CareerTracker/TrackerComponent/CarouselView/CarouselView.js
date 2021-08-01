@@ -8,9 +8,10 @@ const CarouselView = (props) => {
     coursesStatus,
     completionStatuses,
     materias,
-    updateEstado
+    updateEstado,
+    prerrequisites
   } = props;
-  
+
   const isDesktop = useMediaQuery({query: '(min-device-width: 1200px)'});
   const yearsPerTab = isDesktop ? 3 : 1;
 
@@ -19,6 +20,7 @@ const CarouselView = (props) => {
     coursesStatus={coursesStatus}
     completionStatuses={completionStatuses}
     materias={materias}
+    prerrequisites={prerrequisites}
     yearsPerTab={yearsPerTab}
     updateFn={updateEstado}
   />

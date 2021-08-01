@@ -4,9 +4,18 @@ import { Popover, Card } from 'antd';
 import StatusDropdown from './StatusDropdown';
 import './Subject.css';
 
-const Subject = ({ subject, updateEstado, completionStatuses, currentStatus }) => {
+const Subject = (props) => {
 
-  if (subject) {
+  const {
+    subject,
+    updateEstado,
+    completionStatuses,
+    currentStatus,
+    canTakeCourse,
+    canTakeFinalExam
+  } = props;
+
+  if (canTakeCourse) {
     return (
       <div className="Subject">
         <Card className="SubjectCard">

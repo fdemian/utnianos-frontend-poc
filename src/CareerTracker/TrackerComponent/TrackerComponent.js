@@ -47,6 +47,7 @@ const TrackerComponent = (props) => {
       coursesStatus={coursesStatus}
       completionStatuses={completionStatuses}
       updateEstado={(e) => console.log(e)}
+      prerrequisites={prerrequisites}
     />
   </>
   );

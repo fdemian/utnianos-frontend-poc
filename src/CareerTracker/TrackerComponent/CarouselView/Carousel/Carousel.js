@@ -12,7 +12,8 @@ const Carousel = (props) => {
     yearsPerTab,
     updateFn,
     coursesStatus,
-    completionStatuses
+    completionStatuses,
+    prerrequisites
   } = props;
   const studyYears = getYearsArray(yearsPerTab, materias);
 
@@ -57,6 +58,7 @@ const Carousel = (props) => {
             updateFn={updateFn}
             coursesStatus={coursesStatus}
             completionStatuses={completionStatuses}
+            prerrequisites={prerrequisites}
           />
         </CSSTransition>
       </TransitionGroup>
