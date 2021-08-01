@@ -1,5 +1,5 @@
 import React from 'react';
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useMutation } from "@apollo/client";
 import CarouselView from './CarouselView/CarouselView';
 import '../CareerTracker.css';
 
@@ -18,18 +18,29 @@ const GET_CAREER_PLAN = gql`
   }
 `;
 
+const CHANGE_COURSE_STATUS = gql`
+  mutation ChangeCourseStatus($courseId: Int!, $statusId: Int!, $userId: Int!) {
+   changeCourseStatus(courseId: $courseId, statusId: $statusId, userId: $userId) {
+    ok
+   }
+  }
+`;
+
 const TrackerComponent = (props) => {
 
   const {
     careerId,
     coursesStatus,
     completionStatuses,
-    prerrequisites
+    prerrequisites,
+    userId
   } = props;
 
   const { data, loading, error } = useQuery(GET_CAREER_PLAN, {
     variables: { id: careerId }
   });
+
+  const [changeCourseStatus] = useMutation(CHANGE_COURSE_STATUS);
 
   if(loading)
     return <p>Loading...</p>;
@@ -39,6 +50,14 @@ const TrackerComponent = (props) => {
 
   const { courses, name } = data.careerPlan;
 
+  const updateStatusFn = (materiaId, status) => {
+   changeCourseStatus({ variables: {
+     courseId: materiaId,
+     userId: userId,
+     statusId: status
+   }});
+  }
+
   return (
   <>
     <h2 className="carrer-name">{name}</h2>
@@ -46,7 +65,7 @@ const TrackerComponent = (props) => {
       materias={courses}
       coursesStatus={coursesStatus}
       completionStatuses={completionStatuses}
-      updateEstado={(e) => console.log(e)}
+      updateEstado={updateStatusFn}
       prerrequisites={prerrequisites}
     />
   </>

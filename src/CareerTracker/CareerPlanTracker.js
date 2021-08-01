@@ -47,10 +47,11 @@ const GET_PRERREQUISITES = gql`
 const CareeerPlanTracker = ({ user }) => {
 
   const { careerPlan } = user;
+  const userId = user.id;
 
   const {data, loading, error } = useQuery(GET_PLAN_STATUS, {
     variables: {
-      id: user.id,
+      id: userId,
     },
     skip: !careerPlan
   });
@@ -77,6 +78,7 @@ const CareeerPlanTracker = ({ user }) => {
     coursesStatus={coursesStatus}
     completionStatuses={completionStatuses}
     prerrequisites={coursePrerrequisites}
+    userId={userId}
   />
   );
 }
