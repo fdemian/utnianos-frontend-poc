@@ -5,28 +5,8 @@ import './YearOfStudy.css';
 const getCourseStatus = (subject, coursesStatus) =>
 coursesStatus.filter(c => c.courseId === subject.id)[0];
 
-const getCoursePrerrequisites = (subject, prerrequisites) =>
-prerrequisites.filter(p => p.courseId === subject.id);
-
-const prerreqSatisfy = (req, statuses) => {
-  const filteredStatuses = statuses.filter(s =>
-    s.courseId === req.prerrequisiteId &&
-    s.completionId === req.completionId
-  );
-
-  return filteredStatuses.length > 0;
-}
-
-const hasPrerrequisites = (subject, prerrequisites, coursesStatus) => {
-
-  const coursePrerreq = getCoursePrerrequisites(subject, prerrequisites);
-
-  // The subject has no prerrequisites.
-  if(coursePrerreq.length === 0)
-    return true;
-
-  return prerrequisites.every(p => prerreqSatisfy(p, coursesStatus));
-}
+const getCoursePrerrequisites = (courseId, prerrequisites) =>
+prerrequisites.filter(p => p.courseId === courseId);
 
 const YearOfStudy = (props) => {
 
@@ -52,10 +32,9 @@ Año
           subject={subject}
           updateEstado={updateEstado}
           completionStatuses={completionStatuses}
+          prerrequisites={getCoursePrerrequisites(subject.id, prerrequisites)}
+          coursesStatus={coursesStatus}
           currentStatus={getCourseStatus(subject, coursesStatus)}
-          coursePrerrequisites={getCoursePrerrequisites(subject, prerrequisites)}
-          canTakeCourse={hasPrerrequisites(subject, prerrequisites.filter(p => p.type === 'C'), coursesStatus)}
-          canTakeFinalExam={hasPrerrequisites(subject, prerrequisites.filter(p => p.type === 'F'), coursesStatus)}
         />
       </div>
     ))}

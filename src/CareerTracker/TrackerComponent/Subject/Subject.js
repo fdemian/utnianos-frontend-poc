@@ -4,6 +4,24 @@ import { Popover, Card } from 'antd';
 import StatusDropdown from './StatusDropdown';
 import './Subject.css';
 
+const prerreqSatisfy = (req, statuses) => {
+  const filteredStatuses = statuses.find(s =>
+    s.courseId === req.prerrequisiteId &&
+    s.completionId >= req.completionId
+  );
+
+  return filteredStatuses !== undefined;
+}
+
+const hasPrerrequisites = (subject, prerrequisites, coursesStatus) => {
+
+  // The subject has no prerrequisites.
+  if(prerrequisites.length === 0)
+    return true;
+
+  return prerrequisites.every(req => prerreqSatisfy(req, coursesStatus));
+}
+
 const Subject = (props) => {
 
   const {
@@ -11,9 +29,14 @@ const Subject = (props) => {
     updateEstado,
     completionStatuses,
     currentStatus,
-    canTakeCourse,
-    canTakeFinalExam
+    prerrequisites,
+    coursesStatus
   } = props;
+  
+  const finalReq = prerrequisites.filter(p => p.type === 'F');
+  const courseReq = prerrequisites.filter(p => p.type === 'C');
+  const canTakeCourse = hasPrerrequisites(subject, courseReq, coursesStatus);
+  const canTakeFinalExam = hasPrerrequisites(subject, finalReq, coursesStatus);
 
   if (canTakeCourse) {
     return (
