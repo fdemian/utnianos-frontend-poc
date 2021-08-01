@@ -1,5 +1,5 @@
 import React from 'react';
-import { gql, useQuery, useMutation } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import CarouselView from './CarouselView/CarouselView';
 import '../CareerTracker.css';
 
@@ -18,14 +18,6 @@ const GET_CAREER_PLAN = gql`
   }
 `;
 
-const CHANGE_COURSE_STATUS = gql`
-  mutation ChangeCourseStatus($courseId: Int!, $statusId: Int!, $userId: Int!) {
-   changeCourseStatus(courseId: $courseId, statusId: $statusId, userId: $userId) {
-    ok
-   }
-  }
-`;
-
 const TrackerComponent = (props) => {
 
   const {
@@ -33,14 +25,14 @@ const TrackerComponent = (props) => {
     coursesStatus,
     completionStatuses,
     prerrequisites,
-    userId
+    userId,
+    changeCourseStatus
   } = props;
 
   const { data, loading, error } = useQuery(GET_CAREER_PLAN, {
     variables: { id: careerId }
   });
 
-  const [changeCourseStatus] = useMutation(CHANGE_COURSE_STATUS);
 
   if(loading)
     return <p>Loading...</p>;

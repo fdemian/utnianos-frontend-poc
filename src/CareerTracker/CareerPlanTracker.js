@@ -2,7 +2,7 @@ import React from 'react';
 //import TrackerHeading from './TrackerComponent/TrackerHeading';
 import { Spin } from 'antd';
 import TrackerComponent from './TrackerComponent/TrackerComponent';
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useMutation } from "@apollo/client";
 
 const GET_PLAN_STATUS = gql`
   query CoursesStatus($id: Int!) {
@@ -37,17 +37,24 @@ const GET_PRERREQUISITES = gql`
   }
 `;
 
-/*
-<TrackerHeading
-   changeViewType={() => {}}
-   currentView="Desktop"
-   desktop={isDesktop}
-/>
-*/
+const CHANGE_COURSE_STATUS = gql`
+  mutation ChangeCourseStatus($courseId: Int!, $statusId: Int!, $userId: Int!) {
+   changeCourseStatus(courseId: $courseId, statusId: $statusId, userId: $userId) {
+    ok
+    courseId
+    statusId
+   }
+  }
+`;
+
+
 const CareeerPlanTracker = ({ user }) => {
 
   const { careerPlan } = user;
   const userId = user.id;
+
+
+  const [changeCourseStatus, mutResult] = useMutation(CHANGE_COURSE_STATUS);
 
   const {data, loading, error } = useQuery(GET_PLAN_STATUS, {
     variables: {
@@ -69,8 +76,25 @@ const CareeerPlanTracker = ({ user }) => {
     return <p>Error</p>;
 
   const { completionStatuses } = statusesQuery.data;
-  const { coursesStatus } = data;
+  let { coursesStatus } = data;
   const { coursePrerrequisites } = prerreqQuery.data;
+
+  if(mutResult.data) {
+    const { changeCourseStatus } = mutResult.data;
+    const { courseId, statusId } = changeCourseStatus;
+
+    coursesStatus = coursesStatus.map(cs => {
+       if(cs.courseId === courseId){
+         return {
+           completionId: statusId,
+           courseId: cs.courseId,
+          __typename: "CoursesStatusObj"
+         }
+       }
+       return cs;
+    });
+
+  }
 
   return (
   <TrackerComponent
@@ -79,6 +103,7 @@ const CareeerPlanTracker = ({ user }) => {
     completionStatuses={completionStatuses}
     prerrequisites={coursePrerrequisites}
     userId={userId}
+    changeCourseStatus={changeCourseStatus}
   />
   );
 }
