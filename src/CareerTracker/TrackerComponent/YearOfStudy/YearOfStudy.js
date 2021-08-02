@@ -16,7 +16,8 @@ const YearOfStudy = (props) => {
     updateEstado,
     coursesStatus,
     completionStatuses,
-    prerrequisites
+    prerrequisites,
+    materias
   } = props;
 
   return(
@@ -35,6 +36,7 @@ Año
           prerrequisites={getCoursePrerrequisites(subject.id, prerrequisites)}
           coursesStatus={coursesStatus}
           currentStatus={getCourseStatus(subject, coursesStatus)}
+          courses={materias}
         />
       </div>
     ))}
