@@ -45,8 +45,8 @@ const CareerTracker = () => {
   const { user } = userQuery.data;
   const { careerPlans } = careerPlansQuery.data;
 
-  if(user && user.careerPlan){
-    setPlan(user.careerPlan);
+  if(user && user.careerPlan && !plan){
+    setPlan(user.careerPlan.id);
   }
 
   return (
