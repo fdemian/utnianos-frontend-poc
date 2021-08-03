@@ -25,15 +25,12 @@ const TrackerComponent = (props) => {
     coursesStatus,
     completionStatuses,
     prerrequisites,
-    userId,
-    changeCourseStatus
+    changeStatusFn
   } = props;
-
 
   const { data, loading, error } = useQuery(GET_CAREER_PLAN, {
     variables: { id: careerId }
   });
-
 
   if(loading)
     return <p>Loading...</p>;
@@ -43,14 +40,6 @@ const TrackerComponent = (props) => {
 
   const { courses, name } = data.careerPlan;
 
-  const updateStatusFn = (materiaId, status) => {
-   changeCourseStatus({ variables: {
-     courseId: materiaId,
-     userId: userId,
-     statusId: status
-   }});
-  }
-
   return (
   <>
     <h2 className="carrer-name">{name}</h2>
@@ -58,7 +47,7 @@ const TrackerComponent = (props) => {
       materias={courses}
       coursesStatus={coursesStatus}
       completionStatuses={completionStatuses}
-      updateEstado={updateStatusFn}
+      updateEstado={changeStatusFn}
       prerrequisites={prerrequisites}
     />
   </>

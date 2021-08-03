@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 //import TrackerHeading from './TrackerComponent/TrackerHeading';
 import { Spin } from 'antd';
 import TrackerComponent from './TrackerComponent/TrackerComponent';
@@ -51,7 +51,8 @@ const CHANGE_COURSE_STATUS = gql`
 const CareeerPlanTracker = ({ user, careerPlan }) => {
 
   const userId = user.id;
-  const [changeCourseStatus, mutResult] = useMutation(CHANGE_COURSE_STATUS);
+  const [changeCourseStatus] = useMutation(CHANGE_COURSE_STATUS);
+  const [courseStatusesInternal, setCoursesStatuses] = useState(null);
 
   const {data, loading, error } = useQuery(GET_PLAN_STATUS, {
     variables: {
@@ -73,14 +74,21 @@ const CareeerPlanTracker = ({ user, careerPlan }) => {
     return <p>Error</p>;
 
   const { completionStatuses } = statusesQuery.data;
-  let { coursesStatus } = data;
+  const { coursesStatus } = data;
   const { coursePrerrequisites } = prerreqQuery.data;
 
-  if(mutResult.data) {
-    const { changeCourseStatus } = mutResult.data;
-    const { courseId, statusId } = changeCourseStatus;
+  if(!courseStatusesInternal && coursesStatus) {
+    setCoursesStatuses(coursesStatus);
+  }
 
-    coursesStatus = coursesStatus.map(cs => {
+  const changeStatusFn = (courseId, statusId) => {
+    changeCourseStatus({ variables: {
+      courseId: courseId,
+      userId: userId,
+      statusId: statusId
+    }});
+
+    let newStatuses = coursesStatus.map(cs => {
        if(cs.courseId === courseId){
          return {
            completionId: statusId,
@@ -91,16 +99,17 @@ const CareeerPlanTracker = ({ user, careerPlan }) => {
        return cs;
     });
 
+    setCoursesStatuses(newStatuses);
   }
 
   return (
   <TrackerComponent
     careerId={careerPlan}
-    coursesStatus={coursesStatus}
+    coursesStatus={courseStatusesInternal}
     completionStatuses={completionStatuses}
     prerrequisites={coursePrerrequisites}
     userId={userId}
-    changeCourseStatus={changeCourseStatus}
+    changeStatusFn={changeStatusFn}
   />
   );
 }
