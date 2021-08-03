@@ -26,9 +26,6 @@ const getPrerreqList = (courses, prerrequisites) => {
   const idsList = prerrequisites.map(p => p.prerrequisiteId);
   const prerreqs = courses.filter(p => idsList.includes(p.id));
 
-  console.log(courses);
-  console.log("____");
-
   return prerreqs;
 }
 

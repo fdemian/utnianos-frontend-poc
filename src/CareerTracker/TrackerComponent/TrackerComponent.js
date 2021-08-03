@@ -29,6 +29,7 @@ const TrackerComponent = (props) => {
     changeCourseStatus
   } = props;
 
+
   const { data, loading, error } = useQuery(GET_CAREER_PLAN, {
     variables: { id: careerId }
   });

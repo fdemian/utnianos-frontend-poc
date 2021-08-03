@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { Button, Card } from 'antd';
+import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGraduationCap as careerIcon } from '@fortawesome/free-solid-svg-icons';
 import './CareerTracker.css';
@@ -20,7 +21,7 @@ const ADD_CAREER_PLAN = gql`
   }
 `;
 
-const CareerPlanSelector = ({ careerPlans, user }) => {
+const CareerPlanSelector = ({ careerPlans, plan, user, setCareer }) => {
 
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [addCareerPlan, { data }] = useMutation(ADD_CAREER_PLAN);
@@ -33,10 +34,11 @@ const CareerPlanSelector = ({ careerPlans, user }) => {
      addCareerPlan({ variables: variables });
   }
 
-  if(user.careerPlan)
-    return null;
+  if(data && data.addCareerPlan && data.addCareerPlan.ok){
+    setCareer(selectedPlan);
+  }
 
-  if(data && data.ok)
+  if(plan)
     return null;
 
   return (

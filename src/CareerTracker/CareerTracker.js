@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { gql, useQuery } from "@apollo/client";
 import { useAuthToken} from '../Login/authToken';
 import { Spin } from 'antd';
@@ -37,6 +37,7 @@ const CareerTracker = () => {
   const queryOpts = { variables: { id: id } };
   const userQuery = useQuery(GET_USER, queryOpts);
   const careerPlansQuery = useQuery(GET_CAREER_PLANS);
+  const [plan, setPlan] =  useState(null);
 
   if(userQuery.loading || careerPlansQuery.loading)
     return <Spin />;
@@ -44,11 +45,23 @@ const CareerTracker = () => {
   const { user } = userQuery.data;
   const { careerPlans } = careerPlansQuery.data;
 
+  if(user && user.careerPlan){
+    setPlan(user.careerPlan);
+  }
+
   return (
   <div>
     <h1 className="career-tracker-title">Seguidor de carrera</h1>
-    <CareerPlanSelector user={user} careerPlans={careerPlans} />
-    <CareerPlanTracker user={user} />
+    <CareerPlanSelector
+      user={user}
+      careerPlans={careerPlans}
+      setCareer={setPlan}
+      plan={plan}
+    />
+    <CareerPlanTracker
+      user={user}
+      careerPlan={plan}
+    />
   </div>
   );
 }

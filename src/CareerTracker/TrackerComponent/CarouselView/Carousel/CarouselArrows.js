@@ -6,8 +6,6 @@ import {
 } from '@fortawesome/fontawesome-free-solid';
 import './CarouselArrows.css';
 
-
-
 const CarouselArrows = ({ prevFn, nextFn, showArrows }) => {
   if(!showArrows)
     return null;

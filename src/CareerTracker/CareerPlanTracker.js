@@ -48,12 +48,9 @@ const CHANGE_COURSE_STATUS = gql`
 `;
 
 
-const CareeerPlanTracker = ({ user }) => {
+const CareeerPlanTracker = ({ user, careerPlan }) => {
 
-  const { careerPlan } = user;
   const userId = user.id;
-
-
   const [changeCourseStatus, mutResult] = useMutation(CHANGE_COURSE_STATUS);
 
   const {data, loading, error } = useQuery(GET_PLAN_STATUS, {
@@ -98,7 +95,7 @@ const CareeerPlanTracker = ({ user }) => {
 
   return (
   <TrackerComponent
-    careerId={careerPlan.id}
+    careerId={careerPlan}
     coursesStatus={coursesStatus}
     completionStatuses={completionStatuses}
     prerrequisites={coursePrerrequisites}
