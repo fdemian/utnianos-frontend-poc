@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 //import TrackerHeading from './TrackerComponent/TrackerHeading';
 import { Spin } from 'antd';
-import TrackerComponent from './TrackerComponent/TrackerComponent';
+import TrackerComponent from './TrackerComponent';
 import { gql, useQuery, useMutation } from "@apollo/client";
 
 const GET_PLAN_STATUS = gql`

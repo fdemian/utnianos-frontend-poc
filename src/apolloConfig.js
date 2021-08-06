@@ -5,9 +5,22 @@ import {
   createHttpLink
 } from '@apollo/client';
 import { useAuthToken } from "./Login/authToken";
+import { onError } from "@apollo/client/link/error";
+
 
 // TODO:
 //https://stackoverflow.com/questions/61327448/how-to-refresh-jwt-token-using-apollo-and-graphql
+
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  //console.clear();
+  if (graphQLErrors)
+    graphQLErrors.map(({ message, locations, path }) =>
+      console.log(
+        `[GraphQL error]: Message: ${message}, Path: ${path}`
+      )
+    );
+  if (networkError) console.log(`[Network error]: ${networkError}`);
+});
 
 /*
 export const REFRESH_QUERY = gql`
@@ -119,7 +132,7 @@ export const useNewClient = () => {
   const [authToken] = useAuthToken();
   const authLink = authMiddleware(authToken);
   return new ApolloClient({
-    link: ApolloLink.from([ authLink, httpLink]),
+    link: ApolloLink.from([ authLink, errorLink, httpLink]),
     cache,
   });
 };

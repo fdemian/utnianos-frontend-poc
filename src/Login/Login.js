@@ -6,7 +6,7 @@ import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import TopIcon from './TopIcon';
 //import Loading from '../Loading/LoadingIndicator';
 import { useLoginMutation } from "./loginMutation";
-import { useIsLoggedIn } from './authToken';
+import { useIsLoggedIn, useAuthToken } from './authToken';
 import './Login.css';
 
 const layout = {
@@ -23,6 +23,7 @@ const LoginScreen = (props) => {
   // User login hook.
   const [loginMutation] = useLoginMutation();
   const { isLoggedIn } = useIsLoggedIn();
+  const [authToken, _1, _2] = useAuthToken();
 
   // Finished checking login values.
   const onFinish = values => {
@@ -35,7 +36,7 @@ const LoginScreen = (props) => {
      console.log('Failed:', errorInfo);
   };
 
-  if(isLoggedIn)
+  if(isLoggedIn && authToken['auth'] && authToken['id'])
     return <Redirect to="/" />;
 
   return (

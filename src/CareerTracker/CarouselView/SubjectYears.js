@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../CareerTracker.css';
+import '../CareerTracker.css';
 import YearOfStudy from '../YearOfStudy/YearOfStudy';
 
 const SubjectYears = (props) => {

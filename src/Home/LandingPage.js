@@ -18,10 +18,16 @@ const LandingPage = () => {
 
   const [authToken, _, _d] = useAuthToken();
   const id = authToken['id'];
+
+  console.clear();
+  console.log(id);
+  console.log(":::::");
+
   const { loading, error, data } = useQuery(GET_USER, {
     variables: { id: id },
+    skip: !id
   });
-  
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
