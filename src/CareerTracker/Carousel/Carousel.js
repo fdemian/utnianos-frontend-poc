@@ -64,6 +64,7 @@ const Carousel = (props) => {
             coursesStatus={coursesStatus}
             completionStatuses={completionStatuses}
             prerrequisites={prerrequisites}
+            allCourses={courses}
           />
         ))}
         </div>

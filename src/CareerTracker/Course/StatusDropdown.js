@@ -12,14 +12,14 @@ const colors = [
 const categroyFromStatus = (currentStatus, completionStatuses) =>
   completionStatuses.filter(c => c.id === currentStatus.completionId)[0].name;
 
-const StatusDropdown = ({ updateFn, materiaId, completionStatuses, currentStatus, canTakeFinalExam }) => (
+const StatusDropdown = ({ updateFn, courseId, completionStatuses, currentStatus, canTakeFinalExam }) => (
   <span>
     <Select
       style={{ width: '100%' }}
       optionFilterProp="children"
       onChange={(value) => {
         const id = completionStatuses.find(c => c.name === value).id;
-        updateFn(materiaId, id)
+        updateFn(courseId, id)
         }
       }
       defaultValue={categroyFromStatus(currentStatus, completionStatuses)}

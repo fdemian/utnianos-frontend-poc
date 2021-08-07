@@ -4,7 +4,7 @@ import DisplayList from './DisplayList';
 const Pendientes = ({ course, final }) => {
   return (
     <div>
-      <strong>Para cursar hacen falta las siguientes correlativas:</strong>
+      <strong>Esta materia tiene como correlativas:</strong>
       <div>
         <DisplayList title="Con cursada: " list={course} />
       </div>

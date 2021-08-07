@@ -1,6 +1,6 @@
 import React from 'react';
 import { Popover, Card } from 'antd';
-import PopoverContent from '../Pendientes/Pendientes';
+import PopoverContent from '../PendingRequisites/Pending';
 import StatusDropdown from './StatusDropdown';
 import './Course.css';
 
@@ -26,6 +26,10 @@ const getPrerreqList = (courses, prerrequisites) => {
   const idsList = prerrequisites.map(p => p.prerrequisiteId);
   const prerreqs = courses.filter(p => idsList.includes(p.id));
 
+  console.log(courses);
+  console.log(prerrequisites);
+  console.log("?????????");
+
   return prerreqs;
 }
 
@@ -38,7 +42,7 @@ const Course = (props) => {
     currentStatus,
     prerrequisites,
     coursesStatus,
-    courses
+    allCourses
   } = props;
 
   const finalReq = prerrequisites.filter(p => p.type === 'F');
@@ -56,7 +60,7 @@ const Course = (props) => {
           </p>
           <StatusDropdown
             updateFn={updateEstado}
-            materiaId={course.id}
+            courseId={course.id}
             completionStatuses={completionStatuses}
             currentStatus={currentStatus}
             canTakeFinalExam={canTakeFinalExam}
@@ -66,16 +70,17 @@ const Course = (props) => {
     );
   }
 
-  const pendingCourse = getPrerreqList(courses, courseReq);
-  const pendingFinal  = getPrerreqList(courses, finalReq);
+
+  const pendingCourse = getPrerreqList(allCourses, courseReq);
+  const pendingFinal  = getPrerreqList(allCourses, finalReq);
 
   return (
     <div className="Course Disabled">
-      {/*<Popover
+      <Popover
         content={ <PopoverContent course={pendingCourse} final={pendingFinal} /> }
         title={course.name}
         trigger="hover"
-      >*/}
+      >
         <Card className="CourseCard">
 
           <p className="Unselectable">
@@ -89,7 +94,7 @@ const Course = (props) => {
           </p>
 
         </Card>
-      {/*</Popover>*/}
+      </Popover>
     </div>
   );
 

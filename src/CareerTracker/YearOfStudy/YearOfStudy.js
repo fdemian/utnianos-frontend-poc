@@ -16,13 +16,14 @@ const YearOfStudy = (props) => {
     updateEstado,
     coursesStatus,
     completionStatuses,
-    prerrequisites
+    prerrequisites,
+    allCourses
   } = props;
-  
+
   return(
   <div className="Container">
     <p className="Heading">
-Año
+      Año
       {year}
     </p>
     <hr className="Separator" />
@@ -35,7 +36,7 @@ Año
           prerrequisites={getCoursePrerrequisites(course.id, prerrequisites)}
           coursesStatus={coursesStatus}
           currentStatus={getCourseStatus(course, coursesStatus)}
-          courses={courses}
+          allCourses={allCourses}
         />
       </div>
     ))}
