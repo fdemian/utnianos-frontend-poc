@@ -44,7 +44,7 @@ const TrackerComponent = (props) => {
   <>
     <h2 className="carrer-name">{name}</h2>
     <CarouselView
-      materias={courses}
+      courses={courses}
       coursesStatus={coursesStatus}
       completionStatuses={completionStatuses}
       updateEstado={changeStatusFn}

@@ -7,7 +7,7 @@ const CarouselView = (props) => {
   const {
     coursesStatus,
     completionStatuses,
-    materias,
+    courses,
     updateEstado,
     prerrequisites
   } = props;
@@ -19,7 +19,7 @@ const CarouselView = (props) => {
   <Carousel
     coursesStatus={coursesStatus}
     completionStatuses={completionStatuses}
-    materias={materias}
+    courses={courses}
     prerrequisites={prerrequisites}
     yearsPerTab={yearsPerTab}
     updateFn={updateEstado}

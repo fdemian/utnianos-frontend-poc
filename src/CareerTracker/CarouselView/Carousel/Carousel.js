@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group' // ES6
-import SubjectYears from '../SubjectYears';
+import YearOfStudy from '../../YearOfStudy/YearOfStudy';
 import CarouselArrows from './CarouselArrows';
 import getYearsArray from './getYearsArray';
 import './Carousel.css';
+import '../../CareerTracker.css';
 
 const Carousel = (props) => {
 
   const {
-    materias,
+    courses,
     yearsPerTab,
     updateFn,
     coursesStatus,
     completionStatuses,
     prerrequisites
   } = props;
-  const studyYears = getYearsArray(yearsPerTab, materias);
+  const studyYears = getYearsArray(yearsPerTab, courses);
 
   const [currentTab, setCurrentTab] = useState(1);
   const [totalTabs] = useState(studyYears.length);
@@ -38,7 +39,7 @@ const Carousel = (props) => {
     return null;
   }
 
-  const numberOfYears = Array.from(new Set(materias.map(m => m.year))).length;
+  const numberOfYears = Array.from(new Set(courses.map(m => m.year))).length;
   const showArrows = numberOfYears > 3;
 
   return (
@@ -53,14 +54,19 @@ const Carousel = (props) => {
           transitionEnter
           transitionLeave
         >
-          <SubjectYears
-            years={years}
-            courses={materias}
-            updateFn={updateFn}
+        <div className="YearsVisualizer">
+        {years.map((year) => (
+          <YearOfStudy
+            key={year.year}
+            year={year.year}
+            courses={year.courses}
+            updateEstado={updateFn}
             coursesStatus={coursesStatus}
             completionStatuses={completionStatuses}
             prerrequisites={prerrequisites}
           />
+        ))}
+        </div>
         </CSSTransition>
       </TransitionGroup>
     </div>

@@ -18,7 +18,7 @@ const YearOfStudy = (props) => {
     completionStatuses,
     prerrequisites
   } = props;
-
+  
   return(
   <div className="Container">
     <p className="Heading">
