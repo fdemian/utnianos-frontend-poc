@@ -1,6 +1,7 @@
 import React from 'react';
 import { gql, useQuery } from "@apollo/client";
-import CarouselView from './CarouselView/CarouselView';
+import { useMediaQuery } from 'react-responsive';
+import Carousel from './Carousel/Carousel';
 import './CareerTracker.css';
 
 const GET_CAREER_PLAN = gql`
@@ -28,6 +29,7 @@ const TrackerComponent = (props) => {
     changeStatusFn
   } = props;
 
+  const isDesktop = useMediaQuery({query: '(min-device-width: 1200px)'});
   const { data, loading, error } = useQuery(GET_CAREER_PLAN, {
     variables: { id: careerId }
   });
@@ -40,15 +42,18 @@ const TrackerComponent = (props) => {
 
   const { courses, name } = data.careerPlan;
 
+  const yearsPerTab = isDesktop ? 3 : 1;
+
   return (
   <>
     <h2 className="carrer-name">{name}</h2>
-    <CarouselView
-      courses={courses}
+    <Carousel
       coursesStatus={coursesStatus}
       completionStatuses={completionStatuses}
-      updateEstado={changeStatusFn}
+      courses={courses}
       prerrequisites={prerrequisites}
+      yearsPerTab={yearsPerTab}
+      updateFn={changeStatusFn}
     />
   </>
   );

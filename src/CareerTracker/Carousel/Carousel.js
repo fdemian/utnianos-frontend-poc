@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group' // ES6
-import YearOfStudy from '../../YearOfStudy/YearOfStudy';
+import YearOfStudy from '../YearOfStudy/YearOfStudy';
 import CarouselArrows from './CarouselArrows';
 import getYearsArray from './getYearsArray';
 import './Carousel.css';
-import '../../CareerTracker.css';
+import '../CareerTracker.css';
 
 const Carousel = (props) => {
 
