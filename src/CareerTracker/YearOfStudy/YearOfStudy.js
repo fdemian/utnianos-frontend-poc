@@ -1,5 +1,5 @@
 import React from 'react';
-import Subject from '../Subject/Subject';
+import Course from '../Course/Course';
 import './YearOfStudy.css';
 
 const getCourseStatus = (subject, coursesStatus) =>
@@ -11,13 +11,12 @@ prerrequisites.filter(p => p.courseId === courseId);
 const YearOfStudy = (props) => {
 
   const {
-    subjects,
+    courses,
     year,
     updateEstado,
     coursesStatus,
     completionStatuses,
-    prerrequisites,
-    materias
+    prerrequisites
   } = props;
 
   return(
@@ -27,16 +26,16 @@ Año
       {year}
     </p>
     <hr className="Separator" />
-    {subjects.map((subject) => (
-      <div key={subject.id}>
-        <Subject
-          subject={subject}
+    {courses.map((course) => (
+      <div key={course.id}>
+        <Course
+          course={course}
           updateEstado={updateEstado}
           completionStatuses={completionStatuses}
-          prerrequisites={getCoursePrerrequisites(subject.id, prerrequisites)}
+          prerrequisites={getCoursePrerrequisites(course.id, prerrequisites)}
           coursesStatus={coursesStatus}
-          currentStatus={getCourseStatus(subject, coursesStatus)}
-          courses={materias}
+          currentStatus={getCourseStatus(course, coursesStatus)}
+          courses={courses}
         />
       </div>
     ))}

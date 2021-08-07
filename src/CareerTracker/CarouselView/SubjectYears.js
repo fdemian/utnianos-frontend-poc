@@ -9,8 +9,7 @@ const SubjectYears = (props) => {
       updateFn,
       coursesStatus,
       completionStatuses,
-      prerrequisites,
-      materias
+      prerrequisites
     } = props;
 
     return(
@@ -19,8 +18,7 @@ const SubjectYears = (props) => {
         <YearOfStudy
           key={year.year}
           year={year.year}
-          subjects={year.subjects}
-          materias={materias}
+          courses={year.courses}
           updateEstado={updateFn}
           coursesStatus={coursesStatus}
           completionStatuses={completionStatuses}

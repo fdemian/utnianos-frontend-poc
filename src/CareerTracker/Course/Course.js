@@ -2,7 +2,7 @@ import React from 'react';
 import { Popover, Card } from 'antd';
 import PopoverContent from '../Pendientes/Pendientes';
 import StatusDropdown from './StatusDropdown';
-import './Subject.css';
+import './Course.css';
 
 const prerreqSatisfy = (req, statuses) => {
   const filteredStatuses = statuses.find(s =>
@@ -13,9 +13,9 @@ const prerreqSatisfy = (req, statuses) => {
   return filteredStatuses !== undefined;
 }
 
-const hasPrerrequisites = (subject, prerrequisites, coursesStatus) => {
+const hasPrerrequisites = (prerrequisites, coursesStatus) => {
 
-  // The subject has no prerrequisites.
+  // The course has no prerrequisites.
   if(prerrequisites.length === 0)
     return true;
 
@@ -29,10 +29,10 @@ const getPrerreqList = (courses, prerrequisites) => {
   return prerreqs;
 }
 
-const Subject = (props) => {
+const Course = (props) => {
 
   const {
-    subject,
+    course,
     updateEstado,
     completionStatuses,
     currentStatus,
@@ -43,19 +43,20 @@ const Subject = (props) => {
 
   const finalReq = prerrequisites.filter(p => p.type === 'F');
   const courseReq = prerrequisites.filter(p => p.type === 'C');
-  const canTakeCourse = hasPrerrequisites(subject, courseReq, coursesStatus);
-  const canTakeFinalExam = hasPrerrequisites(subject, finalReq, coursesStatus);
+  const canTakeCourse = hasPrerrequisites(courseReq, coursesStatus);
+  const canTakeFinalExam = hasPrerrequisites(finalReq, coursesStatus);
+
 
   if (canTakeCourse) {
     return (
-      <div className="Subject">
-        <Card className="SubjectCard">
-          <p className="SubjectNameContainer">
-            <strong className="SubjectName">{subject.name}</strong>
+      <div className="Course">
+        <Card className="CourseCard">
+          <p className="CourseNameContainer">
+            <strong className="CourseName">{course.name}</strong>
           </p>
           <StatusDropdown
             updateFn={updateEstado}
-            materiaId={subject.id}
+            materiaId={course.id}
             completionStatuses={completionStatuses}
             currentStatus={currentStatus}
             canTakeFinalExam={canTakeFinalExam}
@@ -69,17 +70,17 @@ const Subject = (props) => {
   const pendingFinal  = getPrerreqList(courses, finalReq);
 
   return (
-    <div className="Subject Disabled">
-      <Popover
+    <div className="Course Disabled">
+      {/*<Popover
         content={ <PopoverContent course={pendingCourse} final={pendingFinal} /> }
-        title={subject.name}
+        title={course.name}
         trigger="hover"
-      >
-        <Card className="SubjectCard">
+      >*/}
+        <Card className="CourseCard">
 
           <p className="Unselectable">
-            <strong className="SubjectName">
-              {subject.name}
+            <strong className="CourseName">
+              {course.name}
             </strong>
           </p>
 
@@ -88,10 +89,10 @@ const Subject = (props) => {
           </p>
 
         </Card>
-      </Popover>
+      {/*</Popover>*/}
     </div>
   );
 
 }
 
-export default Subject;
+export default Course;

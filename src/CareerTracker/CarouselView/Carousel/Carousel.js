@@ -55,7 +55,7 @@ const Carousel = (props) => {
         >
           <SubjectYears
             years={years}
-            materias={materias}
+            courses={materias}
             updateFn={updateFn}
             coursesStatus={coursesStatus}
             completionStatuses={completionStatuses}
