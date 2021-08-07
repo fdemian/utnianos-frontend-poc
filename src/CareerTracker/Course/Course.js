@@ -1,33 +1,17 @@
-import React from 'react';
-import { Popover, Card } from 'antd';
-import PopoverContent from '../PendingRequisites/Pending';
+import React, {
+  lazy,
+  Suspense
+} from 'react';
+import { Card, Spin } from 'antd';
 import StatusDropdown from './StatusDropdown';
+import {
+  getCoursePrerrequisites,
+  getCourseStatus,
+  hasPrerrequisites
+} from './utils';
 import './Course.css';
 
-const prerreqSatisfy = (req, statuses) => {
-  const filteredStatuses = statuses.find(s =>
-    s.courseId === req.prerrequisiteId &&
-    s.completionId >= req.completionId
-  );
-
-  return filteredStatuses !== undefined;
-}
-
-const hasPrerrequisites = (prerrequisites, coursesStatus) => {
-
-  // The course has no prerrequisites.
-  if(prerrequisites.length === 0)
-    return true;
-
-  return prerrequisites.every(req => prerreqSatisfy(req, coursesStatus));
-}
-
-const getPrerreqList = (courses, prerrequisites) => {
-  const idsList = prerrequisites.map(p => p.prerrequisiteId);
-  const prerreqs = courses.filter(p => idsList.includes(p.id));
-  
-  return prerreqs;
-}
+const DisabledCourse = lazy(() => import('./DisabledCourse'));
 
 const Course = (props) => {
 
@@ -35,17 +19,17 @@ const Course = (props) => {
     course,
     updateEstado,
     completionStatuses,
-    currentStatus,
-    prerrequisites,
     coursesStatus,
-    allCourses
+    allCourses,
+    allPrereq
   } = props;
 
+  const prerrequisites = getCoursePrerrequisites(course.id, allPrereq);
+  const currentStatus = getCourseStatus(course, coursesStatus);
   const finalReq = prerrequisites.filter(p => p.type === 'F');
   const courseReq = prerrequisites.filter(p => p.type === 'C');
   const canTakeCourse = hasPrerrequisites(courseReq, coursesStatus);
   const canTakeFinalExam = hasPrerrequisites(finalReq, coursesStatus);
-
 
   if (canTakeCourse) {
     return (
@@ -66,32 +50,16 @@ const Course = (props) => {
     );
   }
 
-
-  const pendingCourse = getPrerreqList(allCourses, courseReq);
-  const pendingFinal  = getPrerreqList(allCourses, finalReq);
-
   return (
-    <div className="Course Disabled">
-      <Popover
-        content={ <PopoverContent course={pendingCourse} final={pendingFinal} /> }
-        title={course.name}
-        trigger="hover"
-      >
-        <Card className="CourseCard">
-
-          <p className="Unselectable">
-            <strong className="CourseName">
-              {course.name}
-            </strong>
-          </p>
-
-          <p className="Unselectable">
-            No se cumplen las coorrelativas para que curses esta materia.
-          </p>
-
-        </Card>
-      </Popover>
-    </div>
+  <Suspense fallback={<Spin />}>
+    <DisabledCourse
+      key={course.id}
+      name={course.name}
+      allCourses={allCourses}
+      courseReq={courseReq}
+      finalReq={finalReq}
+    />
+  </Suspense>
   );
 
 }

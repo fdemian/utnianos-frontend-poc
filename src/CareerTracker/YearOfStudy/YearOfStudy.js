@@ -2,12 +2,6 @@ import React from 'react';
 import Course from '../Course/Course';
 import './YearOfStudy.css';
 
-const getCourseStatus = (subject, coursesStatus) =>
-coursesStatus.filter(c => c.courseId === subject.id)[0];
-
-const getCoursePrerrequisites = (courseId, prerrequisites) =>
-prerrequisites.filter(p => p.courseId === courseId);
-
 const YearOfStudy = (props) => {
 
   const {
@@ -33,9 +27,8 @@ const YearOfStudy = (props) => {
           course={course}
           updateEstado={updateEstado}
           completionStatuses={completionStatuses}
-          prerrequisites={getCoursePrerrequisites(course.id, prerrequisites)}
+          allPrereq={prerrequisites}
           coursesStatus={coursesStatus}
-          currentStatus={getCourseStatus(course, coursesStatus)}
           allCourses={allCourses}
         />
       </div>
