@@ -14,7 +14,6 @@ const GET_PLAN_STATUS = gql`
   }
 `;
 
-
 const GET_COMPLETION_STATUSES = gql`
   query CompletionStatuses {
     completionStatuses {
@@ -46,7 +45,6 @@ const CHANGE_COURSE_STATUS = gql`
    }
   }
 `;
-
 
 const CareeerPlanTracker = ({ user, careerPlan }) => {
 

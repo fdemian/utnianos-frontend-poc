@@ -11,31 +11,19 @@ const { Content, Header } = Layout;
 
 const App = (props) => {
 
-  // Fetch user data.
-  // Fetch config data.
-  //const { config, error } = useConfig();
-
-  // Fetch media data.
-  //const { description, blogName } = config;
   const isMobile = useMediaQuery({query: '(max-device-width: 500px)'});
   const contentClass = "content-container" + (isMobile ? " mobile": "");
   const { children } = props;
-
+  
   /*
   if(loggedIn) {
     loadWebsocket();
   }
-
-  if(error || !config || (loggedIn && !user))
-    return null;
   */
 
   const navProps = {
     mobile: isMobile,
     blogName: "UTNIANOS",
-    /*config: config,
-    isFetching: isLoading && userId!==null,
-    */
     notificationsEnabled: false,
     notifications: [],
   };
@@ -46,7 +34,7 @@ const App = (props) => {
    <Helmet>
       <meta charset="utf-8" />
       <meta name="description" content="" />
-      <title>Utnianos</title>
+      <title>UTNianos</title>
     </Helmet>
 
     <Layout data-testid="app-layout">

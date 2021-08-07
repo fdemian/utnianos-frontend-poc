@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { lazy, useState, Suspense } from 'react';
 import { gql, useQuery } from "@apollo/client";
 import { useAuthToken} from '../Login/authToken';
 import { Spin } from 'antd';
-import CareerPlanSelector from './CareerPlanSelector';
-import CareerPlanTracker from './CareerPlanTracker';
+
+const CareerPlanSelector = lazy(() => import('./CareerPlanSelector'));
+const CareerPlanTracker = lazy(() => import('./CareerPlanTracker'));
 
 const GET_USER = gql`
   query User($id: Int!) {
@@ -32,7 +33,7 @@ const GET_CAREER_PLANS = gql`
 
 const CareerTracker = () => {
 
-  const [authToken, _, removeAuthToken] = useAuthToken();
+  const [authToken, _, _2] = useAuthToken();
   const id = authToken['id'];
   const queryOpts = { variables: { id: id } };
   const userQuery = useQuery(GET_USER, queryOpts);
@@ -49,8 +50,20 @@ const CareerTracker = () => {
     setPlan(user.careerPlan.id);
   }
 
-  return (
-  <div>
+  if(plan){
+    return (
+    <Suspense fallback={<Spin />}>
+      <h1 className="career-tracker-title">Seguidor de carrera</h1>
+      <CareerPlanTracker
+        user={user}
+        careerPlan={plan}
+      />
+    </Suspense>
+    );
+  }
+
+  return(
+  <Suspense fallback={<Spin />}>
     <h1 className="career-tracker-title">Seguidor de carrera</h1>
     <CareerPlanSelector
       user={user}
@@ -58,12 +71,9 @@ const CareerTracker = () => {
       setCareer={setPlan}
       plan={plan}
     />
-    <CareerPlanTracker
-      user={user}
-      careerPlan={plan}
-    />
-  </div>
-  );
+   </Suspense>
+   );
+
 }
 
 export default CareerTracker;

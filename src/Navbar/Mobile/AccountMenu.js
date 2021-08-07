@@ -1,7 +1,4 @@
-import React, {
-  lazy,
-  Suspense
-} from 'react';
+import React, { Suspense } from 'react';
 import Menu from 'antd/lib/menu';
 import Spin from 'antd/lib/spin';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

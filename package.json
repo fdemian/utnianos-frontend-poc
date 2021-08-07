@@ -28,6 +28,7 @@
     "web-vitals": "2.1.0"
   },
   "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -68,5 +69,8 @@
       "src/Routes/Routes.js",
       "/node_modules/(?!antd|@ant-design|rc-.+?|@babel/runtime).+(js|jsx)$"
     ]
+  },
+  "devDependencies": {
+    "source-map-explorer": "^2.5.2"
   }
 }
