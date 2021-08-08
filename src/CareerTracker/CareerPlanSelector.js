@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
-import { Button, Card } from 'antd';
+import { gql, useMutation, useQuery } from '@apollo/client';
+import { Button, Card, Spin } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGraduationCap as careerIcon } from '@fortawesome/free-solid-svg-icons';
 import './CareerTracker.css';
@@ -12,6 +12,7 @@ const cardStyle = {
 
 const { Meta } = Card;
 
+// Mutations/queries.
 const ADD_CAREER_PLAN = gql`
   mutation AddCareerPlan($planId: Int!, $userId: Int!) {
     addCareerPlan(planId: $planId, userId: $userId) {
@@ -20,8 +21,19 @@ const ADD_CAREER_PLAN = gql`
   }
 `;
 
-const CareerPlanSelector = ({ careerPlans, user, setCareer }) => {
+const GET_CAREER_PLANS = gql`
+  query CareerPlans {
+    careerPlans {
+      __typename
+      id
+      name
+    }
+  }
+`;
 
+const CareerPlanSelector = ({ user, setCareer }) => {
+
+  const careerPlansQuery = useQuery(GET_CAREER_PLANS);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [addCareerPlan, { data }] = useMutation(ADD_CAREER_PLAN);
 
@@ -37,12 +49,17 @@ const CareerPlanSelector = ({ careerPlans, user, setCareer }) => {
     setCareer(selectedPlan);
   }
 
+  if(careerPlansQuery.loading)
+    return <Spin />;
+
+  const { careerPlans } = careerPlansQuery.data;
+
   return (
   <div className="career-plan-container">
 
     <span className="career-plan-text">
-      <p>Parece que no tenes un plan de carrera elegido</p>
-      <p>Elegí uno para empezar a usar el seguidor de carrera</p>
+      <p>Aún no elegiste un plan de carrera.</p>
+      <p>Selecciona tu carrera de la siguiente lista para continuar.</p>
     </span>
 
     <span className="carrer-plans">

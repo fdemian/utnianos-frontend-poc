@@ -1,8 +1,8 @@
 import { useCookies } from "react-cookie";
 
-const USER_ID = "USER_ID";
 const AUTH_TOKEN = 'AUTH_TOKEN';
 const REFRESH_TOKEN = 'REFRESH_TOKEN';
+const USER_ID = 'USER_ID';
 
 // custom hook to handle authToken - we use compositon to decouple the auth system and it's storage
 export const useAuthToken = () => {
@@ -13,10 +13,10 @@ export const useAuthToken = () => {
   const [userIdCookies, setUserIdCookie, removeUserIdCookie] = useCookies([USER_ID]);
 
   // this function allows to save any string in our cookies, under the key "authToken"
-  const setAuthToken = (id, token, refresh) => {
-    setAuthCookie(AUTH_TOKEN, token);
-    setRefreshCookie(REFRESH_TOKEN, refresh);
-    setUserIdCookie(USER_ID, id);
+  const setAuthToken = async (id, token, refresh) => {
+    await setAuthCookie(AUTH_TOKEN, token);
+    await setRefreshCookie(REFRESH_TOKEN, refresh);
+    await setUserIdCookie(USER_ID, id);
   }
 
   //this function removes the key "authToken" from our cookies. Useful to logout

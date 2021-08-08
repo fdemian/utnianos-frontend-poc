@@ -33,6 +33,7 @@ const Course = (props) => {
 
   if (canTakeCourse) {
     return (
+    <Suspense fallback={<Spin />}>
       <div className="Course">
         <Card className="CourseCard">
           <p className="CourseNameContainer">
@@ -47,6 +48,7 @@ const Course = (props) => {
           />
         </Card>
       </div>
+    </Suspense>  
     );
   }
 

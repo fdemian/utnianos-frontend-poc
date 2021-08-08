@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
+import { Spin } from 'antd';
 import { gql, useQuery } from "@apollo/client";
 import { useMediaQuery } from 'react-responsive';
-import Carousel from './Carousel/Carousel';
 import './CareerTracker.css';
 
 const GET_CAREER_PLAN = gql`
@@ -19,6 +19,9 @@ const GET_CAREER_PLAN = gql`
   }
 `;
 
+const Carousel = lazy(() => import('./Carousel/Carousel'));
+
+
 const TrackerComponent = (props) => {
 
   const {
@@ -30,9 +33,7 @@ const TrackerComponent = (props) => {
   } = props;
 
   const isDesktop = useMediaQuery({query: '(min-device-width: 1200px)'});
-  const { data, loading, error } = useQuery(GET_CAREER_PLAN, {
-    variables: { id: careerId }
-  });
+  const { data, loading, error } = useQuery(GET_CAREER_PLAN, { variables: { id: careerId } });
 
   if(loading)
     return <p>Loading...</p>;
@@ -46,15 +47,19 @@ const TrackerComponent = (props) => {
 
   return (
   <>
-    <h2 className="carrer-name">{name}</h2>
-    <Carousel
-      coursesStatus={coursesStatus}
-      completionStatuses={completionStatuses}
-      courses={courses}
-      prerrequisites={prerrequisites}
-      yearsPerTab={yearsPerTab}
-      updateFn={changeStatusFn}
-    />
+    <h2 className="carrer-name" key="career-name">
+      {name}
+    </h2>
+    <Suspense fallback={<Spin />}>
+      <Carousel
+        coursesStatus={coursesStatus}
+        completionStatuses={completionStatuses}
+        courses={courses}
+        prerrequisites={prerrequisites}
+        yearsPerTab={yearsPerTab}
+        updateFn={changeStatusFn}
+      />
+     </Suspense>
   </>
   );
 }

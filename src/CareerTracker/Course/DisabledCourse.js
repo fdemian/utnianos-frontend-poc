@@ -1,8 +1,9 @@
-import React from 'react';
-import { Popover, Card } from 'antd';
-import PopoverContent from '../PendingRequisites/Pending';
+import React, { lazy, Suspense} from 'react';
+import { Popover, Card, Spin } from 'antd';
 import { getPrerreqList } from './utils';
 import './Course.css';
+
+const PopoverContent = lazy(() => import('../PendingRequisites/Pending'));
  
 const DisabledCourse = ({ name, allCourses, courseReq, finalReq}) => {
 
@@ -12,7 +13,11 @@ const DisabledCourse = ({ name, allCourses, courseReq, finalReq}) => {
   return (
     <div className="Course Disabled">
       <Popover
-        content={ <PopoverContent course={pendingCourse} final={pendingFinal} /> }
+        content={
+        <Suspense fallback={<Spin />}>
+           <PopoverContent course={pendingCourse} final={pendingFinal} />
+        </Suspense>
+        }
         title={name}
         trigger="hover"
       >

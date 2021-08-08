@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-//import TrackerHeading from './TrackerComponent/TrackerHeading';
+import React, { lazy, Suspense, useState } from 'react';
 import { Spin } from 'antd';
-import TrackerComponent from './TrackerComponent';
 import { gql, useQuery, useMutation } from "@apollo/client";
 
+// Queries
 const GET_PLAN_STATUS = gql`
   query CoursesStatus($id: Int!) {
     coursesStatus(id: $id) {
@@ -36,6 +35,7 @@ const GET_PRERREQUISITES = gql`
   }
 `;
 
+// Mutations.
 const CHANGE_COURSE_STATUS = gql`
   mutation ChangeCourseStatus($courseId: Int!, $statusId: Int!, $userId: Int!) {
    changeCourseStatus(courseId: $courseId, statusId: $statusId, userId: $userId) {
@@ -46,6 +46,9 @@ const CHANGE_COURSE_STATUS = gql`
   }
 `;
 
+const TrackerComponent = lazy(() => import('./TrackerComponent'));
+
+
 const CareeerPlanTracker = ({ user, careerPlan }) => {
 
   const userId = user.id;
@@ -53,9 +56,7 @@ const CareeerPlanTracker = ({ user, careerPlan }) => {
   const [courseStatusesInternal, setCoursesStatuses] = useState(null);
 
   const {data, loading, error } = useQuery(GET_PLAN_STATUS, {
-    variables: {
-      id: userId,
-    },
+    variables: { id: userId },
     skip: !careerPlan
   });
 
@@ -101,14 +102,16 @@ const CareeerPlanTracker = ({ user, careerPlan }) => {
   }
 
   return (
-  <TrackerComponent
-    careerId={careerPlan}
-    coursesStatus={courseStatusesInternal}
-    completionStatuses={completionStatuses}
-    prerrequisites={coursePrerrequisites}
-    userId={userId}
-    changeStatusFn={changeStatusFn}
-  />
+  <Suspense fallback={<Spin />}>
+    <TrackerComponent
+      careerId={careerPlan}
+      coursesStatus={courseStatusesInternal}
+      completionStatuses={completionStatuses}
+      prerrequisites={coursePrerrequisites}
+      userId={userId}
+      changeStatusFn={changeStatusFn}
+    />
+  </Suspense>
   );
 }
 
