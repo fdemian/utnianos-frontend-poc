@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group' // ES6
-import YearOfStudy from '../YearOfStudy/YearOfStudy';
+import Course from '../Course/Course';
 import CarouselArrows from './CarouselArrows';
 import getYearsArray from './getYearsArray';
 import './Carousel.css';
@@ -56,16 +56,25 @@ const Carousel = (props) => {
         >
         <div className="YearsVisualizer">
         {years.map((year) => (
-          <YearOfStudy
-            key={year.year}
-            year={year.year}
-            courses={year.courses}
-            updateEstado={updateFn}
-            coursesStatus={coursesStatus}
-            completionStatuses={completionStatuses}
-            prerrequisites={prerrequisites}
-            allCourses={courses}
-          />
+          <div className="Container" key={year.year}>
+            <p className="Heading">
+              Año
+              {year.year}
+            </p>
+            <hr className="Separator" />
+            {year.courses.map((course) => (
+              <div key={course.id}>
+                <Course
+                  course={course}
+                  updateEstado={updateFn}
+                  completionStatuses={completionStatuses}
+                  allPrereq={prerrequisites}
+                  coursesStatus={coursesStatus}
+                  allCourses={courses}
+                />
+              </div>
+            ))}
+          </div>
         ))}
         </div>
         </CSSTransition>
