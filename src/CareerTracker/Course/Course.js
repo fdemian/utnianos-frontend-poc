@@ -1,7 +1,4 @@
-import React, {
-  lazy,
-  Suspense
-} from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Card, Spin } from 'antd';
 import StatusDropdown from './StatusDropdown';
 import {
@@ -48,7 +45,7 @@ const Course = (props) => {
           />
         </Card>
       </div>
-    </Suspense>  
+    </Suspense>
     );
   }
 

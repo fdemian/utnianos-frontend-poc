@@ -16,8 +16,8 @@ const Carousel = (props) => {
     completionStatuses,
     prerrequisites
   } = props;
-  const studyYears = getYearsArray(yearsPerTab, courses);
 
+  const studyYears = getYearsArray(yearsPerTab, courses);
   const [currentTab, setCurrentTab] = useState(1);
   const [totalTabs] = useState(studyYears.length);
   const index = currentTab - 1;
@@ -43,43 +43,42 @@ const Carousel = (props) => {
   const showArrows = numberOfYears > 3;
 
   return (
-    <div>
-      <CarouselArrows prevFn={prevTab} nextFn={nextTab} showArrows={showArrows} />
-      <TransitionGroup>
-        <CSSTransition
-          transitionName="TransitionGroup"
-          transitionAppear={false}
-          transitionEnterTimeout={1000}
-          transitionLeaveTimeout={1000}
-          transitionEnter
-          transitionLeave
-        >
-        <div className="YearsVisualizer">
-        {years.map((year) => (
-          <div className="Container" key={year.year}>
-            <p className="Heading">
-              Año
-              {year.year}
-            </p>
-            <hr className="Separator" />
-            {year.courses.map((course) => (
-              <div key={course.id}>
-                <Course
-                  course={course}
-                  updateEstado={updateFn}
-                  completionStatuses={completionStatuses}
-                  allPrereq={prerrequisites}
-                  coursesStatus={coursesStatus}
-                  allCourses={courses}
-                />
-              </div>
-            ))}
-          </div>
-        ))}
+  <>
+    <CarouselArrows prevFn={prevTab} nextFn={nextTab} showArrows={showArrows} />
+    <TransitionGroup>
+      <CSSTransition
+        transitionName="TransitionGroup"
+        transitionAppear={false}
+        transitionEnterTimeout={1000}
+        transitionLeaveTimeout={1000}
+        transitionEnter
+        transitionLeave
+      >
+      <div className="YearsVisualizer">
+      {years.map((year) => (
+        <div className="Container" key={year.year}>
+          <p className="Heading">
+            Año
+            {year.year}
+          </p>
+          <hr className="Separator" />
+          {year.courses.map((course) => (
+            <Course
+              key={course.id}
+              course={course}
+              updateEstado={updateFn}
+              completionStatuses={completionStatuses}
+              allPrereq={prerrequisites}
+              coursesStatus={coursesStatus}
+              allCourses={courses}
+            />
+          ))}
         </div>
-        </CSSTransition>
-      </TransitionGroup>
-    </div>
+      ))}
+      </div>
+      </CSSTransition>
+    </TransitionGroup>
+  </>
   );
 
 }
