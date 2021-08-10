@@ -2,6 +2,7 @@ import React from 'react';
 import AppRoute from './AppRoute';
 import { render, fireEvent, act, waitFor} from '../utils/testing-utils';
 import '@testing-library/jest-dom/extend-expect';
+import { createMemoryHistory } from "history";
 
 const utils = require('../Login/authToken');
 const TestComponent = () => <p>AppRouter</p>;
@@ -21,6 +22,9 @@ describe("<AppRouter />", () => {
     jest.spyOn(utils, 'useIsLoggedIn').mockImplementation(() => ({
       isLoggedIn: true
     }));
+
+    const history = createMemoryHistory();
+    
     const { getByText } = render(
     <>
        <AppRoute
@@ -38,7 +42,8 @@ describe("<AppRouter />", () => {
          key="login3"
        />
     </>
-    , []);
+    , { history: history });
+
     expect(getByText("AppRouter")).toBeInTheDocument();
   })
 
@@ -60,10 +65,14 @@ describe("<AppRouter />", () => {
     jest.spyOn(utils, 'useIsLoggedIn').mockImplementation(() => ({
       isLoggedIn: false
     }));
-    const { getByText } = render(<>
+
+    const history = createMemoryHistory();
+
+    render(
+    <>
      <AppRoute
        exact={true}
-       path="/"
+       path="/test"
        component={TestComponent}
        isPrivate={true}
        key="--"
@@ -76,8 +85,8 @@ describe("<AppRouter />", () => {
        key="login"
      />
     </>
-    , []);
-    expect(getByText("Login")).toBeInTheDocument();
+    , {history: history});
+    expect(history.location.pathname).toStrictEqual("/");
   })
 
 

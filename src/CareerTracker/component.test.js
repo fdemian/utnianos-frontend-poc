@@ -1,6 +1,5 @@
 import React from 'react';
 import CareerTracker from './CareerTracker';
-import { Context as ResponsiveContext } from 'react-responsive'
 import { render, fireEvent, waitFor} from '../utils/testing-utils';
 import {
   GET_USER,

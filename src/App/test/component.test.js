@@ -31,6 +31,6 @@ describe("<App />", () => {
     expect(content).toBeTruthy();
     expect(header).toHaveClass('page-header-container');
 
-    await waitFor(() => expect(document.title).toEqual("Utnianos"));
+    await waitFor(() => expect(document.title).toEqual("UTNianos"));
   });
 });

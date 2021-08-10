@@ -15,12 +15,12 @@ const AppRoute = ({exact, path, component, isPrivate, key}) => {
   const logoutFn = async () => {
     await client.resetStore();
     removeAuthToken();
-    history.push(`/`);
+    history.push(`/login`);
   }
 
   if(isPrivate && !isLoggedIn){
     logoutFn();
-    return <Redirect to="/" />;
+    return <Redirect to="/login" />;
   }
   else return (
   <Suspense fallback={<Loading />}>
