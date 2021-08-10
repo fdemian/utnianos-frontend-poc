@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { Button, Card, Spin } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGraduationCap as careerIcon } from '@fortawesome/free-solid-svg-icons';
@@ -40,15 +40,16 @@ const CareerPlanSelector = ({ user, setCareer }) => {
   return (
   <div className="career-plan-container">
 
-    <span className="career-plan-text">
+    <span className="career-plan-text" key="career-plan-text">
       <p>Aún no elegiste un plan de carrera.</p>
       <p>Selecciona tu carrera de la siguiente lista para continuar.</p>
     </span>
 
-    <span className="carrer-plans">
+    <span className="carrer-plans" key="career-plans">
     {careerPlans.map(c => (
       <div>
         <Card
+            key={c.name}
             className={selectedPlan === c.id ? "career-plan-selected": ""}
             hoverable
             style={cardStyle}

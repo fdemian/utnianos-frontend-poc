@@ -1,42 +1,27 @@
 import React from 'react';
 import CareerTracker from './CareerTracker';
+import { Context as ResponsiveContext } from 'react-responsive'
 import { render, fireEvent, waitFor} from '../utils/testing-utils';
-import { GET_USER, GET_CAREER_PLANS } from './queries';
+import {
+  GET_USER,
+  GET_CAREER_PLANS,
+  GET_PLAN_STATUS,
+  GET_COMPLETION_STATUSES,
+  GET_PRERREQUISITES,
+  GET_CAREER_PLAN
+} from './queries';
 import { ADD_CAREER_PLAN } from './mutations';
 import '@testing-library/jest-dom/extend-expect';
 import { createMemoryHistory } from "history";
-
-const _user1 = {
-  __typename: "UserObject",
-	id: 1,
-	username: "pipe",
-	avatar: null,
-	careerPlan: null
-};
-
-const _user2 = {
-  __typename: "UserObject",
-	id: 1,
-	username: "pipe",
-	avatar: null,
-	careerPlan: {
-		id: 1,
-		name: "Ingenier\u00eda en sistemas de Informaci\u00f3n [K08] (UTN - FRBA)",
-		__typename: "CareerPlanObj"
-	}
-};
-
-const careerPlans = [{
-  __typename: "CareerPlanObj",
-	id: 1,
-  name: "Ingenier\u00eda en sistemas de Informaci\u00f3n [K08] (UTN - FRBA)"
-	},
-  {
-  __typename: "CareerPlanObj",
-	id: 2,
-  name: "Analista Universitario en Sistemas (UTN - FRBA)"
-}];
-
+import {
+  coursesStatus,
+  _user1,
+  _user2,
+  careerPlans,
+  completionStatuses,
+  coursePrerrequisites,
+  careerPlan
+} from './testData';
 
 jest.mock('../Login/authToken', () => ({
   useAuthToken: () => ([{'id': 1}])
@@ -76,7 +61,7 @@ describe("<CareerTracker />", () => {
        }
       ];
 
-      const { debug, getByText, getAllByRole, getByTestId } = render(<CareerTracker />, {mocks: mocks});
+      const { getByText, getAllByRole, getByTestId } = render(<CareerTracker />, {mocks: mocks});
 
       await waitFor(() => {
         expect(getByText("Seguidor de carrera")).toBeInTheDocument();
@@ -86,7 +71,6 @@ describe("<CareerTracker />", () => {
         expect(getByText(careerPlans[0].name)).toBeInTheDocument();
         expect(getByText(careerPlans[1].name)).toBeInTheDocument();
         expect(getAllByRole("button").length).toStrictEqual(careerPlans.length+1);
-        debug();
       });
 
       //
@@ -156,27 +140,15 @@ describe("<CareerTracker />", () => {
       ];
 
       const history = createMemoryHistory();
-      const { debug, getByText, getAllByRole, getByTestId } = render(<CareerTracker />, {mocks: mocks, history: history});
+      const { getAllByRole, getByTestId } = render(<CareerTracker />, {mocks: mocks, history: history});
 
-      await waitFor(() => {
-        expect(getByText("Seguidor de carrera")).toBeInTheDocument();
-      });
-
-      await waitFor(() => {
-        expect(getByText(careerPlans[0].name)).toBeInTheDocument();
-        expect(getByText(careerPlans[1].name)).toBeInTheDocument();
-        expect(getAllByRole("button").length).toStrictEqual(careerPlans.length+1);
-        debug();
-      });
-
-      //
       await waitFor(() => {
         expect(getByTestId("career-picker-button")).toHaveProperty('disabled', true);
       });
 
       const buttons = getAllByRole("button");
       fireEvent.click(buttons[0]);
-      
+
       // Confirmation button should remain enabled.
       fireEvent.click(getByTestId("career-picker-button"));
       await waitFor(() => {
@@ -184,6 +156,114 @@ describe("<CareerTracker />", () => {
       });
    })
 
+   it("User with a career plan > Basic interaction", async () => {
 
+     const mocks = [{
+       request: {
+         query: GET_USER,
+         variables: { id: 1 }
+       },
+       result: {
+         loading: false,
+         error: false,
+         data: { user: _user2 }
+       }
+     },
+     {
+       request: {
+         query: GET_PLAN_STATUS,
+         variables: { id: 1 }
+       },
+       result: {
+         loading: false,
+         error: false,
+         data: { coursesStatus: coursesStatus }
+       }
+     },
+     {
+       request: {
+         query: GET_COMPLETION_STATUSES
+       },
+       result: {
+         loading: false,
+         error: false,
+         data: { completionStatuses: completionStatuses }
+       }
+     },
+     {
+       request: {
+         query: GET_PRERREQUISITES
+       },
+       result: {
+         loading: false,
+         error: false,
+         data: { coursePrerrequisites: coursePrerrequisites }
+       }
+     },
+     {
+       request: {
+         query: GET_CAREER_PLAN,
+         variables: { id: 2 }
+       },
+       result: {
+         loading: false,
+         error: false,
+         data: { careerPlan: careerPlan }
+       }
+     }
+    ];
+
+    const { queryByText, getByText, getByTestId } = render(<CareerTracker />,{mocks: mocks});
+
+    await waitFor(() => {
+      expect(getByText("Seguidor de carrera")).toBeInTheDocument();
+      expect(getByText(careerPlan.name)).toBeInTheDocument();
+
+      const courses = careerPlan.courses.filter(c => c.year === 1);
+      for(const course of courses){
+        expect(getByText(course.name)).toBeInTheDocument();
+      }
+    })
+
+    // Click right arrow and get the 2nd year.
+    fireEvent.click(getByTestId("arrow-right"));
+
+    await waitFor(() => {
+      const courses2 = careerPlan.courses.filter(c => c.year === 2);
+      for(const course of courses2){
+        expect(getByText(course.name)).toBeInTheDocument();
+      }
+    })
+
+    // Click right arrow and get the 3rd year.
+    fireEvent.click(getByTestId("arrow-right"));
+
+    await waitFor(() => {
+      const courses3 = careerPlan.courses.filter(c => c.year === 3);
+      for(const course of courses3){
+        expect(getByText(course.name)).toBeInTheDocument();
+      }
+    })
+
+    // Click right arrow and get the 4th year.
+    fireEvent.click(getByTestId("arrow-right"));
+
+    await waitFor(() => {
+      const courses4 = careerPlan.courses.filter(c => c.year === 4);
+      for(const course of courses4){
+        expect(getByText(course.name)).toBeInTheDocument();
+      }
+    })
+
+    //Get the previous year and check that no current year elements are present.
+    fireEvent.click(getByTestId("arrow-left"));
+
+    await waitFor(() => {
+      const courses4 = careerPlan.courses.filter(c => c.year === 4);
+      for(const course of courses4){
+        expect(queryByText(course.name)).toStrictEqual(null);
+      }
+    })
+   })
 
 })

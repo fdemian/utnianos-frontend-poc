@@ -1,26 +1,11 @@
 import React, { lazy, Suspense } from 'react';
 import { Spin } from 'antd';
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useMediaQuery } from 'react-responsive';
+import { GET_CAREER_PLAN } from './queries';
 import './CareerTracker.css';
 
-const GET_CAREER_PLAN = gql`
-  query GetCareerPlan($id: Int!) {
-    careerPlan(id: $id) {
-      __typename
-      id
-      name
-      courses {
-        id
-        name
-        year
-      }
-    }
-  }
-`;
-
 const Carousel = lazy(() => import('./Carousel/Carousel'));
-
 
 const TrackerComponent = (props) => {
 
@@ -42,9 +27,8 @@ const TrackerComponent = (props) => {
     return <p>Error</p>;
 
   const { courses, name } = data.careerPlan;
-
   const yearsPerTab = isDesktop ? 3 : 1;
-
+  
   return (
   <>
     <h2 className="carrer-name" key="career-name">
