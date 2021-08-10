@@ -1,22 +1,12 @@
 import React, { lazy, Suspense, useState } from 'react';
 import { Spin } from 'antd';
-import { gql, useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import {
   GET_PLAN_STATUS,
   GET_COMPLETION_STATUSES,
   GET_PRERREQUISITES
 } from './queries';
-
-// Mutations.
-const CHANGE_COURSE_STATUS = gql`
-  mutation ChangeCourseStatus($courseId: Int!, $statusId: Int!, $userId: Int!) {
-   changeCourseStatus(courseId: $courseId, statusId: $statusId, userId: $userId) {
-    ok
-    courseId
-    statusId
-   }
-  }
-`;
+import { CHANGE_COURSE_STATUS } from './mutations';
 
 const TrackerComponent = lazy(() => import('./TrackerComponent'));
 
@@ -39,7 +29,7 @@ const CareeerPlanTracker = ({ user, careerPlan }) => {
 
   if(loading || statusesQuery.loading || prerreqQuery.loading)
     return <Spin tip="Loading..." />;
-  
+
   if(error || statusesQuery.error || prerreqQuery.error)
     return <p>Error</p>;
 

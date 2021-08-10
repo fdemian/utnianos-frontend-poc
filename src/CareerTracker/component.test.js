@@ -212,7 +212,14 @@ describe("<CareerTracker />", () => {
      }
     ];
 
-    const { queryByText, getByText, getByTestId } = render(<CareerTracker />,{mocks: mocks});
+    const {
+      debug,
+      queryByText,
+      getByText,
+      getByTestId,
+      getAllByText,
+      getAllByTestId
+    } = render(<CareerTracker />,{mocks: mocks});
 
     await waitFor(() => {
       expect(getByText("Seguidor de carrera")).toBeInTheDocument();
@@ -263,6 +270,25 @@ describe("<CareerTracker />", () => {
         expect(queryByText(course.name)).toStrictEqual(null);
       }
     })
+
+    fireEvent.click(getByTestId("arrow-right"));
+
+    //
+    const disabledText = "No se cumplen las coorrelativas para que curses esta materia.";
+    expect(getAllByText(disabledText).length).toStrictEqual(2);
+
+    /*
+    fireEvent.mouseOver(getAllByTestId("disabled-course")[0]);
+
+    await waitFor(() => {
+      expect(getByText("Para cursar te faltan las siguientes correlativas:"))
+      .toBeInTheDocument();
+      //debug();
+    })*/
+
+
    })
+
+   // TODO: change course status and check correlatives.
 
 })

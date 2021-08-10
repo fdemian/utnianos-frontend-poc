@@ -4,14 +4,14 @@ import { getPrerreqList } from './utils';
 import './Course.css';
 
 const PopoverContent = lazy(() => import('../PendingRequisites/Pending'));
- 
+
 const DisabledCourse = ({ name, allCourses, courseReq, finalReq}) => {
 
   const pendingCourse = getPrerreqList(allCourses, courseReq);
   const pendingFinal  = getPrerreqList(allCourses, finalReq);
 
   return (
-    <div className="Course Disabled">
+    <div className="Course Disabled" data-testid="disabled-course">
       <Popover
         content={
         <Suspense fallback={<Spin />}>
