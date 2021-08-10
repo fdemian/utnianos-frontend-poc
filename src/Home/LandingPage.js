@@ -17,6 +17,8 @@ const GET_USER = gql`
 const LandingPage = () => {
 
   const [authToken, _, _d] = useAuthToken();
+  console.clear();
+  console.log(authToken);
   const id = authToken['id'];
 
   const { loading, error, data } = useQuery(GET_USER, {

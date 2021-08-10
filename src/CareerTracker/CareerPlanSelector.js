@@ -3,6 +3,8 @@ import { gql, useMutation, useQuery } from '@apollo/client';
 import { Button, Card, Spin } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGraduationCap as careerIcon } from '@fortawesome/free-solid-svg-icons';
+import { GET_CAREER_PLANS } from './queries';
+import { ADD_CAREER_PLAN } from './mutations';
 import './CareerTracker.css';
 
 const cardStyle = {
@@ -11,25 +13,6 @@ const cardStyle = {
 };
 
 const { Meta } = Card;
-
-// Mutations/queries.
-const ADD_CAREER_PLAN = gql`
-  mutation AddCareerPlan($planId: Int!, $userId: Int!) {
-    addCareerPlan(planId: $planId, userId: $userId) {
-      ok
-    }
-  }
-`;
-
-const GET_CAREER_PLANS = gql`
-  query CareerPlans {
-    careerPlans {
-      __typename
-      id
-      name
-    }
-  }
-`;
 
 const CareerPlanSelector = ({ user, setCareer }) => {
 
@@ -82,6 +65,7 @@ const CareerPlanSelector = ({ user, setCareer }) => {
     <Button
       disabled={selectedPlan === null}
       className="career-picker-button"
+      data-testid="career-picker-button"
       size="large"
       icon={<FontAwesomeIcon icon={careerIcon} size="1x" />}
       onClick={setCareerPlan}

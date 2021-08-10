@@ -1,27 +1,11 @@
 import React, { lazy, useState, Suspense } from 'react';
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useAuthToken} from '../Login/authToken';
 import { Spin } from 'antd';
+import { GET_USER } from './queries';
 
 const CareerPlanSelector = lazy(() => import('./CareerPlanSelector'));
 const CareerPlanTracker = lazy(() => import('./CareerPlanTracker'));
-
-// Queries.
-const GET_USER = gql`
-  query User($id: Int!) {
-    user(id: $id) {
-      __typename
-      id
-      username
-      avatar
-      careerPlan {
-        id
-        name
-      }
-    }
-  }
-`;
-
 
 const CareerTracker = () => {
 
@@ -32,7 +16,7 @@ const CareerTracker = () => {
   const [plan, setPlan] =  useState(null);
 
   if(loading)
-    return <Spin />;
+    return <Spin tip="Loading" />;
 
   if(error){
     console.clear();
@@ -41,7 +25,6 @@ const CareerTracker = () => {
   }
 
   const { user } = data;
-
 
   if(user && user.careerPlan && !plan){
     setPlan(user.careerPlan.id);
