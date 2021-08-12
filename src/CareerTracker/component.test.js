@@ -213,12 +213,10 @@ describe("<CareerTracker />", () => {
     ];
 
     const {
-      debug,
       queryByText,
       getByText,
       getByTestId,
-      getAllByText,
-      getAllByTestId
+      getAllByText
     } = render(<CareerTracker />,{mocks: mocks});
 
     await waitFor(() => {

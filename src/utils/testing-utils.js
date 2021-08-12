@@ -1,17 +1,17 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { render } from '@testing-library/react';
 import { MockedProvider } from "@apollo/client/testing";
+import { BrowserRouter } from 'react-router-dom';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { createMemoryHistory } from "history";
+
 
 const TestingWrapper = (props) => {
   const { children, mocks, history} = props;
   return (
   <MockedProvider mocks={mocks}>
-    <Router history={history ? history : null}>
+    <BrowserRouter history={history ? history : null}>
       {children}
-    </Router>
+    </BrowserRouter>
   </MockedProvider>
   )
 }

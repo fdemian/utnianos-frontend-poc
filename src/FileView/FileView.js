@@ -1,22 +1,9 @@
 import React from 'react';
 import { Spin, Tag } from 'antd';
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
+import { GET_COURSE_MATERIAL } from './queries';
 import './FileView.css';
-
-const GET_COURSE_MATERIAL = gql`
-  query GetCourseMaterial($id: Int!) {
-    classMaterial(id: $id) {
-      name
-      description
-      contribTypes
-      course {
-        id
-        name
-      }
-    }
-  }
-`;
 
 const FileView = () => {
   const params = useParams();
@@ -33,7 +20,6 @@ const FileView = () => {
     return <p>Error</p>;
 
   const { classMaterial } = data;
-
   const {
    name,
    contribTypes,
