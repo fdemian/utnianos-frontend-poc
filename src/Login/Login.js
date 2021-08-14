@@ -25,6 +25,12 @@ const LoginScreen = (props) => {
   const { isLoggedIn } = useIsLoggedIn();
   const [authToken, _1, _2] = useAuthToken();
 
+  console.clear();
+  console.log('Logged in?:', isLoggedIn);
+  console.log('ID:', authToken['id']);
+  console.log('AUTH:', authToken['auth']);
+  console.log('REFRESH:', authToken['refresh']);
+
   // Finished checking login values.
   const onFinish = values => {
      const { username, password } = values;

@@ -45,8 +45,7 @@ const FileDetailsForm = (props) => {
     contributions,
     courseData
   } = props;
-
-
+  
   const onTitleChange = (e) => setFileTitle(e.target.value);
   const onDescriptionChange = (e) => setFileDescription(e.target.value);
   const onContribTypeChange = (e) => setSelectedTypes(e);

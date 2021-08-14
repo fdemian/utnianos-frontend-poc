@@ -12,7 +12,7 @@ import { onError } from "@apollo/client/link/error";
 //https://stackoverflow.com/questions/61327448/how-to-refresh-jwt-token-using-apollo-and-graphql
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
-  //console.clear();
+  console.clear();
   if (graphQLErrors)
     graphQLErrors.map(({ message, locations, path }) =>
       console.log(

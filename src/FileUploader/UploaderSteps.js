@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import { Steps, Button } from 'antd';
 import {Redirect} from 'react-router-dom';
 import FileDetailsForm from './FileDetailsForm';
-import FileUploader from './FileUploader';
 import FileSummary from './FileSummary';
 import LoadingIndicator from '../Loading/LoadingIndicator';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCheck as checkIcon,
+  faArrowLeft as arrowLeft,
+  faArrowRight as arrowRight
+} from '@fortawesome/free-solid-svg-icons';
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_CONTRIB_TYPES, GET_COURSES, ADD_CONTRIB } from './Queries';
 import './Uploader.css';
@@ -15,12 +20,7 @@ const UploaderSteps = () => {
 
   const [currentStep, setCurrentStep] = useState(0);
 
-  const [previewVisible, setPreviewVisible] =  useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState([]);
-
-  //
   const [fileTitle, setFileTitle] = useState("");
   const [fileDescription, setFileDescription] = useState("");
   const [selectedTypes, setSelectedTypes] = useState([]);
@@ -57,17 +57,6 @@ const UploaderSteps = () => {
       courseData
     };
 
-    const uploaderProps = {
-      previewVisible,
-      setPreviewVisible,
-      previewImage,
-      setPreviewImage,
-      previewTitle,
-      setPreviewTitle,
-      fileList,
-      setFileList
-    };
-
     const summaryProps = {
       fileList,
       fileTitle,
@@ -99,10 +88,6 @@ const UploaderSteps = () => {
       content: <FileDetailsForm {...detailsProps} />,
     },
     {
-      title: "Archivos a subir (opcional).",
-      content: <FileUploader {...uploaderProps} />,
-    },
-    {
       title: "Revisar y subir",
       content: <FileSummary {...summaryProps} />,
     }
@@ -123,32 +108,39 @@ const UploaderSteps = () => {
       {steps[currentStep].content}
     </div>
 
-    <div className="steps-action" style={{marginTop:50}}>
-      {currentStep < 2 && (
-        <Button
-          type="primary"
-          onClick={next}
-          data-testid="next-button"
-        >
-         Siguiente
-        </Button>
-      )}
-      {currentStep === 2 && (
-        <Button
-          type="primary"
-          onClick={onFinish}
-          data-testid="ok-button"
-        >
-          Listo
-        </Button>
-      )}
+    <div className="steps-action">
       {currentStep > 0 && (
         <Button
+          size="large"
           style={{ margin: '0 8px' }}
           onClick={previous}
           data-testid="prev-button"
         >
-          Anterior
+          <FontAwesomeIcon icon={arrowLeft} />
+          &nbsp; Anterior
+
+        </Button>
+      )}
+      {currentStep < 1 && (
+        <Button
+          size="large"
+          type="primary"
+          onClick={next}
+          data-testid="next-button"
+        >
+          Siguiente &nbsp;
+         <FontAwesomeIcon icon={arrowRight} />
+        </Button>
+      )}
+      {currentStep === 1 && (
+        <Button
+          size="large"
+          type="primary"
+          onClick={onFinish}
+          data-testid="ok-button"
+        >
+          Listo &nbsp;
+          <FontAwesomeIcon icon={checkIcon} />
         </Button>
       )}
      </div>
