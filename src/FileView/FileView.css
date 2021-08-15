@@ -10,3 +10,9 @@
 .tag-text {
   font-size: 20px;
 }
+
+.file-list-container {
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 50px;
+}

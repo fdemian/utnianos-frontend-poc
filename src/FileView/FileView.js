@@ -2,6 +2,7 @@ import React from 'react';
 import { Spin, Tag } from 'antd';
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
+import FileViewList from './FileViewList';
 import { GET_COURSE_MATERIAL } from './queries';
 import './FileView.css';
 
@@ -25,6 +26,7 @@ const FileView = () => {
    contribTypes,
    course,
    description,
+   files
   } = classMaterial;
 
   return (
@@ -38,6 +40,10 @@ const FileView = () => {
       <Tag key={t}>{t}</Tag>
     ))}
     </span>
+    <br />
+
+    <FileViewList files={files} />
+
   </>
   );
 }

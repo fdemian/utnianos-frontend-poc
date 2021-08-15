@@ -1,37 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { List, Avatar } from 'antd';
+import { List } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash as trashIcon } from '@fortawesome/free-solid-svg-icons';
 import {
-  faFilePdf as pdfIcon,
-  faImage as imageIcon,
-  faFileArchive as fileArchive,
-  faTrash as trashIcon
-} from '@fortawesome/free-solid-svg-icons';
+  getFileTypeName,
+  getFileIcon
+} from './utils';
 import './Uploader.css';
-
-const getFileTypeName = (type) => {
-  switch(type) {
-    case "image/png":
-    case "image/jpg":
-      return "Imagen";
-    case "application/pdf":
-      return "PDF";
-    default:
-      return "Archivo";
-  }
-}
-
-const getFileIcon = (type) => {
-  switch(type) {
-    case "image/png":
-      return imageIcon;
-    case "application/pdf":
-      return pdfIcon;
-    default:
-      return fileArchive;
-  }
-}
 
 const FileList = ({fileList, setFileList}) => {
 

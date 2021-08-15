@@ -78,12 +78,14 @@ const FileListContents = (props) => {
      return (nameFilterFn(data) && courseFilterFn(data) && contribFilterFn(data));
    }
 
-   // Name filter is case sensitive.
-   const getFilteredData = (data) => data.filter(d => matchesFilters(d));
-
    if(data.loading)
     return <Spin tip="Loading..." />;
 
+  if(data.error)
+    return <p>Error</p>;
+
+  // Name filter is case sensitive.
+  const getFilteredData = (data) => data.filter(d => matchesFilters(d));
   const { classMaterials } = data.data;
   const dataSource = getFilteredData(classMaterials);
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import FileList from './FileList';
-import { render, fireEvent, waitFor, getDefaultNormalizer} from '../utils/testing-utils';
+import { render, waitFor, getDefaultNormalizer} from '../utils/testing-utils';
 import '@testing-library/jest-dom/extend-expect';
 import { GET_CONTRIB_FILES, GET_CONTRIB_TYPES, GET_COURSES } from './Queries';
 

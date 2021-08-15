@@ -5,7 +5,6 @@ export const GET_CONTRIB_FILES = gql`
     classMaterials {
       id
       name
-      filePath
       contribTypes
       course {
         id

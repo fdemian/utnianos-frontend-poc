@@ -10,6 +10,11 @@ export const GET_COURSE_MATERIAL = gql`
         id
         name
       }
+      files {
+        id
+        path
+        type
+      }
     }
   }
 `;
