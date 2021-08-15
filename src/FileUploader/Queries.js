@@ -19,8 +19,8 @@ export const GET_COURSES = gql`
 `;
 
 export const ADD_CONTRIB = gql`
-  mutation AddContribution($title: String!, $description: String!, $types: String!, $course: String!, $path: String) {
-    addContrib(title: $title,description: $description, types: $types, course: $course, path: $path) {
+  mutation AddContribution($title: String!, $description: String!, $types: String!, $course: String!, $filesList:[FileParam]!) {
+    addContrib(title: $title,description: $description, types: $types, course: $course, filesList: $filesList) {
       id
       ok
     }

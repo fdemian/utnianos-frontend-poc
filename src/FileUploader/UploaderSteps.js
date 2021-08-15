@@ -19,7 +19,6 @@ const { Step } = Steps;
 const UploaderSteps = () => {
 
   const [currentStep, setCurrentStep] = useState(0);
-
   const [fileList, setFileList] = useState([]);
   const [fileTitle, setFileTitle] = useState("");
   const [fileDescription, setFileDescription] = useState("");
@@ -71,12 +70,14 @@ const UploaderSteps = () => {
 
   const onFinish = () => {
 
+    const files = fileList.map(f => f.response);
+
     const variables = {
       title: fileTitle,
       description: fileDescription,
       types: selectedTypes.join(),
       course: selectedCourse,
-      path: null
+      filesList: files
     };
 
     addContrib({ variables: variables});

@@ -33,7 +33,7 @@ const FileSummary = (props) => {
       if (status !== 'uploading') {
         console.log(info.file, info.fileList);
       }
-      if (status === 'done') {
+      if (status === 'done') {        
         message.success(`${info.file.name} file uploaded successfully.`);
         setFileList([...fileList, info.file]);
       } else if (status === 'error') {

@@ -38,9 +38,6 @@ const FileList = ({fileList, setFileList}) => {
   if(fileList.length <= 0)
     return null;
 
-  console.clear();
-  console.log(fileList);
-
   const removeItem = (item) => setFileList(fileList.filter(f => f.uid !== item.uid));
 
   return (
