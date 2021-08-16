@@ -9,7 +9,12 @@ const classMaterial = {
   name: "Material 1",
   contribTypes:"Apunte,Final",
   course: {id: 1, name: "Análisis Matemático 1"},
-  description: "Esto es un apunte."
+  description: "Esto es un apunte.",
+  files: [{
+    id: 1,
+    path: '/uploads/file1.png',
+    type: 'image/png'
+  }]
 };
 
 jest.mock('react-router-dom', () => ({
