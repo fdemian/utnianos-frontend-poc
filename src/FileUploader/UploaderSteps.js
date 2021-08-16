@@ -146,6 +146,7 @@ const UploaderSteps = () => {
       )}
      </div>
 
+     <br />
 
   </div>
   );

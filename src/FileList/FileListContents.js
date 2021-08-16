@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Table, Tag , Spin} from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye as eyeIcon } from '@fortawesome/free-solid-svg-icons';
 
 const columns = [
   {
@@ -34,7 +36,9 @@ const columns = [
   {
     title: 'Ver',
     key: 'view',
-    render: (text, record) => <Link to={`/classnotes/${record.id}`}>Ver</Link>,
+    render: (text, record) => <Link to={`/classnotes/${record.id}`}>
+      <FontAwesomeIcon icon={eyeIcon} size="1x" />
+      </Link>,
   },
 ];
 
@@ -91,7 +95,11 @@ const FileListContents = (props) => {
 
   return (
   <div>
-    <Table columns={columns} dataSource={dataSource} />
+    <Table
+      columns={columns}
+      dataSource={dataSource}
+      locale={{emptyText: 'No hay apuntes subidos.'}}
+    />
   </div>
   );
 }

@@ -33,15 +33,12 @@ const FileSummary = (props) => {
       if (status !== 'uploading') {
         console.log(info.file, info.fileList);
       }
-      if (status === 'done') {        
-        message.success(`${info.file.name} file uploaded successfully.`);
+      if (status === 'done') {
+        message.success(`${info.file.name} archivo subido correctamente.`);
         setFileList([...fileList, info.file]);
       } else if (status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
+        message.error(`${info.file.name} hubo un error al subir el archivo.`);
       }
-    },
-    onDrop(e) {
-      console.log('Dropped files', e.dataTransfer.files);
     }
   };
 

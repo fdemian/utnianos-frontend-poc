@@ -1,5 +1,6 @@
 import React from 'react';
-import { List, Image } from 'antd';
+import { List, Image, Card,} from 'antd';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye as eyeIcon } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -10,21 +11,24 @@ import {
 import './FileView.css';
 
 const splitItemPath = (path) => {
-  if(path.includes("/"))
-    return path.split("/")[1];
+  if(path.includes("%3D"))
+    return path.split("%3D")[1];
 
   return path;
 }
 
+const gridStyle = { width: '25%', textAlign: 'center' };
+
 const ImageList = ({ imageList }) => {
   return(
-  <>
+  <Card title="Imagenes subidas">
     {imageList.map(item => (
+    <Card.Grid style={gridStyle}>
       <Image src={item.path} width={200} />
+    </Card.Grid>
     ))}
-  </>
+  </Card>
   );
-
 }
 
 const FileViewList = ({ files }) => {
@@ -55,7 +59,7 @@ const FileViewList = ({ files }) => {
               avatar={
                <FontAwesomeIcon icon={getFileIcon(item.type)} size="2x" />
               }
-              title={<a href={item.path}>{splitItemPath(item.path)}</a>}
+              title={<Link to={item.path}>{splitItemPath(item.path)}</Link>}
               description={`Tipo de aporte: ${getFileTypeName(item.type)}`}
             />
           </List.Item>

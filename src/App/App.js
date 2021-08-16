@@ -14,7 +14,7 @@ const App = (props) => {
   const isMobile = useMediaQuery({query: '(max-device-width: 500px)'});
   const contentClass = "content-container" + (isMobile ? " mobile": "");
   const { children } = props;
-  
+
   /*
   if(loggedIn) {
     loadWebsocket();
@@ -45,12 +45,14 @@ const App = (props) => {
         </Header>
       </Suspense>
 
-      <Suspense fallback={<Spin />}>
+      <Suspense fallback={<Spin />} className="app-layout">
         <Content className={contentClass} data-testid="content-container">
            {children}
         </Content>
       </Suspense>
     </Layout>
+
+    <br />
 
   </>
   );
