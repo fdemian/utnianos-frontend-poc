@@ -1,0 +1,16 @@
+import React from 'react';
+import { Image, Card } from 'antd';
+
+const gridStyle = { width: '25%', textAlign: 'center' };
+
+const ImageList = ({ imageList }) => (
+  <Card title="Imagenes subidas">
+    {imageList.map(item => (
+    <Card.Grid style={gridStyle}>
+      <Image src={item.path} width={200} />
+    </Card.Grid>
+    ))}
+  </Card>
+);
+
+export default ImageList;

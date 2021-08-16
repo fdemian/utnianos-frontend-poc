@@ -1,39 +1,26 @@
 import React from 'react';
+import DownloadLink from "react-download-link";
 import { List, Image, Card,} from 'antd';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye as eyeIcon } from '@fortawesome/free-solid-svg-icons';
+import { faDownload as downloadIcon } from '@fortawesome/free-solid-svg-icons';
 import {
   getFileTypeName,
   getFileIcon,
   isImageType
 } from '../FileUploader/utils';
+import {
+  getFullURL,
+  getDataFromURL,
+  splitItemPath
+} from './utils';
+import ImageList from './ImageList';
 import './FileView.css';
 
-const splitItemPath = (path) => {
-  if(path.includes("%3D"))
-    return path.split("%3D")[1];
-
-  return path;
-}
-
-const gridStyle = { width: '25%', textAlign: 'center' };
-
-const ImageList = ({ imageList }) => {
-  return(
-  <Card title="Imagenes subidas">
-    {imageList.map(item => (
-    <Card.Grid style={gridStyle}>
-      <Image src={item.path} width={200} />
-    </Card.Grid>
-    ))}
-  </Card>
-  );
-}
-
 const FileViewList = ({ files }) => {
+
   const otherFiles = files.filter(f => !isImageType(f.type));
   const imageFiles = files.filter(f => isImageType(f.type));
+
   return (
   <div className="file-list-container">
      <h3 className="class-material-title">Archivos</h3>
@@ -48,18 +35,30 @@ const FileViewList = ({ files }) => {
         renderItem={item => (
           <List.Item
              actions={[
-               <FontAwesomeIcon
-                  icon={eyeIcon}
-                  onClick={null}
-                  size="2x"
+               <DownloadLink
+                  label={
+                    <FontAwesomeIcon
+                       icon={downloadIcon}
+                       onClick={null}
+                       size="2x"
+                       color="black"
+                     />
+                  }
+                  filename={splitItemPath(item.path)}
+                  exportFile={() => Promise.resolve(getDataFromURL(getFullURL(item.path)))}
                 />
+
               ]}
             >
             <List.Item.Meta
               avatar={
                <FontAwesomeIcon icon={getFileIcon(item.type)} size="2x" />
               }
-              title={<Link to={item.path}>{splitItemPath(item.path)}</Link>}
+              title={
+                <a href={getFullURL(item.path)} rel="noreferrer" target="_blank">
+                  {splitItemPath(item.path)}
+                </a>
+              }
               description={`Tipo de aporte: ${getFileTypeName(item.type)}`}
             />
           </List.Item>
