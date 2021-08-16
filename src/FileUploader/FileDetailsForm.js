@@ -45,7 +45,7 @@ const FileDetailsForm = (props) => {
     contributions,
     courseData
   } = props;
-  
+
   const onTitleChange = (e) => setFileTitle(e.target.value);
   const onDescriptionChange = (e) => setFileDescription(e.target.value);
   const onContribTypeChange = (e) => setSelectedTypes(e);
@@ -68,8 +68,10 @@ const FileDetailsForm = (props) => {
        role="form"
        className="details-form"
        initialValues={{ remember: true }}
+       onFinish={null}
+       onFinishFailed={null}
      >
-     <Form.Item
+      <Form.Item
        label=""
        name="title"
        rules={formRules['title']}

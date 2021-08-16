@@ -59,7 +59,11 @@ const FileSummary = (props) => {
 
     <h2 style={{textAlign:'center'}}>Archivos a subir</h2>
     <br />
-    <Dragger {...uploaderProps} style={{marginLeft:'33%', width:400}}>
+    <Dragger
+       {...uploaderProps}
+       style={{marginLeft:'33%', width:400}}
+       data-testid="file-uploader"
+    >
       <p className="ant-upload-drag-icon">
         <FontAwesomeIcon icon={uploadIcon} size="2x" />
       </p>

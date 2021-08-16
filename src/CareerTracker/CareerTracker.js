@@ -9,7 +9,8 @@ const CareerPlanTracker = lazy(() => import('./CareerPlanTracker'));
 
 const CareerTracker = () => {
 
-  const [authToken, _, _2] = useAuthToken();
+  const authTokenParam = useAuthToken();
+  const authToken = authTokenParam[0];
   const id = authToken['id'];
   const queryOpts = { variables: { id: id } };
   const { data, loading, error } = useQuery(GET_USER, queryOpts);

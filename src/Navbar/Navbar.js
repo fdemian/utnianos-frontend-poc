@@ -30,7 +30,9 @@ const Navbar = (props) => {
   const history = useHistory();
   const client = useApolloClient();
   const { isLoggedIn } = useIsLoggedIn();
-  const [authToken, _, removeAuthToken] = useAuthToken();
+  const authTokenParam = useAuthToken();
+  const authToken = authTokenParam[0];
+  const removeAuthToken = authTokenParam[2];
 
   const id = authToken['id'];
   const queryOpts = { variables: { id: id }, skip: !isLoggedIn };

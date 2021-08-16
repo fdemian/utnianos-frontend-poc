@@ -1,6 +1,6 @@
 import React from 'react';
 import UploaderSteps from './UploaderSteps';
-import FileUploader from './FileUploader';
+import { XhrMock } from '@react-mock/xhr';
 import { render, fireEvent, waitFor, act} from '../utils/testing-utils';
 import { GET_CONTRIB_TYPES, GET_COURSES, ADD_CONTRIB } from './Queries';
 import '@testing-library/jest-dom/extend-expect';
@@ -108,6 +108,11 @@ const mocks = [
   }
 ];
 
+const fileResponse = {
+  url: 'uploads/chucknorris.png',
+  type: 'mime/all'
+};
+
 describe("<FileUploader />", () => {
 
    beforeAll(() => {
@@ -116,7 +121,6 @@ describe("<FileUploader />", () => {
 
    it("<UploaderSteps /> > Basic form interaction.", async () => {
      const {
-       debug,
        getByText,
        getByTestId,
        getAllByRole
@@ -152,27 +156,14 @@ describe("<FileUploader />", () => {
    })
 
    it("<UploaderSteps /> > Change from one step to the other.", async () => {
-     const {
-       getByTestId,
-       queryByTestId,
-       getAllByRole
-     } = render(<UploaderSteps />, {mocks: mocks});
 
-     let nextBtn;
+     const { getByTestId, queryByTestId } = render(<UploaderSteps />, {mocks: mocks});
 
+     // First step. Only "next" button is present.
      await waitFor(async () => {
-      nextBtn = getByTestId("next-button")
-      expect(nextBtn).toBeInTheDocument();
+      expect(getByTestId("next-button")).toBeInTheDocument();
       expect(queryByTestId("prev-button")).not.toBeInTheDocument();
-      fireEvent.click(nextBtn, { bubbles: true });
-     });
-
-     // Both next and prev buttons are present.
-     expect(getByTestId("next-button")).toBeInTheDocument();
-     expect(getByTestId("prev-button")).toBeInTheDocument();
-
-     await act(async () => {
-       fireEvent.click(nextBtn, { bubbles: true });
+      fireEvent.click(getByTestId("next-button"), { bubbles: true });
      });
 
      // Since this is the final step, only the "prev" button is present.
@@ -185,30 +176,77 @@ describe("<FileUploader />", () => {
      });
 
      expect(getByTestId("next-button")).toBeInTheDocument();
-     expect(getByTestId("prev-button")).toBeInTheDocument();
+     expect(queryByTestId("prev-button")).not.toBeInTheDocument();
    })
 
-   /*
-   it("<FileUploader />", async () => {
+
+
+   it("<FileUploader /> > Form interaction.", async () => {
+
+     const {
+       debug,
+       getByRole,
+       getByTestId,
+       getAllByRole,
+       getByText,
+       queryByText
+      } = render(
+      <XhrMock
+         url="/api/uploads"
+         method="POST"
+         response={(req, res) => res.status(200)}>
+       >
+        <UploaderSteps />
+      </XhrMock>
+      , {mocks: mocks});
+
+     await waitFor(async () => {
+       expect(getByTestId("next-button")).toBeInTheDocument();
+       expect(getByRole('form')).toHaveFormValues({
+         title: '',
+         description: ''
+       });
+       //debug();
+
+       // TODO: change
+     });
+
+     const inputs = getAllByRole("textbox");
+
+     fireEvent.change(inputs[0], { target: { value: "Titulo" } });
+     fireEvent.change(inputs[1], { target: { value: "Descripcion" } });
+
+     await waitFor(async () => {
+       expect(getByRole('form')).toHaveFormValues({
+         title: 'Titulo',
+         description: 'Descripcion'
+       });
+     });
+
+     fireEvent.click(getByTestId("next-button"));
+
+     await waitFor(async () => {
+       expect(getByText("Archivos a subir")).toBeInTheDocument();
+       expect(getByText("Revisar y subir")).toBeInTheDocument();
+       //debug();
+     });
+
      const _filename = 'chucknorris.png';
      const file = new File(['(⌐□_□)'], _filename, { type: 'image/png' });
-     const { debug, getByTestId, getByText } = render(<FileUploader />, {mocks:[]});
+     const fileUploader = getByTestId("file-uploader");
+     expect(fileUploader).toBeInTheDocument();
 
-     let uploader = getByTestId('uploader');
+    await waitFor(async () => {
+       fireEvent.change(fileUploader, {
+         target: { files: [file] },
+       })
+    })
 
-      // simulate ulpoad event and wait until finish
-      await waitFor(() =>
-        fireEvent.change(uploader, {
-          target: { files: [file] },
-        })
-      );
+    await waitFor(async () => {
+      expect(getByText("Archivos subidos")).toBeInTheDocument();
+      expect(getByText(_filename, { hidden: true })).toBeInTheDocument();
+    });
 
-      expect(getByText(_filename)).toBeInTheDocument();
-
-      const preview = getByText(_filename);
-      fireEvent.click(preview, { bubbles: true });
-
-      debug();
-   })*/
+   })
 
 })

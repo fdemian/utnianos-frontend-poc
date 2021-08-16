@@ -1,6 +1,6 @@
 import React from 'react';
 import DownloadLink from "react-download-link";
-import { List, Image, Card,} from 'antd';
+import { List } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload as downloadIcon } from '@fortawesome/free-solid-svg-icons';
 import {

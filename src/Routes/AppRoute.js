@@ -10,7 +10,8 @@ const AppRoute = ({exact, path, component, isPrivate, key}) => {
   const { isLoggedIn } = useIsLoggedIn();
   const history = useHistory();
   const client = useApolloClient();
-  const [_1, _2, removeAuthToken] = useAuthToken();
+  const authTokenParam = useAuthToken();
+  const removeAuthToken = authTokenParam[2];
 
   const logoutFn = async () => {
     await client.resetStore();
@@ -19,6 +20,9 @@ const AppRoute = ({exact, path, component, isPrivate, key}) => {
   }
 
   if(isPrivate && !isLoggedIn){
+    console.clear();
+    console.log(isLoggedIn);
+    console.log(":::::");
     logoutFn();
     return <Redirect to="/login" />;
   }
