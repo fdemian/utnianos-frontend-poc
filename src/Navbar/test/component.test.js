@@ -1,9 +1,9 @@
 import React from 'react';
 import Navbar from '../Navbar';
 import AccountMenu from '../AccountMenu/AccountMenu';
-import { gql } from "@apollo/client";
 import { render, fireEvent, waitFor} from '../../utils/testing-utils';
 import '@testing-library/jest-dom/extend-expect';
+import { GET_USER } from '../Queries';
 
 const authUtils = require('../../Login/authUtils');
 
@@ -44,17 +44,6 @@ describe("<NavbarDesktop />", () => {
        blogName: "Morpheus",
      };
 
-     const GET_USER = gql`
-       query User($id: Int!) {
-         user(id: $id) {
-           __typename
-           id
-           username
-           avatar
-         }
-       }
-     `;
-
      const mocks = [
        {
            request: {
@@ -93,17 +82,6 @@ describe("<NavbarDesktop />", () => {
        avatar: "avatar.png"
      };
 
-     const GET_USER = gql`
-       query User($id: Int!) {
-         user(id: $id) {
-           __typename
-           id
-           username
-           avatar
-         }
-       }
-     `;
-
      const mocks = [
        {
            request: {
@@ -125,17 +103,25 @@ describe("<NavbarDesktop />", () => {
              loading: false,
              error: false,
              data: { user: _user }
-          },
-       }
+          }
+        },
+        {
+            request: {
+              query: GET_USER,
+              variables: { "id": "1" }
+            },
+            result: {
+              loading: false,
+              error: false,
+              data: { user: _user }
+            },
+        },
      ];
-     
+
      const { getAllByText, getAllByRole } = render(<Navbar {...navProps} />, { mocks: mocks});
-     //const loadingItems = getAllByTestId("loading-spinner");
-     //expect(loadingItems.length).toStrictEqual(2);
 
      await waitFor(() => {
 
-      const userText = getAllByText('adminuser', {hidden:true});
       const images = getAllByRole('img');
       const altText = navProps.blogName + " logo";
 
@@ -143,6 +129,7 @@ describe("<NavbarDesktop />", () => {
       const userImage = images[1];
 
       // Test user text.
+      const userText = getAllByText('adminuser', {hidden:true});
       expect(userText.length).toStrictEqual(2);
 
       // Test user image.

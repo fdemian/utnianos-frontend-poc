@@ -6,21 +6,11 @@ import Spin from 'antd/lib/spin';
 import Affix from 'antd/lib/affix';
 import { useHistory } from 'react-router';
 import { getUserId } from '../Login/authUtils';
-import { gql, useQuery, useApolloClient } from "@apollo/client";
+import { useQuery, useApolloClient } from "@apollo/client";
+import { GET_USER } from './Queries';
 
 const NavbarDesktop = lazy(() => import('./NavbarDesktop'));
 const NavbarMobile = lazy(() => import('./NavbarMobile'));
-
-const GET_USER = gql`
-  query User($id: Int!) {
-    user(id: $id) {
-      __typename
-      id
-      username
-      avatar
-    }
-  }
-`;
 
 const Navbar = (props) => {
 
@@ -40,7 +30,8 @@ const Navbar = (props) => {
   }
 
   if(error){
-    logoutFn();
+    console.log("Error");
+    //logoutFn();
   }
 
   const navProps = {
