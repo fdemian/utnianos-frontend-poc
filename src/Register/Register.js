@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TopIcon from '../Login/TopIcon';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import { useMutation, gql } from "@apollo/client";
-import { useIsLoggedIn } from '../Login/authToken';
 import './Register.css';
 
 const layout = {
@@ -29,7 +28,8 @@ export const CREATE_USER = gql`
 
 const RegisterScreen = (props) => {
 
-  const { isLoggedIn } = useIsLoggedIn();
+  const id = localStorage.getItem('ID');
+  const isLoggedIn = id !== null;
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [createUser, {

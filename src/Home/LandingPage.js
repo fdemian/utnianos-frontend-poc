@@ -1,24 +1,10 @@
 import React from 'react';
 import OptionsList from './OptionsList';
-import { gql, useQuery } from "@apollo/client";
-import { useAuthToken } from '../Login/authToken';
+import { useQuery } from "@apollo/client";
+import { GET_USER} from './queries';
 import './Landing.css';
 
-const GET_USER = gql`
-  query User($id: Int!) {
-    user(id: $id) {
-      id
-      username
-      avatar
-    }
-  }
-`;
-
-const LandingPage = () => {
-
-  const authTokenParam = useAuthToken();
-  const authToken = authTokenParam[0];
-  const id = authToken['id'];
+const LandingPage = ({ id }) => {
   
   const { loading, error, data } = useQuery(GET_USER, {
     variables: { id: id },

@@ -1,14 +1,14 @@
 import React from 'react';
 import UnloggedHome from './UnloggedHome';
 import LandingPage from './LandingPage';
-import { useIsLoggedIn } from '../Login/authToken';
+import { getUserId } from '../Login/authUtils';
 
 const Home = () => {
-
-  const { isLoggedIn } = useIsLoggedIn();
+  const id = getUserId();
+  const isLoggedIn = id !== null;
 
   if(isLoggedIn){
-    return <LandingPage />;
+    return <LandingPage id={id} />;
   }
   else{
     return <UnloggedHome />;

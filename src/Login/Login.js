@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router';
-import { Form, Input, Button /*, Alert*/ } from 'antd';
+import { Form, Input, Button, Alert } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import TopIcon from './TopIcon';
-//import Loading from '../Loading/LoadingIndicator';
-import { useLoginMutation } from "./loginMutation";
-import { useIsLoggedIn, useAuthToken } from './authToken';
+import { useQuery, useMutation } from "@apollo/client";
+import {
+  GET_USER,
+  USER_LOGIN
+} from './queries';
+import { setStorageTokens } from './authUtils';
 import './Login.css';
 
 const layout = {
@@ -20,16 +23,22 @@ const layout = {
 
 const LoginScreen = (props) => {
 
-  // User login hook.
-  const [loginMutation] = useLoginMutation();
-  const { isLoggedIn } = useIsLoggedIn();
-  const [authToken, _1, _2] = useAuthToken();
+  const [userId, setUserId] = useState(null);
+  const [loginMutation, authData] = useMutation(USER_LOGIN, { skip: userId });
 
-  console.clear();
-  console.log('Logged in?:', isLoggedIn);
-  console.log('ID:', authToken['id']);
-  console.log('AUTH:', authToken['auth']);
-  console.log('REFRESH:', authToken['refresh']);
+  if(!authData.loading && authData.data && !userId){
+    const {
+      id,
+      accessToken,
+      refreshToken
+    } = authData.data.auth;
+
+    setUserId(id);
+    setStorageTokens(id, accessToken, refreshToken);
+  }
+
+  const queryOpts = { variables: { id: userId }, skip: !userId };
+  const { loading, error, data } = useQuery(GET_USER, queryOpts);
 
   // Finished checking login values.
   const onFinish = values => {
@@ -42,8 +51,9 @@ const LoginScreen = (props) => {
      console.log('Failed:', errorInfo);
   };
 
-  if(isLoggedIn && authToken['auth'] && authToken['id'])
+  if(userId && !loading && data){
     return <Redirect to="/" />;
+  }
 
   return (
   <div className="login-grid-container">
@@ -100,7 +110,7 @@ const LoginScreen = (props) => {
           </Button>
         </Form.Item>
       </Form>
-      {/*
+      {
        error &&
         <Alert
           style={{ marginTop: 24 }}
@@ -109,7 +119,7 @@ const LoginScreen = (props) => {
           showIcon
           closable
         />
-      */}
+      }
   </div>
   );
 

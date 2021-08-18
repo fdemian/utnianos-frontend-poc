@@ -5,8 +5,8 @@ import React, {
 import Spin from 'antd/lib/spin';
 import Affix from 'antd/lib/affix';
 import { useHistory } from 'react-router';
+import { getUserId } from '../Login/authUtils';
 import { gql, useQuery, useApolloClient } from "@apollo/client";
-import { useIsLoggedIn, useAuthToken} from '../Login/authToken';
 
 const NavbarDesktop = lazy(() => import('./NavbarDesktop'));
 const NavbarMobile = lazy(() => import('./NavbarMobile'));
@@ -29,23 +29,19 @@ const Navbar = (props) => {
 
   const history = useHistory();
   const client = useApolloClient();
-  const { isLoggedIn } = useIsLoggedIn();
-  const authTokenParam = useAuthToken();
-  const authToken = authTokenParam[0];
-  const removeAuthToken = authTokenParam[2];
-
-  const id = authToken['id'];
-  const queryOpts = { variables: { id: id }, skip: !isLoggedIn };
+  const id = getUserId();
+  const isLoggedIn = id !== null;
+  const queryOpts = { variables: { id: id }, skip: !id };
   const { loading, error, data } = useQuery(GET_USER, queryOpts);
 
   const logoutFn = async () => {
     await client.resetStore();
-    removeAuthToken();
+    window.localStorage.clear();
     history.push(`/`);
   }
 
   if(error){
-    removeAuthToken();
+    window.localStorage.clear();
     history.push(`/login`);
   }
 

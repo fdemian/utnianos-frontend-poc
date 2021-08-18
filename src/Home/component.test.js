@@ -1,20 +1,10 @@
 import React from 'react';
 import Home from './Home';
-import { gql } from "@apollo/client";
 import { render, fireEvent, waitFor} from '../utils/testing-utils';
 import '@testing-library/jest-dom/extend-expect';
+import { GET_USER} from './queries';
 
-const utils = require('../Login/authToken');
-
-const GET_USER = gql`
-  query User($id: Int!) {
-    user(id: $id) {
-      id
-      username
-      avatar
-    }
-  }
-`;
+const authUtils = require('../Login/authUtils');
 
 const _user = {
   id: 1,
@@ -29,9 +19,8 @@ describe("<Home />", () => {
    })
 
    it("<Home /> not logged in.", async () => {
-     jest.spyOn(utils, 'useIsLoggedIn').mockImplementation(() => ({
-       isLoggedIn: false
-     }));
+    jest.spyOn(authUtils, 'getUserId').mockImplementation(() => null);
+
      const { getAllByRole } = render(<Home />, {mocks: []});
      const links = getAllByRole("link");
 
@@ -41,49 +30,35 @@ describe("<Home />", () => {
    })
 
    it("<Home />  Logged in.", async () => {
-     jest.spyOn(utils, 'useIsLoggedIn').mockImplementation(() => ({
-       isLoggedIn: true
-     }));
 
-     jest.spyOn(utils, 'useAuthToken').mockImplementation(() => ([{
-       'id': 1,
-       'auth': "faketoken",
-       'refresh': "refresh",
-     },
-     jest.fn(),
-     jest.fn()
-     ]
-    ));
+       jest.spyOn(authUtils, 'getUserId').mockImplementation(() => 1);
 
-     const mocks = [
-       {
-           request: {
-             query: GET_USER,
-             variables: { id: 1 }
-           },
-           result: {
-             loading: false,
-             error: false,
-             data: { user: _user }
-          },
-       }
-     ];
+       const mocks = [
+         {
+             request: {
+               query: GET_USER,
+               variables: { id: 1 }
+             },
+             result: {
+               loading: false,
+               error: false,
+               data: { user: _user }
+            },
+         }
+       ];
 
-     const { getAllByRole, getByText, getByRole } = render(<Home />, {mocks: mocks});
+       const { getAllByRole, getByText, getByRole } = render(<Home />, {mocks: mocks});
 
-     // Loading phase.
-     await waitFor(async () => {
-       expect(getByText("Loading...")).toBeInTheDocument();
-     });
+       // Loading phase.
+       await waitFor(async () => {
+         expect(getByText("Loading...")).toBeInTheDocument();
+       });
 
-     // After loading request.
-     await waitFor(async () => {
-       expect(getAllByRole("button").length).toStrictEqual(3);
-       expect(getByRole("heading")).toHaveAttribute("class", "welcome-text");
-     });
-
-   })
-
-
+       // After loading request.
+       await waitFor(async () => {
+         expect(getAllByRole("button").length).toStrictEqual(3);
+         expect(getByRole("heading")).toHaveAttribute("class", "welcome-text");
+       });
+    })
 
 })

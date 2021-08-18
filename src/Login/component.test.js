@@ -3,9 +3,48 @@ import Login from './Login';
 import { render, fireEvent, act } from '../utils/testing-utils';
 import '@testing-library/jest-dom/extend-expect';
 import { createMemoryHistory } from "history";
+import {
+  GET_USER,
+  USER_LOGIN
+} from './queries';
 
-const utils = require('./authToken');
-const mutation = require('./loginMutation');
+const user = {
+  id: 1,
+  username: "adminuser",
+  avatar: "avatar.png",
+};
+
+const auth = {
+  id: 1,
+  accessToken: "",
+  refreshToken: "",
+  __typename: ""
+};
+
+const mocks = [
+  {
+      request: {
+        query: USER_LOGIN,
+        variables: {"username":"user1","password":"pass"}
+      },
+      result: {
+        loading: false,
+        error: false,
+        data: { auth: auth }
+     },
+  },
+  {
+      request: {
+        query: GET_USER,
+        variables: { id: 1 }
+      },
+      result: {
+        loading: false,
+        error: false,
+        data: { user: user }
+     },
+  }
+];
 
 describe("<Login />", () => {
 
@@ -18,7 +57,7 @@ describe("<Login />", () => {
   });
 
   it("Login > Renders Form.", async () => {
-    const { getByRole, getAllByRole } = render(<Login />, {mocks: []});
+    const { getByRole, getAllByRole } = render(<Login />, {mocks: mocks});
     const images = getAllByRole("img");
     const inputs = getAllByRole("textbox");
 
@@ -28,14 +67,11 @@ describe("<Login />", () => {
     expect(getByRole("button")).toHaveAttribute("type", "submit");
   })
 
-  it("Login > Form interaction.", async () => {
-    jest.spyOn(mutation, 'useLoginMutation').mockImplementation(() => [
-      () => ({
-        loading: true
-      })
-    ]);
 
-    const { getByRole, getAllByRole } = render(<Login />, {mocks: []});
+
+  it("Login > Form interaction.", async () => {
+
+    const { getByRole, getAllByRole } = render(<Login />, {mocks: mocks});
 
     expect(getByRole('form')).toHaveFormValues({
       username: '',
@@ -63,22 +99,9 @@ describe("<Login />", () => {
 
 
   it("Login > Logged in (redirects to '/').", async () => {
-    jest.spyOn(utils, 'useIsLoggedIn').mockImplementation(() => ({ isLoggedIn: true}));
-    jest.spyOn(utils, 'useAuthToken').mockImplementation(() => ([{
-      'id': 1,
-      'auth': "faketoken",
-      'refresh': "refresh",
-    },
-    jest.fn(),
-    jest.fn()
-    ]
-   ));
-   jest.spyOn(mutation, 'useLoginMutation').mockImplementation(() => [
-     () => {}
-   ]);
    const history = createMemoryHistory();
 
-   render(<Login />, {mocks: [], history: history});
+   render(<Login />, {mocks: mocks, history: history});
    expect(history.location.pathname).toBe("/");
   })
 

@@ -5,7 +5,7 @@ import { gql } from "@apollo/client";
 import { render, fireEvent, waitFor} from '../../utils/testing-utils';
 import '@testing-library/jest-dom/extend-expect';
 
-const utils = require('../../Login/authToken');
+const authUtils = require('../../Login/authUtils');
 
 describe("<NavbarDesktop />", () => {
 
@@ -14,6 +14,8 @@ describe("<NavbarDesktop />", () => {
    })
 
    it("Not logged in.", async () => {
+
+     jest.spyOn(authUtils, 'getUserId').mockImplementation(() => null);
 
      const navProps = {
        mobile: false,
@@ -66,16 +68,7 @@ describe("<NavbarDesktop />", () => {
           },
        }
      ];
-     jest.spyOn(utils, 'useIsLoggedIn').mockImplementation(() => ({ isLoggedIn: true}));
-     jest.spyOn(utils, 'useAuthToken').mockImplementation(() => ([{
-       'id': 1,
-       'auth': "faketoken",
-       'refresh': "refresh",
-     },
-     jest.fn(),
-     jest.fn()
-     ]
-    ));
+     jest.spyOn(authUtils, 'getUserId').mockImplementation(() => 1);
 
      await waitFor(() => {
        const { getAllByTestId } = render(<Navbar {...navProps} />, { mocks: mocks});
@@ -85,6 +78,8 @@ describe("<NavbarDesktop />", () => {
    })
 
    it("Logged in.", async () => {
+
+     jest.spyOn(authUtils, 'getUserId').mockImplementation(() => 1);
 
      const navProps = {
        mobile: false,
@@ -133,17 +128,7 @@ describe("<NavbarDesktop />", () => {
           },
        }
      ];
-     jest.spyOn(utils, 'useIsLoggedIn').mockImplementation(() => ({ isLoggedIn: true}));
-     jest.spyOn(utils, 'useAuthToken').mockImplementation(() => ([{
-       'id': 1,
-       'auth': "faketoken",
-       'refresh': "refresh",
-     },
-     jest.fn(),
-     jest.fn()
-     ]
-    ));
-
+     
      const { getAllByText, getAllByRole } = render(<Navbar {...navProps} />, { mocks: mocks});
      //const loadingItems = getAllByTestId("loading-spinner");
      //expect(loadingItems.length).toStrictEqual(2);

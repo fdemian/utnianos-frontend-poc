@@ -4,7 +4,7 @@ import { render, fireEvent, act, waitFor} from '../utils/testing-utils';
 import '@testing-library/jest-dom/extend-expect';
 import { createMemoryHistory } from "history";
 
-const utils = require('../Login/authToken');
+const authUtils = require('../Login/authUtils');
 const TestComponent = () => <p>AppRouter</p>;
 const LoginTestView = () => <p>Login</p>;
 
@@ -19,12 +19,10 @@ describe("<AppRouter />", () => {
   });
 
   it("Logged in > Private route. Renders private route.", async () => {
-    jest.spyOn(utils, 'useIsLoggedIn').mockImplementation(() => ({
-      isLoggedIn: true
-    }));
+    jest.spyOn(authUtils, 'getUserId').mockImplementation(() => 1);
 
     const history = createMemoryHistory();
-    
+
     const { getByText } = render(
     <>
        <AppRoute
@@ -48,9 +46,8 @@ describe("<AppRouter />", () => {
   })
 
   it("Logged out > Renders public route correctly.", async () => {
-    jest.spyOn(utils, 'useIsLoggedIn').mockImplementation(() => ({
-      isLoggedIn: false
-    }));
+    jest.spyOn(authUtils, 'getUserId').mockImplementation(() => null);
+
     const { getByText } = render(<AppRoute
       exact={true}
       path="/"
@@ -62,10 +59,8 @@ describe("<AppRouter />", () => {
   })
 
   it("Logged out > Private route. Renders login component.", async () => {
-    jest.spyOn(utils, 'useIsLoggedIn').mockImplementation(() => ({
-      isLoggedIn: false
-    }));
 
+    jest.spyOn(authUtils, 'getUserId').mockImplementation(() => null);
     const history = createMemoryHistory();
 
     render(
@@ -88,7 +83,5 @@ describe("<AppRouter />", () => {
     , {history: history});
     expect(history.location.pathname).toStrictEqual("/");
   })
-
-
 
 })

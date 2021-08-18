@@ -1,17 +1,14 @@
 import React, { lazy, useState, Suspense } from 'react';
 import { useQuery } from "@apollo/client";
-import { useAuthToken} from '../Login/authToken';
 import { Spin } from 'antd';
 import { GET_USER } from './queries';
-
+import { getUserId } from '../Login/authUtils';
 const CareerPlanSelector = lazy(() => import('./CareerPlanSelector'));
 const CareerPlanTracker = lazy(() => import('./CareerPlanTracker'));
 
 const CareerTracker = () => {
 
-  const authTokenParam = useAuthToken();
-  const authToken = authTokenParam[0];
-  const id = authToken['id'];
+  const id = getUserId();
   const queryOpts = { variables: { id: id } };
   const { data, loading, error } = useQuery(GET_USER, queryOpts);
   const [plan, setPlan] =  useState(null);
