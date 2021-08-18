@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router';
 import { Form, Input, Button, Alert } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
@@ -10,6 +9,7 @@ import {
   USER_LOGIN
 } from './queries';
 import { setStorageTokens } from './authUtils';
+import { useHistory } from 'react-router';
 import './Login.css';
 
 const layout = {
@@ -25,6 +25,7 @@ const LoginScreen = (props) => {
 
   const [userId, setUserId] = useState(null);
   const [loginMutation, authData] = useMutation(USER_LOGIN, { skip: userId });
+  const history = useHistory();
 
   if(!authData.loading && authData.data && !userId){
     const {
@@ -52,7 +53,8 @@ const LoginScreen = (props) => {
   };
 
   if(userId && !loading && data){
-    return <Redirect to="/" />;
+    history.push("/");
+    window.location.reload();
   }
 
   return (

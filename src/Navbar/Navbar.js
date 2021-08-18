@@ -22,11 +22,9 @@ const GET_USER = gql`
   }
 `;
 
-
 const Navbar = (props) => {
 
   const { mobile } = props;
-
   const history = useHistory();
   const client = useApolloClient();
   const id = getUserId();
@@ -38,11 +36,11 @@ const Navbar = (props) => {
     await client.resetStore();
     window.localStorage.clear();
     history.push(`/`);
+    window.location.reload();
   }
 
   if(error){
-    window.localStorage.clear();
-    history.push(`/login`);
+    logoutFn();
   }
 
   const navProps = {
