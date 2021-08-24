@@ -42,7 +42,7 @@ const Navbar = (props) => {
 
         <span className="login-items"  role="menuitem">
          {
-           loading ? <Spin aria-busy={true} data-testid="loading-spinner" /> :
+           loading ? <Spin role="loading" aria-busy={true} data-testid="loading-spinner" /> :
            (
             <>
               <Link to="/login">

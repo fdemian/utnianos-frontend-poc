@@ -4,8 +4,12 @@ import { Spin } from 'antd';
 import logo from './logo.png';
 
 const NavLogo = ({mobile, blogName}) => (
-  <Suspense fallback={<Spin />}>
-     <Link to="/" className="topnav header-logo">
+  <Suspense fallback={<Spin />} role="menu">
+     <Link
+        to="/"
+        role="link"
+        className="topnav header-logo"
+      >
        <img
          src={logo}
          alt={blogName + " logo"}

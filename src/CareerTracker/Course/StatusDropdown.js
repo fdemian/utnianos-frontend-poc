@@ -12,23 +12,42 @@ const colors = [
 const categroyFromStatus = (currentStatus, completionStatuses) =>
 completionStatuses.filter(c => c.status === currentStatus.completionCode)[0].name;
 
-const StatusDropdown = ({ updateFn, courseCode, completionStatuses, currentStatus, canTakeFinalExam }) => (
+const StatusDropdown = (props) => {
+
+  const {
+    updateFn,
+    courseCode,
+    completionStatuses,
+    currentStatus,
+    canTakeFinalExam
+  } = props;
+
+  const changeInputFn = (value) => {
+    const code = completionStatuses.find(c => c.name === value).status;
+    updateFn(courseCode, code)
+  }
+  const defaultValue = categroyFromStatus(currentStatus, completionStatuses);
+
+  return(
   <span>
     <Select
+      id={"search-attributes-" + courseCode}
+      key={"search-attributes-" + courseCode}
+      aria-expanded="true"
+      name="courses"
+      placeholder="Cambiar estado de materia."
+      aria-label="Cambiar estado de materia."
       style={{ width: '100%' }}
       optionFilterProp="children"
-      onChange={(value) => {
-          const code = completionStatuses.find(c => c.name === value).status;
-          updateFn(courseCode, code)
-        }
-      }
-      defaultValue={categroyFromStatus(currentStatus, completionStatuses)}
+      onChange={changeInputFn}
+      defaultValue={defaultValue}
     >
       {completionStatuses.map((status, i) => (
         <Option
-          value={status.name}
-          key={status.id}
           title={status.name}
+          value={status.name}
+          key={"search-attributes-" + courseCode + "-" + status.id}
+          role="option"
           disabled={status.name === "Aprobada" && !canTakeFinalExam}
         >
           <Badge status={colors[i]} />
@@ -37,6 +56,7 @@ const StatusDropdown = ({ updateFn, courseCode, completionStatuses, currentStatu
       ))}
     </Select>
   </span>
-);
+  )
+};
 
 export default StatusDropdown;

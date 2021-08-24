@@ -11,14 +11,24 @@ const CarouselArrows = ({ prevFn, nextFn, showArrows }) => {
     return null;
 
   return (
-    <>
-      <span className="ArrowLeft" role="button" >
-        <FontAwesomeIcon icon={faArrowLeft} size="3x" onClick={prevFn} data-testid="arrow-left" />
-      </span>
-      <span role="button" className="ArrowRight">
-        <FontAwesomeIcon icon={faArrowRight} size="3x" onClick={nextFn}  data-testid="arrow-right" />
-      </span>
-    </>
+  <>
+      <FontAwesomeIcon
+        icon={faArrowLeft}
+        size="3x"
+        onClick={prevFn}
+        data-testid="arrow-left"
+        role="button"
+        className="ArrowLeft"
+      />
+      <FontAwesomeIcon
+        icon={faArrowRight}
+        size="3x"
+        onClick={nextFn}
+        data-testid="arrow-right"
+        role="button"
+        className="ArrowRight"
+       />
+  </>
   );
 
 }
