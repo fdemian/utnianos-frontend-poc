@@ -1,14 +1,14 @@
 
 export const getCourseStatus = (subject, coursesStatus) =>
-coursesStatus.filter(c => c.courseId === subject.id)[0];
+coursesStatus.filter(c => c.courseCode === subject.code)[0];
 
-export const getCoursePrerrequisites = (courseId, prerrequisites) =>
-prerrequisites.filter(p => p.courseId === courseId);
+export const getCoursePrerrequisites = (courseCode, prerrequisites) =>
+prerrequisites.filter(p => p.courseCode === courseCode);
 
 export const prerreqSatisfy = (req, statuses) => {
   const filteredStatuses = statuses.find(s =>
-    s.courseId === req.prerrequisiteId &&
-    s.completionId >= req.completionId
+    s.courseCode === req.prerrequisite_code &&
+    s.completionCode >= req.completionCode
   );
 
   return filteredStatuses !== undefined;
@@ -24,8 +24,8 @@ export const hasPrerrequisites = (prerrequisites, coursesStatus) => {
 }
 
 export const getPrerreqList = (courses, prerrequisites) => {
-  const idsList = prerrequisites.map(p => p.prerrequisiteId);
-  const prerreqs = courses.filter(p => idsList.includes(p.id));
+  const idsList = prerrequisites.map(p => p.prerrequisiteCode);
+  const prerreqs = courses.filter(p => idsList.includes(p.code));
 
   return prerreqs;
 }

@@ -28,6 +28,7 @@ describe("<CareerTracker />", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    console.warn = () => {};
   })
 
   /*
@@ -128,8 +129,8 @@ describe("<CareerTracker />", () => {
         request: {
          query: ADD_CAREER_PLAN,
           variables: {
-           planId:1,
-           userId:1
+            planId: "K08",
+            userId:1
           }
         },
         result: {
@@ -204,13 +205,13 @@ describe("<CareerTracker />", () => {
        result: {
          loading: false,
          error: false,
-         data: { coursePrerrequisites: coursePrerrequisites }
+         data: { coursePrerrequisites: [] }
        }
      },
      {
        request: {
          query: GET_CAREER_PLAN,
-         variables: { id: 2 }
+         variables: { id: 'K08' }
        },
        result: {
          loading: false,
@@ -226,6 +227,12 @@ describe("<CareerTracker />", () => {
       getByTestId,
       getAllByText
     } = render(<CareerTracker />,{mocks: mocks});
+
+    /*
+    await waitFor(() => {
+      expect(getByText("Seguidor de carrera")).toBeInTheDocument();
+      expect(getByText('Loading')).toBeInTheDocument();
+    })*/
 
     await waitFor(() => {
       expect(getByText("Seguidor de carrera")).toBeInTheDocument();

@@ -1,90 +1,95 @@
-export const coursesStatus = [{
-   __typename: "CoursesStatusObj",
-   courseId: 36,
-   completionId: 5
-  },
-  {
-	__typename: "CoursesStatusObj",
-    courseId: 37,
-	completionId: 5
-  },
-  {
-	__typename: "CoursesStatusObj",
-	courseId: 9,
-	completionId: 8
-  },
-  {
+export const coursesStatus =  [{
 			__typename: "CoursesStatusObj",
-			courseId: 12,
-			completionId: 8
+			courseCode: "950702",
+			completionId: 1
 		}, {
 			__typename: "CoursesStatusObj",
-			courseId: 6,
-			completionId: 8
+			courseCode: "950701",
+			completionId: 1
 		}, {
 			__typename: "CoursesStatusObj",
-			courseId: 11,
-			completionId: 8
+			courseCode: "082020",
+			completionId: 1
 		}, {
 			__typename: "CoursesStatusObj",
-			courseId: 16,
-			completionId: 8
+			courseCode: "082021",
+			completionId: 1
 		}, {
 			__typename: "CoursesStatusObj",
-			courseId: 17,
-			completionId: 8
+			courseCode: "082022",
+			completionId: 1
 		}, {
 			__typename: "CoursesStatusObj",
-			courseId: 13,
-			completionId: 7
+			courseCode: "082023",
+			completionId: 1
 		}, {
 			__typename: "CoursesStatusObj",
-			courseId: 1,
-			completionId: 8
+			courseCode: "081420",
+			completionId: 1
 		}, {
 			__typename: "CoursesStatusObj",
-			courseId: 2,
-			completionId: 8
+			courseCode: "951604",
+			completionId: 1
 		}, {
 			__typename: "CoursesStatusObj",
-			courseId: 3,
-			completionId: 8
+			courseCode: "082024",
+			completionId: 1
 		}, {
 			__typename: "CoursesStatusObj",
-			courseId: 4,
-			completionId: 8
+			courseCode: "950703",
+			completionId: 1
 		}, {
 			__typename: "CoursesStatusObj",
-			courseId: 5,
-			completionId: 8
+			courseCode: "082025",
+			completionId: 1
 		}, {
 			__typename: "CoursesStatusObj",
-			courseId: 7,
-			completionId: 8
+			courseCode: "950605",
+			completionId: 1
 		}, {
 			__typename: "CoursesStatusObj",
-			courseId: 14,
-			completionId: 8
+			courseCode: "082026",
+			completionId: 1
 		}, {
 			__typename: "CoursesStatusObj",
-			courseId: 15,
-			completionId: 8
+			courseCode: "951602",
+			completionId: 1
 		}, {
 			__typename: "CoursesStatusObj",
-			courseId: 18,
-			completionId: 7
+			courseCode: "950704",
+			completionId: 1
 		}, {
 			__typename: "CoursesStatusObj",
-			courseId: 20,
-			completionId: 7
+			courseCode: "082028",
+			completionId: 1
 		}, {
 			__typename: "CoursesStatusObj",
-			courseId: 22,
-			completionId: 8
+			courseCode: "082027",
+			completionId: 1
 		}, {
 			__typename: "CoursesStatusObj",
-			courseId: 21,
-			completionId: 7
+			courseCode: "950309",
+			completionId: 1
+		}, {
+			__typename: "CoursesStatusObj",
+			courseCode: "082030",
+			completionId: 1
+		}, {
+			__typename: "CoursesStatusObj",
+			courseCode: "951603",
+			completionId: 1
+		}, {
+			__typename: "CoursesStatusObj",
+			courseCode: "950310",
+			completionId: 1
+		}, {
+			__typename: "CoursesStatusObj",
+			courseCode: "082098",
+			completionId: 1
+		}, {
+			__typename: "CoursesStatusObj",
+			courseCode: "K08-INT-HABPROF",
+		completionId: 1
 }];
 
 export const _user1 = {
@@ -101,7 +106,7 @@ export const _user2 = {
 	username: "pipe",
 	avatar: null,
 	careerPlan: {
-		id: 2,
+		code: "K08",
 		name: "Ingeniería en sistemas de Información [K08] (UTN - FRBA)",
 		__typename: "CareerPlanObj"
 	}
@@ -109,30 +114,30 @@ export const _user2 = {
 
 export const careerPlans = [{
   __typename: "CareerPlanObj",
-	id: 1,
+  code: "K08",
   name: "Ingeniería en sistemas de Información [K08] (UTN - FRBA)"
 },
 {
   __typename: "CareerPlanObj",
-	id: 2,
+  code: "K08-INT",
   name: "Analista Universitario en Sistemas (UTN - FRBA)"
 }];
 
 export const completionStatuses = [{
 			__typename: "CompletionStatusObj",
-			id: 5,
+			id: 1,
 			name: "Pendiente"
 		}, {
 			__typename: "CompletionStatusObj",
-			id: 6,
+			id: 2,
 			name: "Cursando"
 		}, {
 			__typename: "CompletionStatusObj",
-			id: 7,
+			id: 3,
 			name: "Firmada"
 		}, {
 			__typename: "CompletionStatusObj",
-			id: 8,
+			id: 4,
 			name: "Aprobada"
 }];
 
@@ -1370,111 +1375,121 @@ export const coursePrerrequisites = [{
 
   export const careerPlan = {
 			__typename: "CareerPlanObj",
-			id: 2,
+      code: "K08-INT",
 			name: "Analista Universitario en Sistemas (UTN - FRBA)",
 			courses: [{
-				id: 1,
-				name: "Analisis Matemático",
+				code: "950702",
+				name: "\u00c1lgebra y Geometr\u00eda Anal\u00edtica",
 				year: 1,
 				__typename: "CourseObj"
 			}, {
-				id: 2,
-				name: "Ingeniería y Sociedad",
+				code: "950701",
+				name: "An\u00e1lisis Matem\u00e1tico I",
 				year: 1,
 				__typename: "CourseObj"
 			}, {
-				id: 3,
-				name: "\u00c1lgebra y Geometría Analítica",
+				code: "082020",
+				name: "Matem\u00e1tica Discreta",
 				year: 1,
 				__typename: "CourseObj"
 			}, {
-				id: 4,
-				name: "Matemática Discreta",
-				year: 1,
-				__typename: "CourseObj"
-			}, {
-				id: 5,
+				code: "082021",
 				name: "Algoritmos y Estructura de Datos",
 				year: 1,
 				__typename: "CourseObj"
 			}, {
-				id: 6,
+				code: "082022",
 				name: "Arquitectura de Computadoras",
 				year: 1,
 				__typename: "CourseObj"
 			}, {
-				id: 7,
+				code: "082023",
 				name: "Sistemas y Organizaciones",
 				year: 1,
 				__typename: "CourseObj"
 			}, {
-				id: 9,
-				name: "Análisis de Sistemas",
+				code: "081420",
+				name: "Qu\u00edmica",
+				year: 1,
+				__typename: "CourseObj"
+			}, {
+				code: "951604",
+				name: "Ingenier\u00eda y Sociedad",
+				year: 1,
+				__typename: "CourseObj"
+			}, {
+				code: "082024",
+				name: "An\u00e1lisis de Sistemas",
 				year: 2,
 				__typename: "CourseObj"
 			}, {
-				id: 11,
-				name: "Análisis Matemático II",
+				code: "950703",
+				name: "An\u00e1lisis Matem\u00e1tico II",
 				year: 2,
 				__typename: "CourseObj"
 			}, {
-				id: 12,
-				name: "Sintaxis y Semántica de los Lenguajes",
+				code: "082025",
+				name: "Sintaxis y Sem\u00e1ntica de los Lenguajes",
 				year: 2,
 				__typename: "CourseObj"
 			}, {
-				id: 13,
-				name: "Física I",
+				code: "950605",
+				name: "F\u00edsica I",
 				year: 2,
 				__typename: "CourseObj"
 			}, {
-				id: 14,
-				name: "Paradigmas de Programación",
+				code: "082026",
+				name: "Paradigmas de Programaci\u00f3n",
 				year: 2,
 				__typename: "CourseObj"
 			}, {
-				id: 15,
-				name: "Inglés I",
+				code: "951602",
+				name: "Ingl\u00e9s I",
 				year: 2,
 				__typename: "CourseObj"
 			}, {
-				id: 16,
-				name: "Probabilidad y Estadística",
+				code: "950704",
+				name: "Probabilidad y Estad\u00edstica",
 				year: 2,
 				__typename: "CourseObj"
 			}, {
-				id: 17,
-				name: "Diseño de Sistemas",
+				code: "082028",
+				name: "Dise\u00f1o de Sistemas",
 				year: 3,
 				__typename: "CourseObj"
 			}, {
-				id: 18,
+				code: "082027",
 				name: "Sistemas Operativos",
 				year: 3,
 				__typename: "CourseObj"
 			}, {
-				id: 20,
-				name: "Economía",
+				code: "950309",
+				name: "Econom\u00eda",
 				year: 3,
 				__typename: "CourseObj"
 			}, {
-				id: 21,
-				name: "Gestión de Datos",
+				code: "082030",
+				name: "Gesti\u00f3n de Datos",
 				year: 3,
 				__typename: "CourseObj"
 			}, {
-				id: 22,
-				name: "Inglés II",
+				code: "951603",
+				name: "Ingl\u00e9s II",
 				year: 3,
 				__typename: "CourseObj"
 			}, {
-				id: 36,
-				name: "Habilitación Profesional (Titulo int. sistemas)",
+				code: "950310",
+				name: "Legislaci\u00f3n",
+				year: 3,
+				__typename: "CourseObj"
+			}, {
+				code: "082098",
+				name: "Comunicaciones y Redes",
 				year: 4,
 				__typename: "CourseObj"
 			}, {
-				id: 37,
-				name: "Comunicaciones y Redes",
+				code: "K08-INT-HABPROF",
+				name: "Habilitac\u00f3n Profesional (Titulo intermedio)",
 				year: 4,
 				__typename: "CourseObj"
 			}]

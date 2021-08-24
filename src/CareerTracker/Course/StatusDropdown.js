@@ -9,17 +9,23 @@ const colors = [
   'success'
 ];
 
-const categroyFromStatus = (currentStatus, completionStatuses) =>
-  completionStatuses.filter(c => c.id === currentStatus.completionId)[0].name;
+const categroyFromStatus = (currentStatus, completionStatuses) => {
+  console.clear();
+  console.log(":_::::");
+  console.log(completionStatuses);
+  console.log(currentStatus);
+  console.log(":_::::");
 
-const StatusDropdown = ({ updateFn, courseId, completionStatuses, currentStatus, canTakeFinalExam }) => (
+  return completionStatuses.filter(c => c.id === currentStatus.completionId)[0].name;
+}
+const StatusDropdown = ({ updateFn, courseCode, completionStatuses, currentStatus, canTakeFinalExam }) => (
   <span>
     <Select
       style={{ width: '100%' }}
       optionFilterProp="children"
       onChange={(value) => {
-        const id = completionStatuses.find(c => c.name === value).id;
-        updateFn(courseId, id)
+          const id = completionStatuses.find(c => c.name === value).id;
+          updateFn(courseCode, id)
         }
       }
       defaultValue={categroyFromStatus(currentStatus, completionStatuses)}

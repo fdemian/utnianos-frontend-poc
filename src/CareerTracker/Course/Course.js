@@ -21,7 +21,7 @@ const Course = (props) => {
     allPrereq
   } = props;
 
-  const prerrequisites = getCoursePrerrequisites(course.id, allPrereq);
+  const prerrequisites = getCoursePrerrequisites(course.code, allPrereq);
   const currentStatus = getCourseStatus(course, coursesStatus);
   const finalReq = prerrequisites.filter(p => p.type === 'F');
   const courseReq = prerrequisites.filter(p => p.type === 'C');
@@ -38,7 +38,7 @@ const Course = (props) => {
           </p>
           <StatusDropdown
             updateFn={updateEstado}
-            courseId={course.id}
+            courseCode={course.code}
             completionStatuses={completionStatuses}
             currentStatus={currentStatus}
             canTakeFinalExam={canTakeFinalExam}

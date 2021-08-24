@@ -9,7 +9,7 @@ export const GET_USER = gql`
       username
       avatar
       careerPlan {
-        id
+        code
         name
       }
     }
@@ -20,7 +20,7 @@ export const GET_CAREER_PLANS = gql`
   query CareerPlans {
     careerPlans {
       __typename
-      id
+      code
       name
     }
   }
@@ -33,7 +33,7 @@ export const GET_PLAN_STATUS = gql`
   query CoursesStatus($id: Int!) {
     coursesStatus(id: $id) {
       __typename
-      courseId
+      courseCode
       completionId
     }
   }
@@ -53,22 +53,22 @@ export const GET_PRERREQUISITES = gql`
   query GetPrerrequisites {
     coursePrerrequisites {
       __typename
-      courseId
-      prerrequisiteId
-      completionId
+      courseCode
+      prerrequisiteCode
+      completionCode
       type
     }
   }
 `;
 
 export const GET_CAREER_PLAN = gql`
-  query GetCareerPlan($id: Int!) {
+  query GetCareerPlan($id: String!) {
     careerPlan(id: $id) {
       __typename
-      id
+      code
       name
       courses {
-        id
+        code
         name
         year
       }

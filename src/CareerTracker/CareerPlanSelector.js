@@ -50,11 +50,11 @@ const CareerPlanSelector = ({ user, setCareer }) => {
       <div>
         <Card
             key={c.name}
-            className={selectedPlan === c.id ? "career-plan-selected": ""}
+            className={selectedPlan === c.code ? "career-plan-selected": ""}
             hoverable
             style={cardStyle}
             role="button"
-            onClick={() => setSelectedPlan(c.id)}
+            onClick={() => setSelectedPlan(c.code)}
         >
            <Meta title={c.name} description="" />
         </Card>

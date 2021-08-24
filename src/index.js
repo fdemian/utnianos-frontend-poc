@@ -33,10 +33,10 @@ const UTNApp = () => {
   );
 };
 
+  //<React.StrictMode>
+  //</React.StrictMode>
 ReactDOM.render(
-  <React.StrictMode>
     <UTNApp />
-  </React.StrictMode>
   ,
   document.getElementById('root')
 );

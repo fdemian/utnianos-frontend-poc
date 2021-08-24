@@ -19,7 +19,7 @@ const TrackerComponent = (props) => {
 
   const isDesktop = useMediaQuery({query: '(min-device-width: 1200px)'});
   const { data, loading, error } = useQuery(GET_CAREER_PLAN, { variables: { id: careerId } });
-
+  
   if(loading)
     return <p>Loading...</p>;
 
@@ -28,7 +28,7 @@ const TrackerComponent = (props) => {
 
   const { courses, name } = data.careerPlan;
   const yearsPerTab = isDesktop ? 3 : 1;
-  
+
   return (
   <>
     <h2 className="carrer-name" key="career-name">

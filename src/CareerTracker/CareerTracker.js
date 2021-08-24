@@ -17,7 +17,6 @@ const CareerTracker = () => {
     return <Spin tip="Loading" />;
 
   if(error){
-    console.clear();
     console.log(error);
     return <h1>Error</h1>;
   }
@@ -25,7 +24,7 @@ const CareerTracker = () => {
   const { user } = data;
 
   if(user && user.careerPlan && !plan){
-    setPlan(user.careerPlan.id);
+    setPlan(user.careerPlan.code);
   }
 
   if(plan){
