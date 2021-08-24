@@ -19,8 +19,12 @@ const StatusDropdown = (props) => {
     courseCode,
     completionStatuses,
     currentStatus,
-    canTakeFinalExam
+    canTakeFinalExam,
+    isLoading
   } = props;
+
+  if(isLoading)
+    return null;
 
   const changeInputFn = (value) => {
     const code = completionStatuses.find(c => c.name === value).status;

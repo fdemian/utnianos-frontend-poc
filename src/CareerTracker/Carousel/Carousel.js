@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
+import { useQuery, useMutation } from "@apollo/client";
 import { TransitionGroup, CSSTransition } from 'react-transition-group' // ES6
 import Course from '../Course/Course';
 import CarouselArrows from './CarouselArrows';
 import getYearsArray from './getYearsArray';
 import './Carousel.css';
 import '../CareerTracker.css';
+import {
+  GET_PLAN_STATUS,
+  GET_COMPLETION_STATUSES,
+  GET_PRERREQUISITES
+} from '../queries';
+import { CHANGE_COURSE_STATUS } from '../mutations';
 
 const Carousel = (props) => {
 
@@ -12,10 +19,19 @@ const Carousel = (props) => {
     courses,
     yearsPerTab,
     updateFn,
-    coursesStatus,
-    completionStatuses,
-    prerrequisites
+    userId
   } = props;
+
+  const [changeCourseStatus] = useMutation(CHANGE_COURSE_STATUS);
+  const [courseStatusesInternal, setCoursesStatuses] = useState(null);
+
+  const statusesQuery = useQuery(GET_COMPLETION_STATUSES);
+  const prerreqQuery =  useQuery(GET_PRERREQUISITES);
+  const {data, loading, error } = useQuery(GET_PLAN_STATUS, {
+    variables: {
+      id: userId
+    }
+  });
 
   const studyYears = getYearsArray(yearsPerTab, courses);
   const [currentTab, setCurrentTab] = useState(1);
@@ -42,6 +58,47 @@ const Carousel = (props) => {
   const numberOfYears = Array.from(new Set(courses.map(m => m.year))).length;
   const showArrows = numberOfYears > 3;
 
+  const isLoading = loading || statusesQuery.loading || prerreqQuery.loading;
+  const isError = error || statusesQuery.error || prerreqQuery.error;
+
+  if(isError)
+    return <p>Error</p>;
+
+  let completionStatuses;
+  let coursesStatus;
+  let coursePrerrequisites;
+
+  if(!isLoading){
+    completionStatuses = statusesQuery.data.completionStatuses;
+    coursesStatus = data.coursesStatus;
+    coursePrerrequisites = prerreqQuery.data.coursePrerrequisites;
+  }
+
+  if(!courseStatusesInternal  && coursesStatus) {
+    setCoursesStatuses(coursesStatus);
+  }
+
+  const changeStatusFn = (courseCode, statusCode) => {
+    changeCourseStatus({ variables: {
+      courseCode: courseCode,
+      userId: userId,
+      statusCode: statusCode
+    }});
+
+    let newStatuses = coursesStatus.map(cs => {
+       if(cs.courseCode === courseCode){
+         return {
+           completionCode: statusCode,
+           courseCode: cs.courseCode,
+          __typename: "CoursesStatusObj"
+         }
+        }
+        return cs;
+     });
+     
+     setCoursesStatuses(newStatuses);
+  }
+
   return (
   <>
     <CarouselArrows prevFn={prevTab} nextFn={nextTab} showArrows={showArrows} />
@@ -64,13 +121,14 @@ const Carousel = (props) => {
           <hr className="Separator" />
           {year.courses.map((course) => (
             <Course
-              key={course.id}
+              key={course.code}
+              isLoading={isLoading}
               course={course}
-              updateEstado={updateFn}
-              completionStatuses={completionStatuses}
-              allPrereq={prerrequisites}
-              coursesStatus={coursesStatus}
+              coursesStatus={courseStatusesInternal}
               allCourses={courses}
+              allPrereq={coursePrerrequisites}
+              completionStatuses={completionStatuses}
+              updateFn={changeStatusFn}
             />
           ))}
         </div>

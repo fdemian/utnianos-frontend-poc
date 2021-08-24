@@ -1,78 +1,44 @@
-import React, { lazy, Suspense, useState } from 'react';
-import { Spin } from 'antd';
-import { useQuery, useMutation } from "@apollo/client";
-import {
-  GET_PLAN_STATUS,
-  GET_COMPLETION_STATUSES,
-  GET_PRERREQUISITES
-} from './queries';
-import { CHANGE_COURSE_STATUS } from './mutations';
-
-const TrackerComponent = lazy(() => import('./TrackerComponent'));
+import React from 'react';
+import { useQuery } from "@apollo/client";
+import { useMediaQuery } from 'react-responsive';
+import { GET_CAREER_PLAN } from './queries';
+import './CareerTracker.css';
+import Carousel from './Carousel/Carousel';
 
 const CareeerPlanTracker = ({ user, careerPlan }) => {
 
   const userId = user.id;
-  const [changeCourseStatus] = useMutation(CHANGE_COURSE_STATUS);
-  const [courseStatusesInternal, setCoursesStatuses] = useState(null);
 
-  const {data, loading, error } = useQuery(GET_PLAN_STATUS, {
-    variables: { id: userId },
-    skip: !careerPlan
-  });
-
-  const statusesQuery = useQuery(GET_COMPLETION_STATUSES);
-  const prerreqQuery =  useQuery(GET_PRERREQUISITES);
+  const isDesktop = useMediaQuery({query: '(min-device-width: 1200px)'});
+  const { data, loading, error } = useQuery(GET_CAREER_PLAN, {
+      variables: {
+        id: careerPlan
+      }
+   });
 
   if(!careerPlan)
     return null;
 
-  if(loading || statusesQuery.loading || prerreqQuery.loading)
-    return <Spin tip="Loading..." />;
+  if(loading)
+    return <p>Loading...</p>;
 
-  if(error || statusesQuery.error || prerreqQuery.error)
+  if(error)
     return <p>Error</p>;
 
-  const { completionStatuses } = statusesQuery.data;
-  const { coursesStatus } = data;
-  const { coursePrerrequisites } = prerreqQuery.data;
-
-  if(!courseStatusesInternal && coursesStatus) {
-    setCoursesStatuses(coursesStatus);
-  }
-
-  const changeStatusFn = (courseCode, statusCode) => {
-    changeCourseStatus({ variables: {
-      courseCode: courseCode,
-      userId: userId,
-      statusCode: statusCode
-    }});
-
-    let newStatuses = coursesStatus.map(cs => {
-       if(cs.courseCode === courseCode){
-         return {
-           completionCode: statusCode,
-           courseCode: cs.courseCode,
-          __typename: "CoursesStatusObj"
-         }
-       }
-       return cs;
-    });
-
-    setCoursesStatuses(newStatuses);
-  }
+  const { courses, name } = data.careerPlan;
+  const yearsPerTab = isDesktop ? 3 : 1;
 
   return (
-  <Suspense fallback={<Spin />}>
-    <TrackerComponent
-      careerId={careerPlan}
-      coursesStatus={courseStatusesInternal}
-      completionStatuses={completionStatuses}
-      prerrequisites={coursePrerrequisites}
+  <>
+    <h2 className="carrer-name" key="career-name">
+      {name}
+    </h2>
+    <Carousel
+      courses={courses}
       userId={userId}
-      changeStatusFn={changeStatusFn}
+      yearsPerTab={yearsPerTab}
     />
-  </Suspense>
+  </>
   );
 }
 

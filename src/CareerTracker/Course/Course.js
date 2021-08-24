@@ -14,13 +14,14 @@ const Course = (props) => {
 
   const {
     course,
-    updateEstado,
+    isLoading,
     completionStatuses,
     coursesStatus,
     allCourses,
-    allPrereq
+    allPrereq,
+    updateFn
   } = props;
-
+  
   const prerrequisites = getCoursePrerrequisites(course.code, allPrereq);
   const currentStatus = getCourseStatus(course, coursesStatus);
   const finalReq = prerrequisites.filter(p => p.type === 'F');
@@ -30,22 +31,21 @@ const Course = (props) => {
 
   if (canTakeCourse) {
     return (
-    <Suspense fallback={<Spin />}>
+    <Card className="CourseCard" loading={isLoading}>
       <div className="Course">
-        <Card className="CourseCard">
-          <p className="CourseNameContainer">
-            <strong className="CourseName">{course.name}</strong>
-          </p>
-          <StatusDropdown
-            updateFn={updateEstado}
-            courseCode={course.code}
-            completionStatuses={completionStatuses}
-            currentStatus={currentStatus}
-            canTakeFinalExam={canTakeFinalExam}
-          />
-        </Card>
+        <p className="CourseNameContainer">
+          <strong className="CourseName">{course.name}</strong>
+        </p>
+        <StatusDropdown
+          isLoading={isLoading}
+          updateFn={updateFn}
+          courseCode={course.code}
+          completionStatuses={completionStatuses}
+          currentStatus={currentStatus}
+          canTakeFinalExam={canTakeFinalExam}
+        />
       </div>
-    </Suspense>
+    </Card>
     );
   }
 

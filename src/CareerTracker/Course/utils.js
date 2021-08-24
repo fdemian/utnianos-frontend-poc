@@ -1,16 +1,9 @@
 
-export const getCourseStatus = (subject, coursesStatus) =>
-coursesStatus.filter(c => c.courseCode === subject.code)[0];
+export const getCourseStatus = (subject, coursesStatus) => hasValue(coursesStatus) ?
+coursesStatus.filter(c => c.courseCode === subject.code)[0] : [];
 
-export const getCoursePrerrequisites = (courseCode, prerrequisites) =>
-prerrequisites.filter(p => p.courseCode === courseCode);
-
-const courseReqSatisfy = (statusCode, requiredStatus) => {
-    if(requiredStatus === "F")
-      return statusCode === "F";
-
-    return (statusCode === "C" || statusCode === "F");
-}
+export const getCoursePrerrequisites = (courseCode, prerrequisites) => hasValue(prerrequisites) ?
+prerrequisites.filter(p => p.courseCode === courseCode) : [];
 
 export const prerreqSatisfy = (req, statuses) => {
 
@@ -38,3 +31,14 @@ export const getPrerreqList = (courses, prerrequisites) => {
 
   return prerreqs;
 }
+
+
+
+const courseReqSatisfy = (statusCode, requiredStatus) => {
+    if(requiredStatus === "F")
+      return statusCode === "F";
+
+    return (statusCode === "C" || statusCode === "F");
+}
+
+const hasValue = (data) => data !== undefined && data != null;
