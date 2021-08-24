@@ -8,7 +8,6 @@ import Carousel from './Carousel/Carousel';
 const CareeerPlanTracker = ({ user, careerPlan }) => {
 
   const userId = user.id;
-
   const isDesktop = useMediaQuery({query: '(min-device-width: 1200px)'});
   const { data, loading, error } = useQuery(GET_CAREER_PLAN, {
       variables: {

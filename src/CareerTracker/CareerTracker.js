@@ -29,31 +29,27 @@ const CareerTracker = () => {
 
   if(plan){
     return (
-    <>
+    <Suspense fallback={<Spin />}>
       <h1 className="career-tracker-title">
         Seguidor de carrera
       </h1>
-      <Suspense fallback={<Spin />}>
-        <CareerPlanTracker
-          user={user}
-          careerPlan={plan}
-        />
-      </Suspense>
-    </>
+      <CareerPlanTracker
+        user={user}
+        careerPlan={plan}
+      />
+    </Suspense>
     );
   }
 
   return(
-  <>
+  <Suspense fallback={<Spin />}>
     <h1 className="career-tracker-title">Seguidor de carrera</h1>
-    <Suspense fallback={<Spin />}>
-      <CareerPlanSelector
-        user={user}
-        setCareer={setPlan}
-        plan={plan}
-      />
-     </Suspense>
-   </>
+    <CareerPlanSelector
+       user={user}
+       setCareer={setPlan}
+       plan={plan}
+     />
+   </Suspense>
    );
 
 }

@@ -18,7 +18,6 @@ const Carousel = (props) => {
   const {
     courses,
     yearsPerTab,
-    updateFn,
     userId
   } = props;
 
@@ -95,7 +94,7 @@ const Carousel = (props) => {
         }
         return cs;
      });
-     
+
      setCoursesStatuses(newStatuses);
   }
 
