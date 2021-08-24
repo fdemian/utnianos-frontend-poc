@@ -8,7 +8,10 @@ import '@testing-library/jest-dom/extend-expect';
 const classMaterial = {
   name: "Material 1",
   contribTypes:"Apunte,Final",
-  course: {id: 1, name: "Análisis Matemático 1"},
+  course: {
+    code: "950701", 
+    name: "Análisis Matemático 1"
+  },
   description: "Esto es un apunte.",
   files: [{
     id: 1,

@@ -12,7 +12,7 @@ export const GET_CONTRIB_TYPES = gql`
 export const GET_COURSES = gql`
   query GetCourses {
     courses {
-      id
+      code
       name
     }
   }

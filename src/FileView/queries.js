@@ -7,7 +7,7 @@ export const GET_COURSE_MATERIAL = gql`
       description
       contribTypes
       course {
-        id
+        code
         name
       }
       files {

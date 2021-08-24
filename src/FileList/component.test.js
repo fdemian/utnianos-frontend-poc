@@ -27,12 +27,12 @@ const mocks = [
         error: false,
         data: {
           courses: [{
-            id: 1,
+            code: "950701",
             name: "Analisis Matemático",
             __typename: "CourseObj"
           },
           {
-            id: 2,
+            code: "951604",
             name: "Ingeniería y Sociedad",
             __typename: "CourseObj"
           }]
