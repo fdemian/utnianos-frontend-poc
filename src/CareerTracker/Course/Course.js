@@ -52,7 +52,7 @@ const Course = (props) => {
   return (
   <Suspense fallback={<Spin />}>
     <DisabledCourse
-      key={course.id}
+      key={course.code}
       name={course.name}
       allCourses={allCourses}
       courseReq={courseReq}

@@ -9,11 +9,11 @@ export const ADD_CAREER_PLAN = gql`
 `;
 
 export const CHANGE_COURSE_STATUS = gql`
-  mutation ChangeCourseStatus($courseId: Int!, $statusId: Int!, $userId: Int!) {
-   changeCourseStatus(courseId: $courseId, statusId: $statusId, userId: $userId) {
+  mutation ChangeCourseStatus($courseCode: String!, $statusCode: String!, $userId: Int!) {
+   changeCourseStatus(courseCode: $courseCode, statusCode: $statusCode, userId: $userId) {
     ok
-    courseId
-    statusId
+    courseCode
+    statusCode
    }
   }
 `;

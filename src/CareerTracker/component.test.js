@@ -205,7 +205,7 @@ describe("<CareerTracker />", () => {
        result: {
          loading: false,
          error: false,
-         data: { coursePrerrequisites: [] }
+         data: { coursePrerrequisites: coursePrerrequisites }
        }
      },
      {
@@ -254,6 +254,9 @@ describe("<CareerTracker />", () => {
       }
     })
 
+    const disabledText = "No se cumplen las coorrelativas para que curses esta materia.";
+    expect(getAllByText(disabledText).length).toStrictEqual(5);
+
     // Click right arrow and get the 3rd year.
     fireEvent.click(getByTestId("arrow-right"));
 
@@ -287,9 +290,6 @@ describe("<CareerTracker />", () => {
     fireEvent.click(getByTestId("arrow-right"));
 
     //
-    const disabledText = "No se cumplen las coorrelativas para que curses esta materia.";
-    expect(getAllByText(disabledText).length).toStrictEqual(2);
-
     /*
     fireEvent.mouseOver(getAllByTestId("disabled-course")[0]);
 

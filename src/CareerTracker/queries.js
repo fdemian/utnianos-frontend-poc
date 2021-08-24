@@ -34,7 +34,7 @@ export const GET_PLAN_STATUS = gql`
     coursesStatus(id: $id) {
       __typename
       courseCode
-      completionId
+      completionCode
     }
   }
 `;
@@ -43,7 +43,7 @@ export const GET_COMPLETION_STATUSES = gql`
   query CompletionStatuses {
     completionStatuses {
       __typename
-      id
+      status
       name
     }
   }

@@ -41,18 +41,18 @@ const CareeerPlanTracker = ({ user, careerPlan }) => {
     setCoursesStatuses(coursesStatus);
   }
 
-  const changeStatusFn = (courseId, statusId) => {
+  const changeStatusFn = (courseCode, statusCode) => {
     changeCourseStatus({ variables: {
-      courseId: courseId,
+      courseCode: courseCode,
       userId: userId,
-      statusId: statusId
+      statusCode: statusCode
     }});
 
     let newStatuses = coursesStatus.map(cs => {
-       if(cs.courseId === courseId){
+       if(cs.courseCode === courseCode){
          return {
-           completionId: statusId,
-           courseId: cs.courseId,
+           completionCode: statusCode,
+           courseCode: cs.courseCode,
           __typename: "CoursesStatusObj"
          }
        }

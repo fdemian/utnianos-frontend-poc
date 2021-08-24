@@ -31,7 +31,8 @@ const FileSummary = (props) => {
     onChange(info) {
       const { status } = info.file;
       if (status !== 'uploading') {
-        console.log(info.file, info.fileList);
+        //console.log(info.file, info.fileList);
+        console.log("Uploading");
       }
       if (status === 'done') {
         message.success(`${info.file.name} archivo subido correctamente.`);
