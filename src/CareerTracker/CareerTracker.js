@@ -1,6 +1,6 @@
 import React, { lazy, useState, Suspense } from 'react';
 import { useQuery } from "@apollo/client";
-import { Spin } from 'antd';
+import Spin from 'antd/es/spin';
 import { GET_USER } from './queries';
 import { getUserId } from '../Login/authUtils';
 const CareerPlanSelector = lazy(() => import('./CareerPlanSelector'));

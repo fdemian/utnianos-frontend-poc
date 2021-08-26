@@ -1,5 +1,7 @@
 import React from 'react';
-import { Select, Input, Spin } from 'antd';
+import Select from 'antd/es/select';
+import Input from 'antd/es/input';
+import Spin from 'antd/es/spin';
 
 import './FileList.css';
 

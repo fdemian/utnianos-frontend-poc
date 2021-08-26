@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react';
-import { Card, Spin } from 'antd';
+import Spin from 'antd/es/spin';
+import Card from 'antd/es/card';
 import StatusDropdown from './StatusDropdown';
 import {
   getCoursePrerrequisites,
@@ -21,7 +22,7 @@ const Course = (props) => {
     allPrereq,
     updateFn
   } = props;
-  
+
   const prerrequisites = getCoursePrerrequisites(course.code, allPrereq);
   const currentStatus = getCourseStatus(course, coursesStatus);
   const finalReq = prerrequisites.filter(p => p.type === 'F');

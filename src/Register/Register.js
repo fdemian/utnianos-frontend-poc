@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
-import { Form, Input, Button, Alert } from 'antd';
+import Form from 'antd/es/form';
+import Input from 'antd/es/input';
+import Button from 'antd/es/button';
+import Alert from 'antd/es/alert';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TopIcon from '../Login/TopIcon';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';

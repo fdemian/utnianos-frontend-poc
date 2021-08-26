@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, Dropdown, Spin } from 'antd';
+import Menu from 'antd/es/menu';
+import Dropdown from 'antd/es/dropdown';
+import Spin from 'antd/es/spin';
 import AccountAvatar from '../../UserAvatar/UserAvatar';
 
 // Font awesome icons.

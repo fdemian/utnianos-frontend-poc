@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { Button, Card, Spin } from 'antd';
+import Button from 'antd/es/button';
+import Card from 'antd/es/card';
+import Spin from 'antd/es/spin';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGraduationCap as careerIcon } from '@fortawesome/free-solid-svg-icons';
 import { GET_CAREER_PLANS } from './queries';

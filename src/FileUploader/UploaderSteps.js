@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Steps, Button } from 'antd';
+import Steps from 'antd/es/steps';
+import Button from 'antd/es/button';
 import {Redirect} from 'react-router-dom';
 import FileDetailsForm from './FileDetailsForm';
 import FileSummary from './FileSummary';

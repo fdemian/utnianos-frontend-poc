@@ -1,5 +1,7 @@
 import React, { lazy, Suspense} from 'react';
-import { Popover, Card, Spin } from 'antd';
+import Spin from 'antd/es/spin';
+import Card from 'antd/es/card';
+import Popover from 'antd/es/popover';
 import { getPrerreqList } from './utils';
 import './Course.css';
 

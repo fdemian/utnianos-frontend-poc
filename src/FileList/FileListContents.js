@@ -1,6 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Tag , Spin} from 'antd';
+import Table from 'antd/es/table';
+import Tag from 'antd/es/tag';
+import Spin from 'antd/es/spin';
+
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye as eyeIcon } from '@fortawesome/free-solid-svg-icons';
 

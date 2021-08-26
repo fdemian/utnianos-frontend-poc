@@ -1,5 +1,8 @@
 import React from 'react';
-import { Tag, Upload, message } from 'antd';
+import Tag from 'antd/es/tag';
+import Upload from 'antd/es/upload';
+import message from 'antd/es/message';
+
 import './Uploader.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import FileList from './FileList';

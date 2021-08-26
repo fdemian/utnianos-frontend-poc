@@ -1,5 +1,5 @@
 import React from 'react';
-import { List } from 'antd';
+import List from 'antd/es/list';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash as trashIcon } from '@fortawesome/free-solid-svg-icons';
 import {

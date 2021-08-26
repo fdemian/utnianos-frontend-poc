@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar } from 'antd';
+import Avatar from 'antd/es/avatar';
 
 const AccountAvatar = ({ avatar, username, size, shape }) => {
 

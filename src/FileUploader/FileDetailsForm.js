@@ -1,5 +1,8 @@
 import React from 'react';
-import { Form, Input, Select } from 'antd';
+import Form from 'antd/es/form';
+import Input from 'antd/es/input';
+import Select from 'antd/es/select';
+
 import './Uploader.css';
 
 const { TextArea } = Input;

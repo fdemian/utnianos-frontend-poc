@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Link } from 'react-router-dom';
-import { Spin } from 'antd';
+import Spin from 'antd/es/spin';
 import logo from './logo.png';
 
 const NavLogo = ({mobile, blogName}) => (

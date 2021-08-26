@@ -1,5 +1,7 @@
 import React from 'react';
-import { Image, Card } from 'antd';
+import Image from 'antd/es/image';
+import Card from 'antd/es/card';
+
 import './FileView.css';
 
 const gridStyle = { width: '25%', textAlign: 'center' };

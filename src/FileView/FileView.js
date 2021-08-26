@@ -1,5 +1,7 @@
 import React from 'react';
-import { Spin, Tag } from 'antd';
+import Spin from 'antd/es/spin';
+import Tag from 'antd/es/tag';
+
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import FileViewList from './FileViewList';

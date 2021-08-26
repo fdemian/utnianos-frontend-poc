@@ -2,7 +2,8 @@ import React, {
   lazy,
   Suspense
 } from 'react';
-import { Menu, Spin } from 'antd';
+import Menu from 'antd/es/menu';
+import Spin from 'antd/es/spin';
 import NavLogo from './NavLogo';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
