@@ -94,13 +94,11 @@ const FileListContents = (props) => {
   const dataSource = getFilteredData(classMaterials);
 
   return (
-  <div>
-    <Table
-      columns={columns}
-      dataSource={dataSource}
-      locale={{emptyText: 'No hay apuntes subidos.'}}
-    />
-  </div>
+  <Table
+    columns={columns}
+    dataSource={dataSource}
+    locale={{emptyText: 'No hay apuntes subidos.'}}
+  />
   );
 }
 

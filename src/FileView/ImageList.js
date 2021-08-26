@@ -4,7 +4,12 @@ import './FileView.css';
 
 const gridStyle = { width: '25%', textAlign: 'center' };
 
-const ImageList = ({ imageList }) => (
+const ImageList = ({ imageList }) => {
+
+  if(imageList.length === 0)
+    return null;
+
+  return (
   <Card title="Imagenes subidas">
     {imageList.map(item => (
     <Card.Grid style={gridStyle} key={item.path}>
@@ -12,6 +17,7 @@ const ImageList = ({ imageList }) => (
     </Card.Grid>
     ))}
   </Card>
-);
+  )
+};
 
 export default ImageList;

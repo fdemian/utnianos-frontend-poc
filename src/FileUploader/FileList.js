@@ -16,7 +16,7 @@ const FileList = ({fileList, setFileList}) => {
   const removeItem = (item) => setFileList(fileList.filter(f => f.uid !== item.uid));
 
   return (
-  <div className="file-list-container">
+  <div className="file-list-container-uploader">
   <h3>Archivos subidos</h3>
   <List
      bordered={true}
