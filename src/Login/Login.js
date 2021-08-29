@@ -27,13 +27,13 @@ const layout = {
 const LoginScreen = (props) => {
 
   const [userId, setUserId] = useState(null);
-  const [errorMessage, setError] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [loginMutation, authData] = useMutation(USER_LOGIN, { skip: userId });
   const history = useHistory();
 
-  if(!authData.loading && authData.data && !userId && !errorMessage){
+  if(!authData.loading && authData.data && !userId){
 
-    if(authData.data.ok) {
+    if(authData.data.auth.ok) {
       const {
         id,
         accessToken,
@@ -44,7 +44,9 @@ const LoginScreen = (props) => {
       setStorageTokens(id, accessToken, refreshToken);
     }
     else {
-      setError("La combinación usuario/contraseña es incorrecta.")
+      if(!errorMessage) {
+         setErrorMessage("La combinación de usuario y contraseña es incorrecta.")
+      }
     }
   }
 
@@ -58,7 +60,7 @@ const LoginScreen = (props) => {
   };
 
   const clearError = () => {
-    setError(null);
+    setErrorMessage(null);
   }
 
   // Fail!
@@ -132,7 +134,7 @@ const LoginScreen = (props) => {
           style={{ marginTop: 24, width: '39%', marginLeft:'34%' }}
           type="error"
           message="Error"
-          description="La combinación de usuario y contraseña es inválida."
+          description={errorMessage}
           showIcon
           closable
           onClose={clearError}
