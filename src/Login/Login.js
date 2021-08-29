@@ -65,7 +65,7 @@ const LoginScreen = (props) => {
 
   // Fail!
   const onFinishFailed = errorInfo => {
-     console.log('Failed:', errorInfo);
+     setErrorMessage('Failed: ' + errorInfo);
   };
 
   if(userId && !loading && data) {
