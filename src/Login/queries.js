@@ -13,6 +13,7 @@ export const GET_USER = gql`
 export const USER_LOGIN = gql`
   mutation LoginMutation($username: String!, $password: String!) {
     auth(username: $username, password: $password) {
+      ok
       id
       accessToken
       refreshToken

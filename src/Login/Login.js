@@ -27,18 +27,25 @@ const layout = {
 const LoginScreen = (props) => {
 
   const [userId, setUserId] = useState(null);
+  const [errorMessage, setError] = useState(null);
   const [loginMutation, authData] = useMutation(USER_LOGIN, { skip: userId });
   const history = useHistory();
 
-  if(!authData.loading && authData.data && !userId){
-    const {
-      id,
-      accessToken,
-      refreshToken
-    } = authData.data.auth;
+  if(!authData.loading && authData.data && !userId && !errorMessage){
 
-    setUserId(id);
-    setStorageTokens(id, accessToken, refreshToken);
+    if(authData.data.ok) {
+      const {
+        id,
+        accessToken,
+        refreshToken
+      } = authData.data.auth;
+
+      setUserId(id);
+      setStorageTokens(id, accessToken, refreshToken);
+    }
+    else {
+      setError("La combinación usuario/contraseña es incorrecta.")
+    }
   }
 
   const queryOpts = { variables: { id: userId }, skip: !userId };
@@ -50,12 +57,16 @@ const LoginScreen = (props) => {
      loginMutation({ variables:{ username, password }});
   };
 
+  const clearError = () => {
+    setError(null);
+  }
+
   // Fail!
   const onFinishFailed = errorInfo => {
      console.log('Failed:', errorInfo);
   };
 
-  if(userId && !loading && data){
+  if(userId && !loading && data) {
     history.push("/");
     window.location.reload();
   }
@@ -116,13 +127,14 @@ const LoginScreen = (props) => {
         </Form.Item>
       </Form>
       {
-       error &&
+       (error || errorMessage) &&
         <Alert
           style={{ marginTop: 24 }}
           message="User/Password combination is invalid."
           type="error"
           showIcon
           closable
+          onClose={clearError}
         />
       }
   </div>

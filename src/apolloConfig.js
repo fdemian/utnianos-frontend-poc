@@ -9,7 +9,8 @@ import { onError } from "@apollo/client/link/error";
 const clientLogout = () => {
   localStorage.removeItem('AUTH_TOKEN');
   localStorage.removeItem('REFRESH_TOKEN');
-  localStorage.removeItem('USER_ID');
+  localStorage.removeItem('ID');
+  window.location.reload();
 }
 
 // TODO:

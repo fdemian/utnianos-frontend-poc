@@ -27,7 +27,7 @@ const authUtils = require('../Login/authUtils');
 describe("<CareerTracker />", () => {
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    //jest.clearAllMocks();
     console.warn = () => {};
   })
 

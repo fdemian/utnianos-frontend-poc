@@ -15,6 +15,7 @@ const user = {
 };
 
 const auth = {
+  ok: true,
   id: 1,
   accessToken: "",
   refreshToken: "",
