@@ -129,9 +129,10 @@ const LoginScreen = (props) => {
       {
        (error || errorMessage) &&
         <Alert
-          style={{ marginTop: 24 }}
-          message="User/Password combination is invalid."
+          style={{ marginTop: 24, width: '39%', marginLeft:'34%' }}
           type="error"
+          message="Error"
+          description="La combinación de usuario y contraseña es inválida."
           showIcon
           closable
           onClose={clearError}
