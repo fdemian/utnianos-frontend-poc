@@ -1,5 +1,6 @@
 import React from 'react';
 import CareerTracker from './CareerTracker';
+import Pending from './PendingRequisites/Pending';
 import { render, fireEvent, waitFor} from '../utils/testing-utils';
 import {
   GET_USER,
@@ -31,11 +32,43 @@ describe("<CareerTracker />", () => {
     console.warn = () => {};
   })
 
-  /*
-  it("<CareerTracker /> initial render/smoke test", async () => {
-    const { getByText } = render(<CareerTracker />);
-    expect(getByText("Loading")).toBeInTheDocument();
-  })*/
+
+  it("<Pending /> render pending courses list with data.", async () => {
+
+    const courseList = [
+      {
+        "code": "950702",
+        "name": "Álgebra y Geometría Analítica"
+      },
+      {
+        "code": "950701",
+        "name": "Análisis Matemático I"
+      }
+    ];
+    const finalList = [
+      {
+        "code": "950702",
+        "name": "Álgebra y Geometría Analítica"
+      },
+      {
+        "code": "950701",
+        "name": "Análisis Matemático I"
+      }
+    ];
+
+    const {
+      getByText,
+      getAllByText
+    } = render(<Pending course={courseList} final={finalList} />);
+
+    expect(getByText("Con cursada:")).toBeInTheDocument();
+    expect(getByText("Con cursada:")).toBeInTheDocument();
+
+    expect(getByText("Esta materia tiene como correlativas:")).toBeInTheDocument();
+
+    expect(getAllByText(courseList[0].name).length).toStrictEqual(2);
+    expect(getAllByText(courseList[1].name).length).toStrictEqual(2);
+  })
 
   it("User without a career plan > Basic interaction.", async () => {
 
@@ -232,7 +265,8 @@ describe("<CareerTracker />", () => {
     await waitFor(() => {
       expect(getByText("Seguidor de carrera")).toBeInTheDocument();
       expect(getByText('Loading')).toBeInTheDocument();
-    })*/
+    })
+    */
 
     await waitFor(() => {
       expect(getByText("Seguidor de carrera")).toBeInTheDocument();
@@ -286,19 +320,7 @@ describe("<CareerTracker />", () => {
         expect(queryByText(course.name)).toStrictEqual(null);
       }
     })
-
     fireEvent.click(getByTestId("arrow-right"));
-
-    //
-    /*
-    fireEvent.mouseOver(getAllByTestId("disabled-course")[0]);
-
-    await waitFor(() => {
-      expect(getByText("Para cursar te faltan las siguientes correlativas:"))
-      .toBeInTheDocument();
-      //debug();
-    })
-    */
 
   })
 
