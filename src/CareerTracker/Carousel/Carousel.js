@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from "@apollo/client";
-import { TransitionGroup, CSSTransition } from 'react-transition-group' // ES6
 import Course from '../Course/Course';
 import CarouselArrows from './CarouselArrows';
 import getYearsArray from './getYearsArray';
@@ -78,63 +77,56 @@ const Carousel = (props) => {
   }
 
   const changeStatusFn = (courseCode, statusCode) => {
-    changeCourseStatus({ variables: {
-      courseCode: courseCode,
-      userId: userId,
-      statusCode: statusCode
-    }});
+
+     changeCourseStatus({ variables: {
+       courseCode: courseCode,
+       userId: userId,
+       statusCode: statusCode
+     }});
 
     let newStatuses = coursesStatus.map(cs => {
        if(cs.courseCode === courseCode){
          return {
+           __typename: cs.__typename,
            completionCode: statusCode,
-           courseCode: cs.courseCode,
-          __typename: "CoursesStatusObj"
+           courseCode: cs.courseCode
          }
         }
         return cs;
      });
-
      setCoursesStatuses(newStatuses);
   }
 
   return (
   <>
-    <CarouselArrows prevFn={prevTab} nextFn={nextTab} showArrows={showArrows} />
-    <TransitionGroup>
-      <CSSTransition
-        transitionName="TransitionGroup"
-        transitionAppear={false}
-        transitionEnterTimeout={1000}
-        transitionLeaveTimeout={1000}
-        transitionEnter
-        transitionLeave
-      >
-      <div className="YearsVisualizer">
-      {years.map((year) => (
-        <div className="Container" key={year.year}>
-          <p className="Heading">
-            Año
-            {year.year}
-          </p>
-          <hr className="Separator" />
-          {year.courses.map((course) => (
-            <Course
-              key={course.code}
-              isLoading={isLoading}
-              course={course}
-              coursesStatus={courseStatusesInternal}
-              allCourses={courses}
-              allPrereq={coursePrerrequisites}
-              completionStatuses={completionStatuses}
-              updateFn={changeStatusFn}
-            />
-          ))}
+    <CarouselArrows
+       prevFn={prevTab}
+       nextFn={nextTab}
+       showArrows={showArrows}
+    />
+    <div className="YearsVisualizer">
+    {years.map((year) => (
+      <div className="Container" key={year.year}>
+        <p className="Heading">
+          Año
+          {year.year}
+        </p>
+        <hr className="Separator" />
+        {year.courses.map((course) => (
+         <Course
+            key={course.code}
+            isLoading={isLoading}
+            course={course}
+            coursesStatus={courseStatusesInternal}
+            allCourses={courses}
+            allPrereq={coursePrerrequisites}
+            completionStatuses={completionStatuses}
+            updateFn={changeStatusFn}
+          />
+        ))}
         </div>
       ))}
       </div>
-      </CSSTransition>
-    </TransitionGroup>
   </>
   );
 

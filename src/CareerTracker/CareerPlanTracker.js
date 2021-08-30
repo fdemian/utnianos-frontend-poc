@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { useQuery } from "@apollo/client";
 import { useMediaQuery } from 'react-responsive';
 import { GET_CAREER_PLAN } from './queries';
 import './CareerTracker.css';
-import Carousel from './Carousel/Carousel';
+//import Carousel from './Carousel/Carousel';
+import Skeleton from 'antd/es/skeleton';
+
+const Carousel = lazy(() => import('./Carousel/Carousel'));
 
 const CareeerPlanTracker = ({ user, careerPlan }) => {
 
@@ -32,11 +35,13 @@ const CareeerPlanTracker = ({ user, careerPlan }) => {
     <h2 className="carrer-name" key="career-name">
       {name}
     </h2>
+    <Suspense fallback={<Skeleton active />}>
     <Carousel
       courses={courses}
       userId={userId}
       yearsPerTab={yearsPerTab}
     />
+    </Suspense>
   </>
   );
 }

@@ -1,8 +1,9 @@
 import React, { lazy, useState, Suspense } from 'react';
 import { useQuery } from "@apollo/client";
-import Spin from 'antd/es/spin';
 import { GET_USER } from './queries';
 import { getUserId } from '../Login/authUtils';
+import Spin from 'antd/es/spin';
+
 const CareerPlanSelector = lazy(() => import('./CareerPlanSelector'));
 const CareerPlanTracker = lazy(() => import('./CareerPlanTracker'));
 
@@ -36,6 +37,7 @@ const CareerTracker = () => {
       <CareerPlanTracker
         user={user}
         careerPlan={plan}
+        loading={loading}
       />
     </Suspense>
     );

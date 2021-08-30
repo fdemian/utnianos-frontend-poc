@@ -1,5 +1,6 @@
 import React from 'react';
-import { Select, Badge } from 'antd';
+import Select from 'antd/es/select';
+import Badge from 'antd/es/badge';
 
 const { Option } = Select;
 const colors = [
@@ -50,7 +51,7 @@ const StatusDropdown = (props) => {
         <Option
           title={status.name}
           value={status.name}
-          key={"search-attributes-" + courseCode + "-" + status.id}
+          key={"search-attributes-" + courseCode + "-" + status.status}
           role="option"
           disabled={status.name === "Aprobada" && !canTakeFinalExam}
         >
