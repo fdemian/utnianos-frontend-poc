@@ -2,6 +2,8 @@
 
 ## Correr el proyecto
 
+Tener en cuenta que para que el proyecto corra de manera correcta el backend debe estar corriendo de antemano.
+
 Primero instalar paquetes con yarn:
 
 ### `yarn`
