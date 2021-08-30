@@ -6,7 +6,12 @@ import logo from '../logo.png';
 const UnloggedHome = () => {
   return (
   <div className="unlogged-home-container">
-    <img src={logo} alt="utnianos logo" />
+    <img
+      src={logo}
+      alt="utnianos logo"
+      width={592}
+      height={134}
+    />
     <p style={{fontSize:'30px'}}>Bienvenido!</p>
     <p style={{fontSize:'20px'}}>
       En este sitio vas a poder seguir tu progreso académico, ver apuntes y más.
