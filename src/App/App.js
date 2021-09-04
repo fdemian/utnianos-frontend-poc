@@ -15,11 +15,6 @@ const App = (props) => {
   const contentClass = "content-container" + (isMobile ? " mobile": "");
   const { children } = props;
 
-  /*
-  if(loggedIn) {
-    loadWebsocket();
-  }
-  */
 
   const navProps = {
     mobile: isMobile,
