@@ -2,15 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
 import logo from '../logo.png';
+import { getIsMobile } from '../App/utils';
 
 const UnloggedHome = () => {
+
+  const isMobile = getIsMobile();
+  console.clear();
+  console.log(isMobile);
+
   return (
-  <div className="unlogged-home-container">
+  <div className={`unlogged-home-container${isMobile ? "-mobile": ""}`}>
     <img
       src={logo}
       alt="utnianos logo"
-      width={592}
-      height={134}
+      width={isMobile ? 237: 592}
+      height={isMobile ? 54: 134}
     />
     <p style={{fontSize:'30px'}}>Bienvenido!</p>
     <p style={{fontSize:'20px'}}>
