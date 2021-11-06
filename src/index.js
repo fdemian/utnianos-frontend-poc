@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import ApplicationRoutes from './Routes/Routes';
 import AppRoute from './Routes/AppRoute';
 //import reportWebVitals from './reportWebVitals';
@@ -16,7 +16,6 @@ const UTNApp = () => {
   <ApolloProvider client={client}>
     <Router>
         <App>
-          <Switch>
           {Routes.map(route =>
             <AppRoute
               exact={route.exact}
@@ -26,17 +25,15 @@ const UTNApp = () => {
               key={route.path ? route.path.toString() : "-"}
             />
            )}
-           </Switch>
          </App>
      </Router>
    </ApolloProvider>
   );
 };
 
+//<React.StrictMode>
 ReactDOM.render(
-  <React.StrictMode>
-    <UTNApp />
-  </React.StrictMode>,
+    <UTNApp />,
   document.getElementById('root')
 );
 

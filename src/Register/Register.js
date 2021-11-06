@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router';
+import { Navigate } from 'react-router-dom';
 import Form from 'antd/es/form';
 import Input from 'antd/es/input';
 import Button from 'antd/es/button';
@@ -65,12 +65,12 @@ const RegisterScreen = (props) => {
     return <p>Loading</p>;
 
   if(isLoggedIn)
-    return <Redirect to="/" />;
+    return  <Navigate to="/" />;
 
   if(data){
    const { ok, id } = data.createUser;
    if(ok){
-     return <Redirect to={`/registersuccess/${id}`} />;
+     return <Navigate to={`/registersuccess/${id}`} />;
    }
   }
 

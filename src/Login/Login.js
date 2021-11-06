@@ -12,7 +12,7 @@ import {
   USER_LOGIN
 } from './queries';
 import { setStorageTokens } from './authUtils';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 const layout = {
@@ -29,7 +29,7 @@ const LoginScreen = (props) => {
   const [userId, setUserId] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loginMutation, authData] = useMutation(USER_LOGIN, { skip: userId });
-  const history = useHistory();
+  const history = useNavigate();
 
   if(!authData.loading && authData.data && !userId){
 

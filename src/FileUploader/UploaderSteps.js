@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Steps from 'antd/es/steps';
 import Button from 'antd/es/button';
-import {Redirect} from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import FileDetailsForm from './FileDetailsForm';
 import FileSummary from './FileSummary';
 import LoadingIndicator from '../Loading/LoadingIndicator';
@@ -40,7 +40,7 @@ const UploaderSteps = () => {
     return <LoadingIndicator />;
 
  if(response.data && response.data.addContrib.ok)
-    return <Redirect to="/classnotes" />
+    return <Navigate to="/classnotes" />
 
     const contributions = contribQuery.data;
     const courseData = courseQuery.data;

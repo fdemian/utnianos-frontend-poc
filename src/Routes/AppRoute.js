@@ -1,7 +1,6 @@
 import React, { Suspense } from "react";
 import Loading from '../Loading/LoadingIndicator';
-import { Route, Redirect } from 'react-router-dom';
-import { useHistory } from 'react-router';
+import { Route, Navigate, useNavigate } from 'react-router-dom';
 import { useApolloClient } from "@apollo/client";
 import { getUserId } from '../Login/authUtils';
 
@@ -9,7 +8,7 @@ const AppRoute = ({exact, path, component, isPrivate, key}) => {
 
   const id = getUserId();
   const isLoggedIn = id !== null;
-  const history = useHistory();
+  const history = useNavigate();
   const client = useApolloClient();
 
   const logoutFn = async () => {
@@ -20,7 +19,7 @@ const AppRoute = ({exact, path, component, isPrivate, key}) => {
 
   if(isPrivate && !isLoggedIn){
     logoutFn();
-    return <Redirect to="/login" />;
+    return <Navigate to="/login" />;
   }
   else return (
   <Suspense fallback={<Loading />}>

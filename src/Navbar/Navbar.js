@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 import Spin from 'antd/lib/spin';
 import Affix from 'antd/lib/affix';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { getUserId } from '../Login/authUtils';
 import { useQuery, useApolloClient } from "@apollo/client";
 import { GET_USER } from './Queries';
@@ -15,7 +15,7 @@ const NavbarMobile = lazy(() => import('./NavbarMobile'));
 const Navbar = (props) => {
 
   const { mobile } = props;
-  const history = useHistory();
+  const history = useNavigate();
   const client = useApolloClient();
   const id = getUserId();
   const isLoggedIn = id !== null;
