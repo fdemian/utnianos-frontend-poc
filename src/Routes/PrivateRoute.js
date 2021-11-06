@@ -1,8 +1,8 @@
 import React from "react";
 import { Navigate } from 'react-router-dom';
-import Loading from '../Loading/LoadingIndicator';
 import { useApolloClient } from "@apollo/client";
 import { getUserId } from '../Login/authUtils';
+//import Loading from '../Loading/LoadingIndicator';
 
 const PrivateRoute = ({ isPrivate, children }) => {
 

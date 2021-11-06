@@ -20,7 +20,36 @@ const Carousel = (props) => {
     userId
   } = props;
 
-  const [changeCourseStatus] = useMutation(CHANGE_COURSE_STATUS);
+  const [changeCourseStatus] = useMutation(CHANGE_COURSE_STATUS, {
+    update(
+      cache,
+      {
+        data: { changeCourseStatus }
+      }
+    ){
+      cache.modify({
+        fields: {
+          coursesStatus(existingCourses = []) {
+            const {
+              courseCode,
+              statusCode
+            } = changeCourseStatus;
+
+            return existingCourses.map(cs => {
+               if(cs.courseCode === courseCode){
+                 return {
+                   __typename: cs.__typename,
+                   completionCode: statusCode,
+                   courseCode: cs.courseCode
+                 }
+                }
+                return cs;
+             });
+         }
+       }
+      })
+    }
+  });
 
   const statusesQuery = useQuery(GET_COMPLETION_STATUSES);
   const prerreqQuery =  useQuery(GET_PRERREQUISITES);
@@ -73,23 +102,20 @@ const Carousel = (props) => {
 
   const changeStatusFn = (courseCode, statusCode) => {
 
-     changeCourseStatus({ variables: {
+     changeCourseStatus({
+       variables: {
        courseCode: courseCode,
        userId: userId,
        statusCode: statusCode
-     }});
-
-     /*
-    let newStatuses = coursesStatus.map(cs => {
-       if(cs.courseCode === courseCode){
-         return {
-           __typename: cs.__typename,
-           completionCode: statusCode,
-           courseCode: cs.courseCode
-         }
+     },
+     optimisticResponse: {
+       changeCourseStatus:{
+         courseCode: courseCode,
+         userId: userId,
+         statusCode: statusCode
         }
-        return cs;
-     });*/
+      }
+    });
   }
 
   return (
