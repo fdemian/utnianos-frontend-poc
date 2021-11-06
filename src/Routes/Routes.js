@@ -12,14 +12,14 @@ const CareerTracker = React.lazy(() => import('../CareerTracker/CareerTracker'))
 const ApplicationRoutes = {
    App: App,
    Routes: [
-    { path: "/", exact: true, component: Home, private: false },
-    { path: "/login", exact: true, component: Login, private: false },
-    { path: "/register", exact: true, component: Register, private: false },
-    { path: "/registersuccess/:id", exact: true, component: RegisterSuccess, private: false },
-    { path: "/classnotes", exact: true, component: FileList, private: true },
-    { path: "/classnotes/upload", exact: true, component: FileUploader, private: true },
-    { path: "/classnotes/:id", exact: true, component: ClassNotesView, private: true },
-    { path: "/tracker", exact: true, component: CareerTracker, private: true }
+    { path: "/", exact: true, component: <Home />, private: false },
+    { path: "/login", exact: true, component: <Login />, private: false },
+    { path: "/register", exact: true, component: <Register />, private: false },
+    { path: "/registersuccess/:id", exact: true, component: <RegisterSuccess />, private: false },
+    { path: "/classnotes", exact: true, component: <FileList />, private: true },
+    { path: "/classnotes/upload", exact: true, component: <FileUploader />, private: true },
+    { path: "/classnotes/:id", exact: true, component: <ClassNotesView />, private: true },
+    { path: "/tracker", exact: true, component: <CareerTracker />, private: true }
    ]
 };
 

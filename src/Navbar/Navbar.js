@@ -15,7 +15,7 @@ const NavbarMobile = lazy(() => import('./NavbarMobile'));
 const Navbar = (props) => {
 
   const { mobile } = props;
-  const history = useNavigate();
+  const navigate = useNavigate();
   const client = useApolloClient();
   const id = getUserId();
   const isLoggedIn = id !== null;
@@ -25,7 +25,7 @@ const Navbar = (props) => {
   const logoutFn = async () => {
     await client.resetStore();
     window.localStorage.clear();
-    history.push(`/`);
+    navigate(`/`);
     window.location.reload();
   }
 

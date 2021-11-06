@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Routes as RoutesContainer, Route } from 'react-router-dom';
 import ApplicationRoutes from './Routes/Routes';
-import AppRoute from './Routes/AppRoute';
-//import reportWebVitals from './reportWebVitals';
+import PrivateRoute from './Routes/PrivateRoute';
 import {useNewClient} from './apolloConfig';
 import { ApolloProvider } from "@apollo/client";
 const { App, Routes } = ApplicationRoutes;
+//import reportWebVitals from './reportWebVitals';
 
 const UTNApp = () => {
 
@@ -15,19 +15,24 @@ const UTNApp = () => {
   return(
   <ApolloProvider client={client}>
     <Router>
-        <App>
-          {Routes.map(route =>
-            <AppRoute
+      <App>
+        <RoutesContainer>
+          {Routes.map((route) =>
+            <Route
               exact={route.exact}
               path={route.path}
-              component={route.component}
-              isPrivate={route.private}
-              key={route.path ? route.path.toString() : "-"}
+              element={
+               <PrivateRoute isPrivate={route.private}>
+                {route.component}
+              </PrivateRoute>
+              }
+              key={route.key}
             />
-           )}
-         </App>
+          )}
+        </RoutesContainer>
+      </App>
      </Router>
-   </ApolloProvider>
+  </ApolloProvider>
   );
 };
 

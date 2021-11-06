@@ -21,7 +21,6 @@ const Carousel = (props) => {
   } = props;
 
   const [changeCourseStatus] = useMutation(CHANGE_COURSE_STATUS);
-  const [courseStatusesInternal, setCoursesStatuses] = useState(null);
 
   const statusesQuery = useQuery(GET_COMPLETION_STATUSES);
   const prerreqQuery =  useQuery(GET_PRERREQUISITES);
@@ -72,10 +71,6 @@ const Carousel = (props) => {
     coursePrerrequisites = prerreqQuery.data.coursePrerrequisites;
   }
 
-  if(!courseStatusesInternal  && coursesStatus) {
-    setCoursesStatuses(coursesStatus);
-  }
-
   const changeStatusFn = (courseCode, statusCode) => {
 
      changeCourseStatus({ variables: {
@@ -84,6 +79,7 @@ const Carousel = (props) => {
        statusCode: statusCode
      }});
 
+     /*
     let newStatuses = coursesStatus.map(cs => {
        if(cs.courseCode === courseCode){
          return {
@@ -93,8 +89,7 @@ const Carousel = (props) => {
          }
         }
         return cs;
-     });
-     setCoursesStatuses(newStatuses);
+     });*/
   }
 
   return (
@@ -117,7 +112,7 @@ const Carousel = (props) => {
             key={course.code}
             isLoading={isLoading}
             course={course}
-            coursesStatus={courseStatusesInternal}
+            coursesStatus={coursesStatus}
             allCourses={courses}
             allPrereq={coursePrerrequisites}
             completionStatuses={completionStatuses}

@@ -69,7 +69,7 @@ const LoginScreen = (props) => {
   };
 
   if(userId && !loading && data) {
-    history.push("/");
+    history("/");
     window.location.reload();
   }
 
