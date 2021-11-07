@@ -12,7 +12,7 @@ const { Content, Header } = Layout;
 
 const App = (props) => {
 
-  const isMobile = useMediaQuery({query: '(max-device-width: 500px)'});
+  const isMobile = useMediaQuery({query: '(max-device-width: 768px)'});
   const contentClass = "content-container" + (isMobile ? " mobile": "");
   setIsMobile(isMobile);
 

@@ -5,5 +5,6 @@ export const setIsMobile = (isMobile) => {
 }
 
 export const getIsMobile = () => {
-  return localStorage.getItem(IS_MOBILE);
+  const isMobile = localStorage.getItem(IS_MOBILE);
+  return Boolean(isMobile);
 }

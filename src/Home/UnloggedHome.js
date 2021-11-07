@@ -7,9 +7,10 @@ import { getIsMobile } from '../App/utils';
 const UnloggedHome = () => {
 
   const isMobile = getIsMobile();
-
+  const cssClass = `unlogged-home-container${isMobile ? "-mobile": ""}`;
+  
   return (
-  <div className={`unlogged-home-container${isMobile ? "-mobile": ""}`}>
+  <div className={cssClass}>
     <img
       src={logo}
       alt="utnianos logo"
