@@ -42,39 +42,6 @@
 
 }
 
-@media screen and (max-width: 768px) {
-
- .input-field.ant-input-affix-wrapper
-  {
-    display: block;
-  }
-
-  .login-container form
-  {
-    width: 100%;
-  }
-
-  .login-container .ant-tabs-tabpane.ant-tabs-tabpane-active {
-    padding-left: 10%;
-    padding-right: 10%;
-  }
-
-  .alt-login-title {
-    color: gainsboro;
-  }
-
-  .alt-login-container
-  {
-    text-align: center;
-  }
-
-  .login .alt-login-title,.register .alt-login-title {
-    color: gainsboro;
-    margin-left: 0;
-  }
-
-}
-
 .icon-header
 {
   margin-left: 45%;
@@ -116,10 +83,6 @@
   top: 2px;
 }
 
-.input-field {
-  width: 560px;
-}
-
 .login-form {
   margin-left: 34%;
 }
@@ -134,4 +97,53 @@
 
 .login-container .ant-popover-placement-right {
   left: 398px !important;
+}
+
+@media screen and (min-width: 768px) {
+  .input-field {
+    width: 560px;
+  }
+  .login-button {
+    width:564px;
+  }
+}
+
+ /* ----- Mobile ----- */
+
+@media screen and (max-width: 768px) {
+
+ /*
+ .input-field.ant-input-affix-wrapper
+  {
+    display: block;
+  }*/
+
+  .login-container form
+  {
+    width: 100%;
+  }
+
+  .login-container .ant-tabs-tabpane.ant-tabs-tabpane-active {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+
+  .alt-login-title {
+    color: gainsboro;
+  }
+
+  .alt-login-container
+  {
+    text-align: center;
+  }
+
+  .login .alt-login-title,.register .alt-login-title {
+    color: gainsboro;
+    margin-left: 0;
+  }
+
+  .login-form {
+    margin-left: 0%;
+  }
+
 }

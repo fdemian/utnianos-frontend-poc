@@ -7,8 +7,6 @@ import { getIsMobile } from '../App/utils';
 const UnloggedHome = () => {
 
   const isMobile = getIsMobile();
-  console.clear();
-  console.log(isMobile);
 
   return (
   <div className={`unlogged-home-container${isMobile ? "-mobile": ""}`}>

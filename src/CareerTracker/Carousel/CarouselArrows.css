@@ -1,34 +1,31 @@
-@media(min-width: 900px) 
-{	
+@media screen and (min-width: 768px) {
   .ArrowLeft
   {
 	  position: absolute;
 	  top: 251px;
 	  right: 94%;
   }
-    
+
   .ArrowRight
-  { 
+  {
 	  position: absolute;
 	  top: 251px;
 	  margin-left: 95%;
   }
 }
 
-@media(max-width:900px) 
-{	
+/* MOBILE */
+@media screen and (max-width: 768px) {
   .ArrowLeft
   {
     position: absolute;
-    top: 94px;
-    right: 67%;	
+    top: 272px;
   }
 
   .ArrowRight
   {
     position: absolute;
-    top: 94px;
-    margin-left: 67%;
+    top: 272px;
+    margin-left: 74%;
   }
-  
 }

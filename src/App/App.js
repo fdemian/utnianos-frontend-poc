@@ -3,6 +3,7 @@ import { useMediaQuery } from 'react-responsive';
 import { Helmet } from "react-helmet";
 import Spin from 'antd/lib/spin';
 import { Layout } from 'antd';
+import { setIsMobile } from './utils';
 import './App.css';
 
 const Navbar = lazy(() => import('../Navbar/Navbar'));
@@ -13,6 +14,8 @@ const App = (props) => {
 
   const isMobile = useMediaQuery({query: '(max-device-width: 500px)'});
   const contentClass = "content-container" + (isMobile ? " mobile": "");
+  setIsMobile(isMobile);
+
   const { children } = props;
 
 

@@ -12,6 +12,7 @@ import {
 } from '../queries';
 import { CHANGE_COURSE_STATUS } from '../mutations';
 
+
 const Carousel = (props) => {
 
   const {
@@ -129,7 +130,7 @@ const Carousel = (props) => {
     {years.map((year) => (
       <div className="Container" key={year.year}>
         <p className="Heading">
-          Año
+          Año &nbsp;
           {year.year}
         </p>
         <hr className="Separator" />

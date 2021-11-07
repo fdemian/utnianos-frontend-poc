@@ -4,7 +4,7 @@ import Input from 'antd/es/input';
 import Button from 'antd/es/button';
 import Alert from 'antd/es/alert';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import TopIcon from './TopIcon';
 import { useQuery, useMutation } from "@apollo/client";
 import {
@@ -123,8 +123,9 @@ const LoginScreen = (props) => {
         </Form.Item>
         <br />
         <Form.Item>
-          <Button style={{width:564}} type="primary" htmlType="submit" block>
-            Log In
+          <Button className="login-button" size="large" type="primary" htmlType="submit" block>
+            Log In &nbsp;
+            <FontAwesomeIcon icon={faSignInAlt} size="lg" color="white" />
           </Button>
         </Form.Item>
       </Form>
