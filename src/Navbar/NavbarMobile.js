@@ -27,12 +27,14 @@ const Navbar = (props) => {
  const openDrawer = () => setDrawerVisible(true);
 
  const {
-   loggedIn,
-   user,
+   isLoggedIn,
+   data,
    notifications,
    notificationsEnabled,
    dismissNotifications
  } = props;
+
+ const { user } = data;
 
  return (
  <Suspense fallback={<Spin />}>
@@ -42,7 +44,7 @@ const Navbar = (props) => {
        placement="right"
        onClose={closeDrawer}
        title={
-         loggedIn ?
+         isLoggedIn && user ?
          <Suspense fallback={<Spin />}>
              <AccountAvatar
                avatar={user.avatar}
@@ -50,7 +52,7 @@ const Navbar = (props) => {
                size='small'
              />
              <strong className="menu-title">
-                {user.username}
+                &nbsp; {user.username}
              </strong>
           </Suspense>
          : null
@@ -59,7 +61,7 @@ const Navbar = (props) => {
      >
       <Suspense fallback={<Spin />}>
          <NavbarMenu
-           loggedIn={loggedIn}
+           loggedIn={isLoggedIn}
            notifications={notifications}
            notificationsEnabled={notificationsEnabled}
            user={user}
