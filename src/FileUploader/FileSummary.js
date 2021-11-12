@@ -65,7 +65,6 @@ const FileSummary = (props) => {
     <br />
     <Dragger
        {...uploaderProps}
-       style={{marginLeft:'33%', width:400}}
        data-testid="file-uploader"
     >
       <p className="ant-upload-drag-icon">

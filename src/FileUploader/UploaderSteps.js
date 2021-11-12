@@ -13,6 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_CONTRIB_TYPES, GET_COURSES, ADD_CONTRIB } from './Queries';
+import { getIsMobile } from '../App/utils';
 import './Uploader.css';
 
 const { Step } = Steps;
@@ -44,6 +45,7 @@ const UploaderSteps = () => {
 
     const contributions = contribQuery.data;
     const courseData = courseQuery.data;
+    const isMobile = getIsMobile();
 
     const detailsProps = {
       fileTitle,
@@ -54,7 +56,8 @@ const UploaderSteps = () => {
       setSelectedTypes,
       setSelectedCourse,
       contributions,
-      courseData
+      courseData,
+      mobile: isMobile
     };
 
     const summaryProps = {
@@ -86,11 +89,11 @@ const UploaderSteps = () => {
 
   const steps = [
     {
-      title: "Detalles de archivo.",
+      title: isMobile ? "Detalles" : "Detalles de archivo.",
       content: <FileDetailsForm {...detailsProps} />,
     },
     {
-      title: "Revisar y subir",
+      title: isMobile ? "Confirmar" : "Revisar y subir",
       content: <FileSummary {...summaryProps} />,
     }
   ];

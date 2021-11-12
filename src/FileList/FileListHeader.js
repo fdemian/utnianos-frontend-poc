@@ -2,6 +2,7 @@ import React from 'react';
 import Select from 'antd/es/select';
 import Input from 'antd/es/input';
 import Spin from 'antd/es/spin';
+import { getIsMobile } from '../App/utils';
 
 import './FileList.css';
 
@@ -27,8 +28,11 @@ const FileListHeader = (props) => {
   const { courses } = coursesList.data;
   const { contribTypes } = contribTypesList.data;
 
+  const isMobile = getIsMobile();
+  const cssClass = `file-list-header-container${isMobile ? "-mobile": ""}`;
+
   return (
-  <div className="file-list-header-container">
+  <div className={cssClass}>
 
     <span className="contribution-type-select">
       <h3>Tipo de apunte</h3>

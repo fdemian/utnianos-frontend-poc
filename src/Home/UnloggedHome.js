@@ -8,7 +8,7 @@ const UnloggedHome = () => {
 
   const isMobile = getIsMobile();
   const cssClass = `unlogged-home-container${isMobile ? "-mobile": ""}`;
-  
+
   return (
   <div className={cssClass}>
     <img

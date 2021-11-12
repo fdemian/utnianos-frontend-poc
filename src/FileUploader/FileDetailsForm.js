@@ -46,7 +46,8 @@ const FileDetailsForm = (props) => {
     setSelectedTypes,
     setSelectedCourse,
     contributions,
-    courseData
+    courseData,
+    mobile
   } = props;
 
   const onTitleChange = (e) => setFileTitle(e.target.value);
@@ -59,6 +60,7 @@ const FileDetailsForm = (props) => {
 
   const { contribTypes } = contributions;
   const { courses } = courseData;
+  const inputClass = mobile ? "input-mobile" : "input-desktop";
 
   return (
   <>
@@ -69,7 +71,7 @@ const FileDetailsForm = (props) => {
        {...layout}
        name="details-form"
        role="form"
-       className="details-form"
+       className={"details-form" + (mobile ? "-mobile" : "")}
        initialValues={{ remember: true }}
        onFinish={null}
        onFinishFailed={null}
@@ -110,7 +112,7 @@ const FileDetailsForm = (props) => {
         <Select
           name="subject"
           defaultValue="default"
-          style={{ width: 560 }}
+          className={inputClass}
           onChange={onCourseChange}
         >
           <Option value="default">
@@ -128,7 +130,7 @@ const FileDetailsForm = (props) => {
       >
         <Select
           mode="multiple"
-          style={{ width: 560 }}
+          className={inputClass}
           placeholder="Elija un o más tipo(s) de apunte(s)."
           defaultValue={selectedTypes}
           onChange={onContribTypeChange}
