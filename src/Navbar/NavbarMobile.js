@@ -34,7 +34,7 @@ const Navbar = (props) => {
    dismissNotifications
  } = props;
 
- const { user } = data;
+ const user = data ? data.user : null;
 
  return (
  <Suspense fallback={<Spin />}>
