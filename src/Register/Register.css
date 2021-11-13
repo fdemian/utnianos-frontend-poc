@@ -2,8 +2,22 @@
   margin-top: 50px;
 }
 
+
 .register-form {
   margin-left: 34%;
+}
+
+
+@media screen and (min-width: 768px) {
+  .register-button {
+    width:564px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .register-form {
+    margin-left: 0%;
+  }
 }
 
 .register-success-container {

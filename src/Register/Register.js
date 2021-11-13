@@ -7,7 +7,7 @@ import Alert from 'antd/es/alert';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TopIcon from '../Login/TopIcon';
-import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useMutation, gql } from "@apollo/client";
 import './Register.css';
 
@@ -165,8 +165,9 @@ const RegisterScreen = (props) => {
         </Form.Item>
         <br />
         <Form.Item>
-          <Button style={{width:564}} type="primary" htmlType="submit" block>
-            Register
+          <Button className="register-button" size="large" type="primary" htmlType="submit" block>
+            Register &nbsp;
+            <FontAwesomeIcon icon={faUserPlus} size="lg" color="white" />
           </Button>
         </Form.Item>
       </Form>
