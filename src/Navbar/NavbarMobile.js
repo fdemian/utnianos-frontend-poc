@@ -28,6 +28,7 @@ const Navbar = (props) => {
 
  const {
    isLoggedIn,
+   logoutFn,
    data,
    notifications,
    notificationsEnabled,
@@ -68,6 +69,7 @@ const Navbar = (props) => {
            clearFn={dismissNotifications}
            closeDrawer={closeDrawer}
            setDrawerVisible={setDrawerVisible}
+           logoutFn={logoutFn}
          />
        </Suspense>
      </Drawer>

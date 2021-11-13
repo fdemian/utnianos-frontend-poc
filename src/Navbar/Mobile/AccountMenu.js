@@ -16,6 +16,11 @@ const AccountMenu = (props) => {
 
   const { logoutFn, closeDrawer } = props;
 
+  const logoutAndClose = () => {
+    logoutFn();
+    closeDrawer();
+  }
+
   return (
   <div className="sidemenu-inline sidemenu-mobile">
   <Suspense fallback={<Spin />}>
@@ -43,15 +48,13 @@ const AccountMenu = (props) => {
               &nbsp; Ajustes
             </Link>
           </Menu.Item>
-          <Menu.Item key="UserMenu:4" onClick={closeDrawer} className="MenuItem">
-            <span onClick={logoutFn}>
+          <Menu.Item key="UserMenu:4" onClick={logoutAndClose} className="MenuItem">
               <FontAwesomeIcon
                 icon={signOut}
                 className="MenuIcon"
                 size="lg"
               />
               &nbsp; Cerrar sesión
-            </span>
           </Menu.Item>
         </SubMenu>
       </Menu>
