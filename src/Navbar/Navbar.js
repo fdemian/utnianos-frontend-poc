@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUserId } from '../Login/authUtils';
 import { useQuery, useApolloClient } from "@apollo/client";
 import { GET_USER } from './Queries';
+import { GET_IS_LOGGED_IN, SET_LOGIN } from '../Login/queries';
 
 const NavbarDesktop = lazy(() => import('./NavbarDesktop'));
 const NavbarMobile = lazy(() => import('./NavbarMobile'));
@@ -18,15 +19,27 @@ const Navbar = (props) => {
   const navigate = useNavigate();
   const client = useApolloClient();
   const id = getUserId();
-  const isLoggedIn = id !== null;
+  const loginQuery = useQuery(GET_IS_LOGGED_IN);
+  const isLoggedIn = (loginQuery.data && (loginQuery.data.loggedIn === true));
   const queryOpts = { variables: { id: id }, skip: !id };
   const { loading, error, data } = useQuery(GET_USER, queryOpts);
+
 
   const logoutFn = async () => {
     await client.resetStore();
     window.localStorage.clear();
+
+    client.writeQuery({
+       query: SET_LOGIN,
+       data: { // Contains the data to write
+        loggedIn: false,
+       },
+       variables: {
+         status: false
+       }
+    });
+
     navigate(`/`);
-    window.location.reload();
   }
 
   if(error){

@@ -1,11 +1,11 @@
 import React from 'react';
 import OptionsList from './OptionsList';
 import { useQuery } from "@apollo/client";
-import { GET_USER} from './queries';
+import { GET_USER } from './queries';
 import './Landing.css';
 
 const LandingPage = ({ id }) => {
-  
+
   const { loading, error, data } = useQuery(GET_USER, {
     variables: { id: id },
     skip: !id

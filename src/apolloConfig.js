@@ -1,16 +1,12 @@
-import {
-  ApolloClient,
-  ApolloLink,
-  InMemoryCache,
-  createHttpLink,
-} from '@apollo/client';
+import { ApolloClient, ApolloLink, createHttpLink } from '@apollo/client';
 import { onError } from "@apollo/client/link/error";
+import { cache, loggedInVar } from './cache';
 
 const clientLogout = () => {
   localStorage.removeItem('AUTH_TOKEN');
   localStorage.removeItem('REFRESH_TOKEN');
   localStorage.removeItem('ID');
-  window.location.reload();
+  loggedInVar(false);
 }
 
 // TODO:
@@ -44,7 +40,6 @@ const authMiddleware = () =>
 
     return forward(operation);
 });
-const cache = new InMemoryCache({});
 const httpLink = createHttpLink({ uri: '/graphql' });
 
 export const useNewClient = () => {

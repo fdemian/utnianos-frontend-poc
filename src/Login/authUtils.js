@@ -3,7 +3,8 @@ const AUTH_TOKEN = 'AUTH_TOKEN';
 const REFRESH_TOKEN = 'REFRESH_TOKEN';
 
 export const getUserId = () => {
-  return localStorage.getItem(USER_ID);
+  const stringId = localStorage.getItem(USER_ID);    
+  return  stringId === null ? null : parseInt(stringId, 10);
 }
 
 export const setStorageTokens = (id, accessToken, refreshToken) => {

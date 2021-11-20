@@ -6,13 +6,11 @@ import Alert from 'antd/es/alert';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import TopIcon from './TopIcon';
-import { useQuery, useMutation } from "@apollo/client";
-import {
-  GET_USER,
-  USER_LOGIN
-} from './queries';
+import Loading from '../Loading/LoadingIndicator';
+import { useQuery, useMutation, useApolloClient } from "@apollo/client";
+import { SET_LOGIN, GET_IS_LOGGED_IN, USER_LOGIN } from './queries';
 import { setStorageTokens } from './authUtils';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import './Login.css';
 
 const layout = {
@@ -29,7 +27,8 @@ const LoginScreen = (props) => {
   const [userId, setUserId] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loginMutation, authData] = useMutation(USER_LOGIN, { skip: userId });
-  const history = useNavigate();
+  const loginQuery = useQuery(GET_IS_LOGGED_IN);
+  const client = useApolloClient();
 
   if(!authData.loading && authData.data && !userId){
 
@@ -40,8 +39,17 @@ const LoginScreen = (props) => {
         refreshToken
       } = authData.data.auth;
 
-      setUserId(id);
       setStorageTokens(id, accessToken, refreshToken);
+      setUserId(id);
+      client.writeQuery({
+         query: SET_LOGIN,
+         data: { // Contains the data to write
+          loggedIn: true,
+         },
+         variables: {
+           status: true
+         }
+       });
     }
     else {
       if(!errorMessage) {
@@ -49,9 +57,6 @@ const LoginScreen = (props) => {
       }
     }
   }
-
-  const queryOpts = { variables: { id: userId }, skip: !userId };
-  const { loading, error, data } = useQuery(GET_USER, queryOpts);
 
   // Finished checking login values.
   const onFinish = values => {
@@ -68,10 +73,11 @@ const LoginScreen = (props) => {
      setErrorMessage('Failed: ' + errorInfo);
   };
 
-  if(userId && !loading && data) {
-    history("/");
-    window.location.reload();
-  }
+  if(loginQuery.loading)
+    return <Loading />;
+
+  if(loginQuery.data.loggedIn)
+    return <Navigate to="/" />;
 
   return (
   <div className="login-grid-container">
@@ -130,7 +136,7 @@ const LoginScreen = (props) => {
         </Form.Item>
       </Form>
       {
-       (error || errorMessage) &&
+       errorMessage &&
         <Alert
           style={{ marginTop: 24, width: '39%', marginLeft:'34%' }}
           type="error"
