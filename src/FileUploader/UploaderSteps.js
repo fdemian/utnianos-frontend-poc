@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Steps from 'antd/es/steps';
 import Button from 'antd/es/button';
 import { Navigate } from 'react-router-dom';
@@ -20,10 +20,11 @@ const { Step } = Steps;
 
 const UploaderSteps = () => {
 
+  const containerRef = useRef(null);
   const [currentStep, setCurrentStep] = useState(0);
+  const [fileDescription, setFileDescription] = useState(null);
   const [fileList, setFileList] = useState([]);
   const [fileTitle, setFileTitle] = useState("");
-  const [fileDescription, setFileDescription] = useState("");
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
 
@@ -47,38 +48,34 @@ const UploaderSteps = () => {
     const courseData = courseQuery.data;
     const isMobile = getIsMobile();
 
-    const detailsProps = {
-      fileTitle,
-      setFileTitle,
-      fileDescription,
-      setFileDescription,
-      selectedTypes,
-      setSelectedTypes,
-      setSelectedCourse,
-      contributions,
-      courseData,
-      mobile: isMobile
-    };
 
-    const summaryProps = {
-      fileList,
-      fileTitle,
-      fileDescription,
-      selectedTypes,
-      selectedCourse,
-      setFileTitle,
-      setFileList,
-      setFileDescription
-    };
+  const detailsProps = {
+    fileTitle,
+    setFileTitle,
+    containerRef,
+    selectedTypes,
+    setSelectedTypes,
+    setSelectedCourse,
+    contributions,
+    courseData,
+    mobile: isMobile
+  };
 
+  const summaryProps = {
+    fileList,
+    fileTitle,
+    fileDescription,
+    selectedTypes,
+    selectedCourse,
+    setFileTitle,
+    setFileList,
+  };
 
   const onFinish = () => {
-
     const files = fileList.map(f => f.response);
-
     const variables = {
       title: fileTitle,
-      description: fileDescription,
+      description: JSON.stringify(fileDescription),
       types: selectedTypes.join(),
       course: selectedCourse,
       filesList: files
@@ -99,7 +96,12 @@ const UploaderSteps = () => {
   ];
 
   const previous = () => setCurrentStep(currentStep-1);
-  const next = () => setCurrentStep(currentStep+1);
+  const next = () => {
+    if(currentStep === 0){
+      setFileDescription(containerRef.current.getContent());
+    }
+    setCurrentStep(currentStep+1);
+  }
 
   return(
   <div className="uploader-container">
@@ -123,7 +125,6 @@ const UploaderSteps = () => {
         >
           <FontAwesomeIcon icon={arrowLeft} />
           &nbsp; Anterior
-
         </Button>
       )}
       {currentStep < 1 && (

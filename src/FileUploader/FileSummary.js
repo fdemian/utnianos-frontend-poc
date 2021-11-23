@@ -9,6 +9,7 @@ import FileList from './FileList';
 import {
   faUpload as uploadIcon
 } from '@fortawesome/free-solid-svg-icons';
+import { DefaultRenderer }  from 'elementary-editor';
 
 const actionURL = '/api/uploads';
 
@@ -20,9 +21,9 @@ const FileSummary = (props) => {
     fileList,
     setFileList,
     fileTitle,
-    fileDescription,
     selectedTypes,
-    selectedCourse
+    selectedCourse,
+    fileDescription
   } = props;
 
   const uploaderProps = {
@@ -49,7 +50,7 @@ const FileSummary = (props) => {
   return (
   <div className="details-container">
     <h1 className="details-title">{fileTitle}</h1>
-    <p>{fileDescription}</p>
+    <DefaultRenderer raw={fileDescription} />
     <p>Materia: {selectedCourse}</p>
     <div className="contribution-tags">
       <p>Tipo de contribución</p>

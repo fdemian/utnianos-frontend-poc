@@ -2,10 +2,10 @@ import React from 'react';
 import Form from 'antd/es/form';
 import Input from 'antd/es/input';
 import Select from 'antd/es/select';
+import { Editor } from 'elementary-editor';
 
 import './Uploader.css';
 
-const { TextArea } = Input;
 const { Option } = Select;
 
 const layout = {
@@ -41,17 +41,16 @@ const FileDetailsForm = (props) => {
 
   const {
     setFileTitle,
-    setFileDescription,
     selectedTypes,
     setSelectedTypes,
     setSelectedCourse,
     contributions,
     courseData,
+    containerRef,
     mobile
   } = props;
 
   const onTitleChange = (e) => setFileTitle(e.target.value);
-  const onDescriptionChange = (e) => setFileDescription(e.target.value);
   const onContribTypeChange = (e) => setSelectedTypes(e);
   const onCourseChange = (s) => setSelectedCourse(s);
 
@@ -93,16 +92,13 @@ const FileDetailsForm = (props) => {
         name="description"
         rules={formRules['descripcion']}
        >
-        <TextArea
-           style={{width:580, height:200}}
-           onChange={onDescriptionChange}
-           name="description"
-           className="input-field"
-           placeholder=" Ingrese una descripción."
-           maxWidth={700}
-           width={700}
-           height={500}
-        />
+        <div style={{width:580, height:200, marginBottom: '100px'}}>
+          <Editor
+            initialState={null}
+            containerRef={containerRef}
+            placeholder=" Ingrese una descripción."
+          />
+        </div>
        </Form.Item>
        <Form.Item
         label=""

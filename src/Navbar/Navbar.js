@@ -28,10 +28,9 @@ const Navbar = (props) => {
   const logoutFn = async () => {
     await client.resetStore();
     window.localStorage.clear();
-
     client.writeQuery({
        query: SET_LOGIN,
-       data: { // Contains the data to write
+       data: {
         loggedIn: false,
        },
        variables: {
