@@ -27,7 +27,12 @@ const Navbar = (props) => {
 
   const logoutFn = async () => {
     await client.resetStore();
-    window.localStorage.clear();
+
+    // CLEAR reelevant localStorage items.
+    window.localStorage.removeItem('AUTH_TOKEN');
+    window.localStorage.removeItem('REFRESH_TOKEN');
+    window.localStorage.removeItem('ID');
+
     client.writeQuery({
        query: SET_LOGIN,
        data: {
