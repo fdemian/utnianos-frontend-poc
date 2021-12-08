@@ -14,11 +14,6 @@ const Home = () => {
   if(loading)
     return <Loading />;
 
-  /*
-  console.clear();
-  console.log(data);
-  console.log(":::::");*/
-
   const isLoggedIn = data.loggedIn;
 
   if(isLoggedIn){

@@ -4,3 +4,30 @@
   width: 80%;
   text-align: center;
 }
+
+.home-welcome-text {
+  font-size: 30px;
+}
+
+.home-paragraph {
+  font-size: 20px;
+}
+
+.unlogged-home-container-mobile {
+  margin-top: 50px;
+  margin-left: 10%;
+  width: 80%;
+  text-align: center;
+}
+
+@media(max-device-width: 768px){
+
+  .home-welcome-text {
+    font-size: 20px;
+  }
+
+  .home-paragraph {
+    font-size: 15px;
+  }
+
+}

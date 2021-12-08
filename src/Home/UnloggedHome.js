@@ -11,17 +11,19 @@ const UnloggedHome = () => {
 
   return (
   <div className={cssClass}>
+    { isMobile ? null :
     <img
       src={logo}
       alt="utnianos logo"
-      width={isMobile ? 237: 592}
-      height={isMobile ? 54: 134}
+      width={592}
+      height={134}
     />
-    <p style={{fontSize:'30px'}}>Bienvenido!</p>
-    <p style={{fontSize:'20px'}}>
+    }
+    <p className="home-welcome-text">Bienvenido!</p>
+    <p className="home-paragraph">
       En este sitio vas a poder seguir tu progreso académico, ver apuntes y más.
     </p>
-    <p style={{fontSize:'20px'}}>
+    <p className="home-paragraph">
       <Link to="/login">Inicia sesión</Link> o <Link to="/register">registrate</Link> si no tenés un usuario.
     </p>
   </div>
